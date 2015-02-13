@@ -29,7 +29,7 @@ function update(){
 
   // some funky jquery to search through the array.
   var currentAnnotations = arr = jQuery.grep(annotationsArray, function(e) {
-    return((e.startTime => currentTime) && (e.endTime < currentTime));
+    return((e.startTime >= currentTime) && (e.endTime < currentTime));
   });
 }
 
@@ -42,6 +42,7 @@ $(document).ready(function(){
 
   $(VIDEO_SELECTOR).bind("play", function() {
     console.log('started playing.');
+    // NOTE: This is also called on resume from a pause, it's not unique to the video's first play.
     // call update manually - there could be annotations that need to be shown at 0 secs!
     update();
   });
