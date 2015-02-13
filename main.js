@@ -21,6 +21,13 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.endTime = endTime;
 }
 
+function testAnnotation(){
+  var newAnnotation = new annotation('Annotation', null, 30, 30, 30, 30, 3, 5);
+  annotationsArray.push(newAnnotation);
+  console.log(annotationsArray);
+
+}
+
 //  the update method, to be called every time the running time of the video changes by a whole second
 function update(){
   console.log('update called.');
@@ -28,9 +35,11 @@ function update(){
   // but also an end time less than the current time.
 
   // some funky jquery to search through the array.
-  var currentAnnotations = arr = jQuery.grep(annotationsArray, function(e) {
-    return((e.startTime >= currentTime) && (e.endTime < currentTime));
+  var currentAnnotations = $.grep(annotationsArray, function(e) {
+    return (currentTime >= e.startTime  && currentTime < e.endTime);
   });
+
+  console.log(currentAnnotations);
 }
 
 //  jQuery events.
