@@ -10,23 +10,26 @@ var currentTime = 0;
 var annotationsArray = [];
 
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height) {
+function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime) {
     this.text = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
     this.yPosition = yPosition;
     this.width = width;
     this.height = height;
+    this.startTime = startTime;
+    this.endTime = endTime;
 }
 
 //  the update method, to be called every time the running time of the video changes by a whole second
 function update(){
   console.log('update called.');
-  // some funky jquery to search through the array.
   // we want annotations that have a start time greater than or equal to the current playback time,
   // but also an end time less than the current time.
-  var currentAnnotations = arr = jQuery.grep(arr, function( n, i ) {
-    return ( n !== 5 && i > 4 );
+
+  // some funky jquery to search through the array.
+  var currentAnnotations = arr = jQuery.grep(annotationsArray, function(e) {
+    return((e.startTime => currentTime) && (e.endTime < currentTime));
   });
 }
 
