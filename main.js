@@ -47,7 +47,7 @@ function update(){
   });
 
   // and get annotations that need to be removed (i.e. have an end time of the current second)
-  var newAnnotations = $.grep(annotationsArray, function(e) {
+  var oldAnnotations = $.grep(annotationsArray, function(e) {
     return (currentTime == e.endTime);
   })
 
