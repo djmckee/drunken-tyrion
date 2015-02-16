@@ -39,6 +39,18 @@ function update(){
     return (currentTime >= e.startTime  && currentTime < e.endTime);
   });
 
+  // these things might also be useful to know I guess...
+
+  // get annotations that need to be added (i.e. have a start time of the current second)
+  var newAnnotations = $.grep(annotationsArray, function(e) {
+    return (currentTime == e.startTime);
+  });
+
+  // and get annotations that need to be removed (i.e. have an end time of the current second)
+  var newAnnotations = $.grep(annotationsArray, function(e) {
+    return (currentTime == e.endTime);
+  })
+
   console.log(currentAnnotations);
 }
 
