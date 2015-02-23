@@ -54,10 +54,55 @@ function update(){
   console.log(currentAnnotations);
 }
 
+// perform some basic setup tasks such as loading in the existing array of annotations from local storage...
+function setUp(){
+  //data-easyannotation-fileid is the attribute that holds our local storage file id, get it...
+  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-fileid');
+
+  //check there's actually something to load in first...
+  if (localStorage.getItem(localStorageId)){
+    //go ahead and load...
+    //load in from local storage...
+    var localData = JSON.parse(localStorage.getItem(localStorageId));
+
+    //if the array is null, then set our array of annotations to a blank array (so we're not having null pointer issues)
+    //otherwise, set it to the parsed array we've retrived from local storage (stored in localData currently...)
+    if (localData == null){
+      // there's no saved data to load in, use a blank array...
+      annotationsArray = [];
+    } else {
+      // there's actually data to load in :o
+      // let's load it...
+      annotationsArray = localData;
+    }
+  } else {
+    //no saved data :'(
+    //let's make annotationsArray a blank array object then...
+    annotationsArray = [];
+  }
+
+}
+
+// a convenience save function... we'll wanna call this after every edit, etc.
+function saveAnnotations(){
+  //firstly, let's convert the array to a JSON string...
+  var jsonArray = JSON.stringify(annotationsArray);
+
+  //now, get the relevant local storage ID from the html data attribute...
+  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-fileid');
+
+  //save the converted data into the local storage of the browser, with the proper ID...
+  localStorage.setItem(localStorageId, jsonArray);
+
+}
+
 //  jQuery events.
 $(document).ready(function(){
   //the DOM has loaded, so let's begin...
   console.log('ready');
+
+  //set-up video (load in array of annotations...)
+  setUp();
 
   //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
