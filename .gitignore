@@ -1,5 +1,12 @@
 # Created by https://www.gitignore.io
 
+# Maybe we'll put some test videos in our folders - we really don't want these cluttering up the repo...
+.mp4
+.m4v
+.ogg
+.webm
+.mov
+
 ### OSX ###
 .DS_Store
 .AppleDouble
