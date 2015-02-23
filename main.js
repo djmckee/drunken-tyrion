@@ -1,7 +1,10 @@
 // easyAnnotate JavaScript.
 
 // define a 'constant' so we can easily select video, no matter what we choose to call it in final HTML implementation...
-var VIDEO_SELECTOR = 'video'
+var VIDEO_SELECTOR = 'video';
+
+// and a 'constant' to select our add button...
+var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 
 //  global variables
 //  number of whole seconds that the video's been playing for.
@@ -109,6 +112,12 @@ function clearStoredAnnotations(){
 
 }
 
+function addAnnotation(){
+  console.log('Starting to add annotation...');
+  //okay, first pause the video...
+  $(VIDEO_SELECTOR).trigger('pause');
+}
+
 //  jQuery events.
 $(document).ready(function(){
   //the DOM has loaded, so let's begin...
@@ -150,6 +159,12 @@ $(document).ready(function(){
 
       update();
     }
+  });
+
+  //when the add button's clicked, we wanna use the add function...
+  $(ADD_BUTTON_SELECTOR).click(function() {
+    //get adding...
+    addAnnotation();
   });
 
 });
