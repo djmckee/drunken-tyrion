@@ -56,8 +56,8 @@ function update(){
 
 // perform some basic setup tasks such as loading in the existing array of annotations from local storage...
 function setUp(){
-  //data-easyannotation-fileid is the attribute that holds our local storage file id, get it...
-  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-fileid');
+  //data-easyannotation-file-id is the attribute that holds our local storage file id, get it...
+  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
 
   //check there's actually something to load in first...
   if (localStorage.getItem(localStorageId)){
@@ -89,10 +89,23 @@ function saveAnnotations(){
   var jsonArray = JSON.stringify(annotationsArray);
 
   //now, get the relevant local storage ID from the html data attribute...
-  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-fileid');
+  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
 
   //save the converted data into the local storage of the browser, with the proper ID...
   localStorage.setItem(localStorageId, jsonArray);
+
+}
+
+//clear the contents of existing local storage items (probably just for testing purposes but you never know...)
+function clearStoredAnnotations(){
+  //clear all local storage items associated with this page.
+  window.localStorage.clear();
+
+  //also, clear the current annotations array, setting it to a blank array object.
+  annotationsArray = [];
+
+  //confirm on the console, since this'll probably be used for debugging/testing
+  console.log('Local storage cleared.');
 
 }
 
