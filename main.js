@@ -189,6 +189,14 @@ function setUp(){
   // Remove the default browser controls
   $(VIDEO_SELECTOR).controls = false;
 
+  //sort the array so earlier annotations come first...
+  annotationsArray.sort(function(a, b) {
+    return a.startTime - b.startTime;
+  });
+
+  //populate the annotations list...
+  populateAnnotationsList();
+
 }
 
 // a convenience save function... we'll wanna call this after every edit, etc.
@@ -231,6 +239,12 @@ function addAnnotationClicked(){
 
     //let's save too!
     saveAnnotations();
+
+    //and re-populate the list...
+    populateAnnotationsList();
+
+    //also, the new annotation we've just made needs to be put on teh screen right now...
+    addAnnotationToScreen(newAnnotation);
   }
 }
 
@@ -264,6 +278,30 @@ function formatSecondsToString(numberOfSeconds){
   var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
 
   return wholeMinutes + ":" + secondsRemaining;
+
+}
+
+function populateAnnotationsList(){
+  //sort the array so earlier annotations come first...
+  annotationsArray.sort(function(a, b) {
+    return a.startTime - b.startTime;
+  });
+
+  //clear any existing annotations in the list...
+  $("li.vidAnnotationListItem").each(function(index) {
+    //remove it!
+    this.remove();
+  });
+
+  //loop through the array, adding a new li element in the appropriate list for each one...
+  for (var i = 0; i < annotationsArray.length; i++){
+    //get the current list item...
+    var currentAnnotation = annotationsArray[i];
+    //formulate our new li HTML...
+    var newListElement = '<li class="vidAnnotationListItem"><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
+    //and add it to the end of the list...
+    $("ul#vidAnnotationList").append(newListElement);
+  }
 
 }
 
