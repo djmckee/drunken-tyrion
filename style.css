@@ -21,7 +21,7 @@ body{
 #vidTitle{
 	text-align: center;
 	font-size: 200%;
-	font-family:
+
 }
 
 #vid{
@@ -95,7 +95,7 @@ body{
 }
 
 #vidAnnotationInner > ul > li:nth-child(even) {
-    background-color: #6a9666;;
+    background-color: #6a9666;
 }
 
 #vid-overlay {

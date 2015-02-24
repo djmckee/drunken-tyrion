@@ -250,7 +250,7 @@ function playPauseClicked() {
 
 function formatSecondsToString(numberOfSeconds){
   if(numberOfSeconds < 10){
-    //if it's under a minute, just return it...
+    //if it's under 10 seconds, just return it...
     return "0:0" + numberOfSeconds.toString();
   }
 
