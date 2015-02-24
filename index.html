@@ -1,27 +1,48 @@
-<!-- WARNING: Please only edit index-dev.html. index.html is DESTROYED every time the build script is ran -->
 <!DOCTYPE html>
+<!-- WARNING: Please only edit index-dev.html. index.html is DESTROYED every time the build script is ran -->
 <html>
 <head>
-  <title>easyAnnotate Demo</title>
+	<title>easyAnnotate Demo</title>
+  <link rel="stylesheet" href="reset.css" type="text/css" />
+	<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
+	<div id="container">
+    <div id="vidTitle">
+      <h1>Video Title</h1>
+    </div>
+		<!-- Important: 'data-easyannotation-file-id' is going to specify what to save the annotations as in local storage! Keep this consistant on a per video basis -->
+    <div id="vid">
+      <div id="vid-overlay"></div>
+			<video width="400" data-easyannotation-file-id="ExampleFileName" id="videoPlayer">
+				<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+				<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+				Your browser does not support HTML5 video, lulz.
+			</video>
+		</div>
 
-  <!-- Important: 'data-easyannotation-file-id' is going to specify what to save the annotations as in local storage! Keep this consistant on a per video basis -->
-  <video width="400" controls data-easyannotation-file-id="ExampleFileName">
-    <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-    <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
-      Your browser does not support HTML5 video, lulz.
-  </video>
+    <div id="vidAnnotation">
+		</div>
 
-  <p><a id="addAnnotation" href="#">Add annotation...</a><p>
+		<div id="annotationButton">
+			<p><a id="addAnnotation" href="#">Add Annotation</a><p>
+		</div>
 
 
+	</div>
 
-<!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
-<!-- We need jQuery and any other libraries (from the dependenices folder) first... -->
-<script src="dependencies/jquery-2.1.3.min.js"></script>
-<!-- Now for the actual js that does the cool stuff... -->
-<script src="main.min.js"></script>
+    <div id="controls">
+        <button id="playPauseButton">Play</button>
+        <button onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</button>
+        <button onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</button>
+    </div>
+
+  <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
+  <!-- We need jQuery and any other libraries (from the dependenices folder) first... -->
+  <script src="dependencies/jquery-2.1.3.min.js"></script>
+  <script src="dependencies/md5.min.js"></script>
+  <!-- Now for the actual js that does the cool stuff... -->
+  <script src="main.min.js"></script>
 
 </body>
 </html>
