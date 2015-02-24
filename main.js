@@ -32,7 +32,7 @@ function uniqueIdForAnnotation(a){
   //make a hash using the crypto-js MD5 library
   var hash = CryptoJS.MD5(stringToMakeUnique);
 
-  //make sure it's in strign form, then return it
+  //make sure it's in string form, then return it
   return hash.toString();
 }
 
