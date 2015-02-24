@@ -248,6 +248,24 @@ function playPauseClicked() {
     }
 }
 
+function formatSecondsToString(numberOfSeconds){
+  if(numberOfSeconds < 10){
+    //if it's under a minute, just return it...
+    return "0:0" + numberOfSeconds.toString();
+  }
+
+
+  if(numberOfSeconds < 60){
+    //if it's under a minute, just return it...
+    return "0:" + numberOfSeconds.toString();
+  }
+
+  var wholeMinutes = Math.floor(numberOfSeconds / 60);
+  var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
+
+  return wholeMinutes + ":" + secondsRemaining;
+
+}
 
 //  jQuery events.
 $(document).ready(function(){
