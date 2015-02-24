@@ -82,6 +82,17 @@ function addAnnotationToScreen(a){
 
 }
 
+function removeAnnotationFromScreen(){
+  //get a unique id first...
+  var id = uniqueIdForAnnotation(a);
+
+  //work out the current annotation's selector so we can select and remove it from screen
+  var annotationSelector = 'div#' + id;
+
+  //remove...
+  $(annotationSelector).remove();
+}
+
 //  the update method, to be called every time the running time of the video changes by a whole second
 function update(){
   console.log('update called.');
@@ -107,8 +118,8 @@ function update(){
       for (newAnnotation in newAnnotations){
         //make a new annotation div, set it's id tag to the unique ID for this particular annotation
         //add all of the releveant attributes from the annotation, then add it to the video player...
-        var id = uniqueIdForAnnotation(newAnnotation);
         console.log('need to add ' + id);
+        addAnnotationToScreen(newAnnotation);
       }
 
     }
@@ -126,7 +137,6 @@ function update(){
 
       for (oldAnnotation in oldAnnotations){
         //work out its unique ID, then remove it from the document (taking it off screen)
-        var id = uniqueIdForAnnotation(oldAnnotation);
         console.log('need to remove ' + id);
 
       }
