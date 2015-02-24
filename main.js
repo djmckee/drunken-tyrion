@@ -1,7 +1,7 @@
 // easyAnnotate JavaScript.
 
 // define a 'constant' so we can easily select video, no matter what we choose to call it in final HTML implementation...
-var VIDEO_SELECTOR = 'video';
+var VIDEO_SELECTOR = 'video#vid';
 
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
@@ -57,7 +57,7 @@ function addAnnotationToScreen(a){
   $(VIDEO_SELECTOR).append(annotationHtmlElement);
 
   //set height and width, and a high z-index so it shows over the video.
-  $(annotationSelector).css({"width": a.width, "height": a.height, "z-index": "1000"});
+  $(annotationSelector).css({"width": a.width, "height": a.height, "z-index": "1000", "position": "absolute"});
 
   //if there's some text, add it...
   if (a.text != null){
