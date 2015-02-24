@@ -50,6 +50,12 @@ body{
 	border-radius: 20px;
 	padding: 5px;
 }
+#addAnnotation:hover{
+	background-color: #AAAAAA;
+}
+#addAnnotation:active{
+	background-color: #EE0000;
+}
 
 .vidAnnotationType{
 
