@@ -5,6 +5,8 @@ var VIDEO_SELECTOR = 'video';
 var VIDEO_CONTAINER = 'div#vid-overlay'
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
+var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
+
 var PLAY_PAUSE_SELECTOR = 'button#playPauseButton';
 
 //  global variables
@@ -296,11 +298,22 @@ function populateAnnotationsList(){
     //get the current list item...
     var currentAnnotation = annotationsArray[i];
     //formulate our new li HTML...
-    var newListElement = '<li class="vidAnnotationListItem"><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
+    var newListElement = '<li class="vidAnnotationListItem"><a class="removeAnnotation" href="#" data-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
     //and add it to the end of the list...
     $("ul#vidAnnotationList").append(newListElement);
   }
 
+}
+
+function deleteAnnotationAtIndex(index){
+  //remove 1 item, at the current index, from the annotations array...
+  annotationsArray.splice(index, 1);
+
+  //redraw the list...
+  populateAnnotationsList();
+
+  //we've modified the array so save it...
+  saveAnnotations();
 }
 
 //  jQuery events.
@@ -356,6 +369,13 @@ $(document).ready(function(){
 
   $(PLAY_PAUSE_SELECTOR).click(function() {
     playPauseClicked();
+  });
+
+  $(document).on("click", REMOVE_BUTTON_SELECTOR, function() {
+    //get the index to remove from the button data attribute...
+    var index = $(this).data('annotation-id');
+    //call the remove...
+    deleteAnnotationAtIndex(index);
   });
 
 });

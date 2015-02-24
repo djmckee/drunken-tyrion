@@ -121,7 +121,18 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 
 }
 
-
 #vidContainer{
 	background-color: #333;
+}
+
+.removeAnnotation{
+	float: right;
+	text-decoration: none;
+	color: #555555;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.removeAnnotation:hover{
+	color: #FF0000;
 }
