@@ -121,12 +121,25 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 	/* this makes annotations actually work - pls don't break */
 	position: absolute;
 	z-index: 3000;
+}
 
+#vid-canvas {
+	/* this makes box drawing actually work - pls don't break */
+	position: absolute;
+	z-index: 4000;
 
+	/* QUICK HACK */
+	width: 400px;
+	height: 220px;
 }
 
 #vidContainer{
 	background-color: #333;
+}
+
+#informationalText{
+	float: left;
+	font-weight: bold;
 }
 
 .removeAnnotation{

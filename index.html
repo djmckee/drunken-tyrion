@@ -15,6 +15,7 @@
 		<div id="vidContainer">
 	    <div id="vid">
 	      <div id="vid-overlay"></div>
+				<canvas id="vid-canvas"></canvas>
 				<video width="400" data-easyannotation-file-id="ExampleFileName" id="videoPlayer">
 					<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
 					<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
@@ -29,6 +30,7 @@
 				</div>
 			</div>
 		</div>
+		<div id="informationalText"></div>
 		<div id="annotationButton">
 			<p><a id="addAnnotation" href="#">Add Annotation</a><p>
 		</div>
@@ -40,9 +42,12 @@
         <button id="playPauseButton">Play</button>
         <button onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</button>
         <button onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</button>
-				<button id="hideVA">Hide Annotation List</button>
-				<button id="showVA">Show Annotation List</button>
+
+		<button id="hideVA">Hide Annotation List</button>
+		<button id="showVA">Show Annotation List</button>
     </div>
+
+    <progress id="progress" min="0" max="100" value="0">Progress Bar</progress>
 
   <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
   <!-- We need jQuery and any other libraries (from the dependenices folder) first... -->
