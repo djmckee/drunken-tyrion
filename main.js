@@ -243,8 +243,6 @@ function addAnnotationClicked(){
     //and re-populate the list...
     populateAnnotationsList();
 
-    //also, the new annotation we've just made needs to be put on teh screen right now...
-    addAnnotationToScreen(newAnnotation);
   }
 }
 
