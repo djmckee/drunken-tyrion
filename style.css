@@ -6,6 +6,10 @@ body{
 	font-family: 'Roboto Condensed', sans-serif;
 }
 
+#title{
+	margin-bottom: 10px;
+}
+
 #container{
 	max-width: 600px;
 	min-height: 100vh;
@@ -14,6 +18,7 @@ body{
 	background-color: #FFFFFF;
 	border-left: 1px black solid;
 	border-right: 1px black solid;
+	padding-top: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
 }
