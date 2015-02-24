@@ -57,7 +57,7 @@ function addAnnotationToScreen(a){
   $(VIDEO_SELECTOR).append(annotationHtmlElement);
 
   //set height and width, and a high z-index so it shows over the video.
-  $(annotationSelector).css({width: a.width, height: a.height, z-index: 1000});
+  $(annotationSelector).css({"width": a.width, "height": a.height, "z-index": "1000"});
 
   //if there's some text, add it...
   if (a.text != null){
@@ -76,7 +76,7 @@ function addAnnotationToScreen(a){
     var imageSelector = annotationSelector + ' img';
 
     //do a 'lil styling
-    $(imageSelector).css({width: 100%, height: auto});
+    $(imageSelector).css({"width": "100%", "height": "auto"});
 
   }
 
