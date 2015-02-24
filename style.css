@@ -43,7 +43,8 @@ body{
 #vidAnnotationInner{
 	width: 190px;
 	height: 210px;
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 #annotationButton{
