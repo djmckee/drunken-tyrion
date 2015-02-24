@@ -38,7 +38,6 @@ body{
 	display: inline-block;
 	overflow: scroll;
 	padding: 5px;
-
 }
 
 #vidAnnotationInner{
@@ -62,7 +61,8 @@ body{
 	border: solid;
 	border-color: #222222;
 	background-color: #DDDDDD;
-	border-radius: 20px;
+	border-top-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 	padding: 5px;
 }
 #addAnnotation:hover{
