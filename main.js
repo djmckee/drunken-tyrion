@@ -24,6 +24,13 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.endTime = endTime;
 }
 
+//create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
+function uniqueIdForAnnotation(a){
+  var stringToMakeUnique = (a.startTime.toString()) + (a.startTime.toString()) + (a.xPosition.toString())  + (a.yPosition.toString()) + (a.text)
+  var hash = CryptoJS.MD5(stringToMakeUnique);
+  return hash.toString();
+}
+
 function testAnnotation(){
   var newAnnotation = new annotation('Annotation', null, 30, 30, 30, 30, 3, 5);
   annotationsArray.push(newAnnotation);
@@ -49,10 +56,27 @@ function update(){
     return (currentTime == e.startTime);
   });
 
+  if (newAnnotations != null){
+    if (newAnnotations.length > 0){
+      //there's animations to load!
+      console.log('have new annotations to load');
+
+    }
+  }
+
   // and get annotations that need to be removed (i.e. have an end time of the current second)
   var oldAnnotations = $.grep(annotationsArray, function(e) {
     return (currentTime == e.endTime);
   })
+
+  if (oldAnnotations != null){
+    if (oldAnnotations.length > 0){
+      //there's animations to remove!
+      console.log('have old annotations to remove');
+
+    }
+  }
+
 
   console.log(currentAnnotations);
 }
