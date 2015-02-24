@@ -43,6 +43,45 @@ function testAnnotation(name){
 
 }
 
+function addAnnotationToScreen(a){
+  //get a unique id first...
+  var id = uniqueIdForAnnotation(a);
+
+  //create our annotation html...
+  var annotationHtmlElement = '<div class="annotation-on-screen" id="' + id + '> </div>';
+
+  //work out the current annotation's selector so we can select and set attributes in jQuery
+  var annotationSelector = 'div#' + id;
+
+  //add it to the DOM so we can begin to add style etc...
+  $(VIDEO_SELECTOR).append(annotationHtmlElement);
+
+  //set height and width, and a high z-index so it shows over the video.
+  $(annotationSelector).css({width: a.width, height: a.height, z-index: 1000});
+
+  //if there's some text, add it...
+  if (a.text != null){
+    //set text of the annotation element...
+    $(annotationSelector).text(a.text);
+  }
+
+  //if there's an image, add it...
+  if (a.imageUrl != null){
+    //create an image tag...
+    var imageElement = '<img src="' + a.imageUrl +  '"/>';
+
+    //add blank image into the annotation...
+    $(VIDEO_SELECTOR).append(imageElement);
+
+    var imageSelector = annotationSelector + ' img';
+
+    //do a 'lil styling
+    $(imageSelector).css({width: 100%, height: auto});
+
+  }
+
+}
+
 //  the update method, to be called every time the running time of the video changes by a whole second
 function update(){
   console.log('update called.');
@@ -154,7 +193,7 @@ function clearStoredAnnotations(){
 
 }
 
-function addAnnotation(){
+function addAnnotationClicked(){
   console.log('Starting to add annotation...');
   //okay, first pause the video...
   $(VIDEO_SELECTOR).trigger('pause');
@@ -207,7 +246,7 @@ $(document).ready(function(){
   //when the add button's clicked, we wanna use the add function...
   $(ADD_BUTTON_SELECTOR).click(function() {
     //get adding...
-    addAnnotation();
+    addAnnotationClicked();
   });
 
 });
