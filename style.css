@@ -33,10 +33,11 @@ body{
 	float:right;
 	width: 180px;
 	height: 200px;
-	background-color: #806060; /*was once 666 rock SOC */
+	background-color: #333;
+	/* background-color: #806060;  /*was once 666 rock SOC */
 	display: inline-block;
 	overflow: scroll;
-	padding: 10px;
+	padding: 5px;
 
 }
 
@@ -80,14 +81,14 @@ body{
 }
 
 #vidAnnotation > ul > li{
-	padding-bottom: 15px;
+	padding: 10px;
 }
 
 #vidAnnotation > ul > li:nth-child(odd) {
-    background-color: #333;
+    background-color: #597c56;
 }
 #vidAnnotation > ul > li:nth-child(even) {
-    background-color: #666;
+    background-color: #6a9666;;
 }
 
 #vid-overlay {
