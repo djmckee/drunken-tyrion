@@ -220,6 +220,17 @@ function addAnnotationClicked(){
   console.log('Starting to add annotation...');
   //okay, first pause the video...
   $(VIDEO_SELECTOR).trigger('pause');
+
+  //basic basic basic.
+  var title = prompt("Please enter your annotation text:", "");
+  //literally at fkn pumpkin spice levels.
+  if (title != null) {
+    var newAnnotation = new annotation(title, null, 0, 0, 180, 45, currentTime, (currentTime + 2));
+    annotationsArray.push(newAnnotation);
+
+    //let's save too!
+    saveAnnotations();
+  }
 }
 
 
