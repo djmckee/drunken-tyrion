@@ -50,3 +50,11 @@ body{
 	font-size: 120%;
 	color: #FFF;
 }
+
+#vid-overlay {
+	/* this makes annotations actually work - pls don't break */
+	position: absolute;
+	z-index: 3000;
+
+
+}

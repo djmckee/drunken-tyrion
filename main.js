@@ -1,8 +1,8 @@
 // easyAnnotate JavaScript.
 
 // define a 'constant' so we can easily select video, no matter what we choose to call it in final HTML implementation...
-var VIDEO_SELECTOR = 'video#vid';
-
+var VIDEO_SELECTOR = 'video';
+var VIDEO_CONTAINER = 'div#vid-overlay'
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 
@@ -14,12 +14,12 @@ var annotationsArray = [];
 
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime) {
-    this.text = text;
+    this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
     this.yPosition = yPosition;
-    this.width = width;
-    this.height = height;
+    this.aWidth = width;
+    this.aHeight = height;
     this.startTime = startTime;
     this.endTime = endTime;
 }
@@ -48,22 +48,28 @@ function addAnnotationToScreen(a){
   var id = uniqueIdForAnnotation(a);
 
   //create our annotation html...
-  var annotationHtmlElement = '<div class="annotation-on-screen" id="' + id + '> </div>';
+  var annotationHtmlElement = '<div class="annotation-on-screen" id="' + id + '"></div>';
 
   //work out the current annotation's selector so we can select and set attributes in jQuery
   var annotationSelector = 'div#' + id;
 
   //add it to the DOM so we can begin to add style etc...
-  $(VIDEO_SELECTOR).append(annotationHtmlElement);
+  $(VIDEO_CONTAINER).append(annotationHtmlElement);
+
+  console.log('attempting to add:' + annotationHtmlElement);
 
   //set height and width, and a high z-index so it shows over the video.
-  $(annotationSelector).css({"width": a.width, "height": a.height, "z-index": "1000", "position": "absolute"});
+  $(annotationSelector).css({"width": a.aWidth, "height": a.aHeight});
 
-  //if there's some text, add it...
-  if (a.text != null){
-    //set text of the annotation element...
-    $(annotationSelector).text(a.text);
+  var annotationString = String(a.textString);
+
+  console.log('annotation title: ' + annotationString);
+
+  if (annotationString == null){
+    annotationString = "";
   }
+
+  $(annotationSelector).text(annotationString);
 
   //if there's an image, add it...
   if (a.imageUrl != null){
@@ -71,7 +77,7 @@ function addAnnotationToScreen(a){
     var imageElement = '<img src="' + a.imageUrl +  '"/>';
 
     //add blank image into the annotation...
-    $(VIDEO_SELECTOR).append(imageElement);
+    $(annotationSelector).append(imageElement);
 
     var imageSelector = annotationSelector + ' img';
 
