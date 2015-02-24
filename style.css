@@ -1,6 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed);
+
 body{
 	background-color: #e0e0e0;
 	margin: 0px;
+	font-family: 'Roboto Condensed', sans-serif;
 }
 
 #container{
@@ -18,6 +21,7 @@ body{
 #vidTitle{
 	text-align: center;
 	font-size: 200%;
+	font-family:
 }
 
 #vid{
