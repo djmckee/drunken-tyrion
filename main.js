@@ -61,7 +61,7 @@ function addAnnotationToScreen(a){
   //set height and width, and a high z-index so it shows over the video.
   $(annotationSelector).css({"width": a.aWidth, "height": a.aHeight});
 
-  var annotationString = String(a.textString);
+  var annotationString = a.textString;
 
   console.log('annotation title: ' + annotationString);
 
@@ -121,13 +121,15 @@ function update(){
     if (newAnnotations.length > 0){
       //there's animations to load!
       console.log('have new annotations to load');
-      for (newAnnotation in newAnnotations){
+
+      for (var i = 0; i < newAnnotations.length; i++){
         //make a new annotation div, set it's id tag to the unique ID for this particular annotation
         //add all of the releveant attributes from the annotation, then add it to the video player...
         console.log('need to add something.');
+        var newAnnotation = newAnnotations[i];
+        console.log(newAnnotation);
         addAnnotationToScreen(newAnnotation);
       }
-
     }
   }
 
@@ -141,10 +143,10 @@ function update(){
       //there's animations to remove!
       console.log('have old annotations to remove');
 
-      for (oldAnnotation in oldAnnotations){
+      for (var i = 0; i < oldAnnotations.length; i++){
         //work out its unique ID, then remove it from the document (taking it off screen)
         console.log('need to remove something.');
-        removeAnnotationFromScreen(oldAnnotation);
+        removeAnnotationFromScreen(oldAnnotations[i]);
 
       }
 
@@ -181,7 +183,7 @@ function setUp(){
     //let's make annotationsArray a blank array object then...
     annotationsArray = [];
   }
-    
+
   // Daniel's madness :O
   // Remove the default browser controls
   //VIDEO_SELECTOR.controls = false;
@@ -273,5 +275,3 @@ $(document).ready(function(){
 });
 
 // **Control Stuff**
-
-
