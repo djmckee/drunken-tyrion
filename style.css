@@ -1,7 +1,35 @@
 body{
 	background-color: #e0e0e0;
+	margin: 0px;
+}
+
+#container{
+	max-width: 600px;
+	min-height: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #FFFFFF;
+	border-left: 1px black solid;
+	border-right: 1px black solid;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#vidTitle{
+	text-align: center;
+	font-size: 200%;
 }
 
 #vid{
-	
+	display: inline-block;
+	float: left;
+}
+
+#vidAnnotation{
+	float:right;
+	width: 200px;
+	height: 220px;
+	background-color: #666; /* rock SOC */
+	display: inline-block;
+	color: #FFF;
 }
