@@ -31,14 +31,20 @@ body{
 
 #vidAnnotation{
 	float:right;
-	width: 180px;
-	height: 200px;
+	width: 190px;
+	height: 210px;
 	background-color: #333;
 	/* background-color: #806060;  /*was once 666 rock SOC */
 	display: inline-block;
 	overflow: scroll;
 	padding: 5px;
 
+}
+
+#vidAnnotationInner{
+	width: 190px;
+	height: 210px;
+	overflow: scroll;
 }
 
 #annotationButton{
@@ -80,14 +86,15 @@ body{
 	color: #FFF;
 }
 
-#vidAnnotation > ul > li{
+#vidAnnotationInner > ul > li{
 	padding: 10px;
 }
 
-#vidAnnotation > ul > li:nth-child(odd) {
+#vidAnnotationInner > ul > li:nth-child(odd) {
     background-color: #597c56;
 }
-#vidAnnotation > ul > li:nth-child(even) {
+
+#vidAnnotationInner > ul > li:nth-child(even) {
     background-color: #6a9666;;
 }
 
@@ -97,4 +104,9 @@ body{
 	z-index: 3000;
 
 
+}
+
+
+#vidContainer{
+	background-color: #333;
 }
