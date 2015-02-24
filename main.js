@@ -245,7 +245,7 @@ function playPauseClicked() {
         document.getElementById('videoPlayer').pause();
         $(PLAY_PAUSE_SELECTOR).text("Play");
 
-    }   
+    }
 }
 
 
@@ -268,6 +268,8 @@ $(document).ready(function(){
 
   $(VIDEO_SELECTOR).bind('pause', function() {
     console.log('playback paused.');
+    $(PLAY_PAUSE_SELECTOR).text("Play");
+
   });
 
   $(VIDEO_SELECTOR).bind('ended', function() {
@@ -297,7 +299,7 @@ $(document).ready(function(){
     //get adding...
     addAnnotationClicked();
   });
-    
+
   $(PLAY_PAUSE_SELECTOR).click(function() {
     playPauseClicked();
   });
