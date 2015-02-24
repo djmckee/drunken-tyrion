@@ -26,8 +26,11 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
 
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
 function uniqueIdForAnnotation(a){
+  //concatenate our huge string of annotation stuff...
   var stringToMakeUnique = (a.startTime.toString()) + (a.startTime.toString()) + (a.xPosition.toString())  + (a.yPosition.toString()) + (a.text)
+  //make a hash using the crypto-js MD5 library
   var hash = CryptoJS.MD5(stringToMakeUnique);
+  //make sure it's in strign form, then return it
   return hash.toString();
 }
 
