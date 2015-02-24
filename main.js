@@ -82,7 +82,7 @@ function addAnnotationToScreen(a){
 
 }
 
-function removeAnnotationFromScreen(){
+function removeAnnotationFromScreen(a){
   //get a unique id first...
   var id = uniqueIdForAnnotation(a);
 
@@ -118,7 +118,7 @@ function update(){
       for (newAnnotation in newAnnotations){
         //make a new annotation div, set it's id tag to the unique ID for this particular annotation
         //add all of the releveant attributes from the annotation, then add it to the video player...
-        console.log('need to add ' + id);
+        console.log('need to add something.');
         addAnnotationToScreen(newAnnotation);
       }
 
@@ -137,7 +137,8 @@ function update(){
 
       for (oldAnnotation in oldAnnotations){
         //work out its unique ID, then remove it from the document (taking it off screen)
-        console.log('need to remove ' + id);
+        console.log('need to remove something.');
+        removeAnnotationFromScreen(oldAnnotation);
 
       }
 
