@@ -140,3 +140,14 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 .removeAnnotation:hover{
 	color: #FF0000;
 }
+
+
+#addAnnotationForm{
+	width: 250px;
+	height: 150px;
+	position: absolute;
+	background-color: #000;
+	left: 300px;
+	top: 600px;
+	z-index: 4000;
+}
