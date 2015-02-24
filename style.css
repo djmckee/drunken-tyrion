@@ -90,6 +90,7 @@ body{
 .vidAnnotationContent{
 	font-size: 120%;
 	color: #FFF;
+	word-wrap: break-word;
 }
 
 #vidAnnotationInner > ul > li{
