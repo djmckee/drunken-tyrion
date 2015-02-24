@@ -29,13 +29,30 @@ body{
 	float:right;
 	width: 200px;
 	height: 220px;
-	background-color: #666; /* rock SOC */
+	background-color: #806060; /*was once 666 rock SOC */
 	display: inline-block;
 	overflow: scroll;
 }
 
+#annotationButton{
+	margin-top: 250px;/*extremely elegant solution*/
+	display: block;
+	font-family: calibri;
+}
+
+#addAnnotation{
+	color: #000000;
+	text-decoration: none;
+	font-weight: bold;
+	border: solid;
+	border-color: #222222;
+	background-color: #DDDDDD;
+	border-radius: 20px;
+	padding: 5px;
+}
+
 .vidAnnotationType{
-	
+
 }
 
 .vidAnnotationTimes{
