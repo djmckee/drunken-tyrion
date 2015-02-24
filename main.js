@@ -453,7 +453,7 @@ $(document).ready(function(){
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
     //  the current video play time, in whole seconds (rounded down)
-    newTime = Math.floor(this.currentTime);
+    var newTime = Math.floor(this.currentTime);
     // okay, we only care about updating if the time is different (in whole seconds)
     // otherwise, the user's getting absolutely hammered with the DOM redrawing etc.
     if(newTime != currentTime){
