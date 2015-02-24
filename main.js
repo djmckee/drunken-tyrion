@@ -62,7 +62,7 @@ function addAnnotationToScreen(a){
   console.log('attempting to add:' + annotationHtmlElement);
 
   //set height and width, and a high z-index so it shows over the video.
-  $(annotationSelector).css({"width": a.aWidth, "height": a.aHeight});
+  $(annotationSelector).css({"width": a.aWidth, "height": a.aHeight, "position": "relative", "top": a.yPosition, "left": a.xPosition});
 
   var annotationString = a.textString;
 
