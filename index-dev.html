@@ -2,19 +2,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>easyAnnotate Demo</title>
+	<title>easyAnnotate Demo</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
+	<div id="container">
+		<!-- Important: 'data-easyannotation-file-id' is going to specify what to save the annotations as in local storage! Keep this consistant on a per video basis -->
+		<div>
+			<video id="vid" width="400" controls data-easyannotation-file-id="ExampleFileName">
+				<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+				<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+				Your browser does not support HTML5 video, lulz.
+			</video>
+		</div>
 
-  <!-- Important: 'data-easyannotation-file-id' is going to specify what to save the annotations as in local storage! Keep this consistant on a per video basis -->
-  <video width="400" controls data-easyannotation-file-id="ExampleFileName">
-    <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-    <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
-      Your browser does not support HTML5 video, lulz.
-  </video>
-
-  <p><a id="addAnnotation" href="#">Add annotation...</a><p>
-
+		<p><a id="addAnnotation" href="#">Add annotation...</a><p>
+	</div>
 
 
 <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
