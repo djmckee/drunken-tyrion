@@ -175,6 +175,10 @@ function setUp(){
     //let's make annotationsArray a blank array object then...
     annotationsArray = [];
   }
+    
+  // Daniel's madness :O
+  // Remove the default browser controls
+  //VIDEO_SELECTOR.controls = false;
 
 }
 
@@ -261,3 +265,7 @@ $(document).ready(function(){
   });
 
 });
+
+// **Control Stuff**
+
+
