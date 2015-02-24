@@ -44,6 +44,10 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 	height: 210px;
 	background-color: #333;
 	/* background-color: #806060;  /*was once 666 rock SOC */
+	background-image: url('resources/noAnnotations.png');
+	background-size: 80% auto;
+	background-position: 50% 15%;
+	background-repeat: no-repeat;
 	display: inline-block;
 	padding: 5px;
 	overflow:hidden;
