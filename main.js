@@ -27,15 +27,17 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
 function uniqueIdForAnnotation(a){
   //concatenate our huge string of annotation stuff...
-  var stringToMakeUnique = (a.startTime.toString()) + (a.startTime.toString()) + (a.xPosition.toString())  + (a.yPosition.toString()) + (a.text)
+  var stringToMakeUnique = (String(a.startTime)) + (String(a.endTime)) + (String(a.xPosition))  + (String(a.yPosition)) + (a.text);
+
   //make a hash using the crypto-js MD5 library
   var hash = CryptoJS.MD5(stringToMakeUnique);
+
   //make sure it's in strign form, then return it
   return hash.toString();
 }
 
-function testAnnotation(){
-  var newAnnotation = new annotation('Annotation', null, 30, 30, 30, 30, 3, 5);
+function testAnnotation(name){
+  var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5);
   annotationsArray.push(newAnnotation);
   console.log(annotationsArray);
 
@@ -63,6 +65,12 @@ function update(){
     if (newAnnotations.length > 0){
       //there's animations to load!
       console.log('have new annotations to load');
+      for (newAnnotation in newAnnotations){
+        //make a new annotation div, set it's id tag to the unique ID for this particular annotation
+        //add all of the releveant attributes from the annotation, then add it to the video player...
+        var id = uniqueIdForAnnotation(newAnnotation);
+        console.log('need to add ' + id);
+      }
 
     }
   }
@@ -76,6 +84,13 @@ function update(){
     if (oldAnnotations.length > 0){
       //there's animations to remove!
       console.log('have old annotations to remove');
+
+      for (oldAnnotation in oldAnnotations){
+        //work out its unique ID, then remove it from the document (taking it off screen)
+        var id = uniqueIdForAnnotation(oldAnnotation);
+        console.log('need to remove ' + id);
+
+      }
 
     }
   }
