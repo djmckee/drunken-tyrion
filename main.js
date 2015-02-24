@@ -5,6 +5,7 @@ var VIDEO_SELECTOR = 'video#vid';
 
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
+var PLAY_PAUSE_SELECTOR = 'button#playPauseButton';
 
 //  global variables
 //  number of whole seconds that the video's been playing for.
@@ -178,7 +179,7 @@ function setUp(){
     
   // Daniel's madness :O
   // Remove the default browser controls
-  //VIDEO_SELECTOR.controls = false;
+  $(VIDEO_SELECTOR).controls = false;
 
 }
 
@@ -212,6 +213,20 @@ function addAnnotationClicked(){
   console.log('Starting to add annotation...');
   //okay, first pause the video...
   $(VIDEO_SELECTOR).trigger('pause');
+}
+
+// **Control Stuff**
+
+function playPauseClicked() {
+    if(document.getElementById('videoPlayer').paused || document.getElementById('videoPlayer').ended) {
+        document.getElementById('videoPlayer').play();
+        $(PLAY_PAUSE_SELECTOR).text("Pause");
+    }
+    else {
+        document.getElementById('videoPlayer').pause();
+        $(PLAY_PAUSE_SELECTOR).text("Play");
+
+    }   
 }
 
 
@@ -263,9 +278,11 @@ $(document).ready(function(){
     //get adding...
     addAnnotationClicked();
   });
+    
+  $(PLAY_PAUSE_SELECTOR).click(function() {
+    playPauseClicked();
+  });
 
 });
-
-// **Control Stuff**
 
 
