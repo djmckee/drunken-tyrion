@@ -8,6 +8,7 @@ var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
 
 var PLAY_PAUSE_SELECTOR = 'button#playPauseButton';
+var PROGRESS_BAR_SELECTOR = 'progress#progress';
 
 //  global variables
 //  number of whole seconds that the video's been playing for.
@@ -283,6 +284,13 @@ function formatSecondsToString(numberOfSeconds){
 
 }
 
+function updateProgressBar() {
+    var bar = $(PROGRESS_BAR_SELECTOR);
+    var percent = Math.floor( (100/$(VIDEO_SELECTOR).duration) * ($(VIDEO_SELECTOR).currentTime) );
+    bar.value = percent;
+    bar.innerHTML = percent + "%";
+}
+
 function populateAnnotationsList(){
   //sort the array so earlier annotations come first...
   annotationsArray.sort(function(a, b) {
@@ -345,6 +353,7 @@ $(document).ready(function(){
     console.log('finished playing.');
     // reset current time variable (but do not call update!)
     currentTime = 0;
+    $(PROGRESS_BAR_SELECTOR).value = 0;
   });
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
@@ -358,6 +367,8 @@ $(document).ready(function(){
 
       //update current time to new time.
       currentTime = newTime;
+
+      updateProgressBar();
 
       update();
     }
