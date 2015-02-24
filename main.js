@@ -160,6 +160,7 @@ function addAnnotation(){
   $(VIDEO_SELECTOR).trigger('pause');
 }
 
+
 //  jQuery events.
 $(document).ready(function(){
   //the DOM has loaded, so let's begin...
