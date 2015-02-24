@@ -31,11 +31,13 @@ body{
 
 #vidAnnotation{
 	float:right;
-	width: 200px;
-	height: 220px;
+	width: 180px;
+	height: 200px;
 	background-color: #806060; /*was once 666 rock SOC */
 	display: inline-block;
 	overflow: scroll;
+	padding: 10px;
+
 }
 
 #annotationButton{
@@ -64,20 +66,28 @@ body{
 }
 
 .vidAnnotationType{
-
+	font-size: 50%;
+	text-transform: uppercase;
 }
 
 .vidAnnotationTimes{
-	width: 100%;
-	height: 20px;
 	font-size: 70%;
 }
 
 .vidAnnotationContent{
-	width: 100%;
-	height: 30px;
 	font-size: 120%;
 	color: #FFF;
+}
+
+#vidAnnotation > ul > li{
+	padding-bottom: 15px;
+}
+
+#vidAnnotation > ul > li:nth-child(odd) {
+    background-color: #333;
+}
+#vidAnnotation > ul > li:nth-child(even) {
+    background-color: #666;
 }
 
 #vid-overlay {
