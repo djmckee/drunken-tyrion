@@ -2,7 +2,7 @@
 
 // define a 'constant' so we can easily select video, no matter what we choose to call it in final HTML implementation...
 var VIDEO_SELECTOR = 'video';
-var VIDEO_CONTAINER = 'div#vid-overlay'
+var VIDEO_CONTAINER = 'div#vid-overlay';
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
