@@ -234,9 +234,11 @@ function addAnnotationClicked(){
 
   //basic basic basic.
   var title = prompt("Please enter your annotation text:", "");
+  //asks how long the annotation should run for
+  var time = prompt("Please enter how long you want the annotation to stay on screen:", "");
   //literally at fkn pumpkin spice levels.
-  if (title != null) {
-    var newAnnotation = new annotation(title, null, 0, 0, 180, 45, currentTime, (currentTime + 2));
+  if (title != null && time != null && !isNaN(time)) {
+    var newAnnotation = new annotation(title, null, 0, 0, 180, 45, currentTime, (currentTime + parseInt(time)));
     annotationsArray.push(newAnnotation);
 
     //let's save too!
