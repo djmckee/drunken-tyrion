@@ -9,21 +9,26 @@
 <body>
 	<div id="container">
     <div id="vidTitle">
-      <h1>Video Title</h1>
+      <h1 id="title">Video Title</h1>
     </div>
 		<!-- Important: 'data-easyannotation-file-id' is going to specify what to save the annotations as in local storage! Keep this consistant on a per video basis -->
-    <div id="vid">
-      <div id="vid-overlay"></div>
-			<video width="400" data-easyannotation-file-id="ExampleFileName" id="videoPlayer">
-				<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-				<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
-				Your browser does not support HTML5 video, lulz.
-			</video>
-		</div>
+		<div id="vidContainer">
+	    <div id="vid">
+	      <div id="vid-overlay"></div>
+				<video width="400" data-easyannotation-file-id="ExampleFileName" id="videoPlayer">
+					<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+					<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
+					Your browser does not support HTML5 video, lulz.
+				</video>
+			</div>
 
-    <div id="vidAnnotation">
+	    <div id="vidAnnotation">
+				<div id="vidAnnotationInner">
+					<ul id="vidAnnotationList">
+					</ul>
+				</div>
+			</div>
 		</div>
-
 		<div id="annotationButton">
 			<p><a id="addAnnotation" href="#">Add Annotation</a><p>
 		</div>
@@ -35,6 +40,8 @@
         <button id="playPauseButton">Play</button>
         <button onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</button>
         <button onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</button>
+				<button id="hideVA">Hide Annotation List</button>
+				<button id="showVA">Show Annotation List</button>
     </div>
 
   <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
@@ -43,6 +50,6 @@
   <script src="dependencies/md5.min.js"></script>
   <!-- Now for the actual js that does the cool stuff... -->
   <script src="main.min.js"></script>
-
+	<script src="hideyshow.min.js"></script>
 </body>
 </html>
