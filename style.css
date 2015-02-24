@@ -36,7 +36,6 @@ body{
 	background-color: #333;
 	/* background-color: #806060;  /*was once 666 rock SOC */
 	display: inline-block;
-	overflow: scroll;
 	padding: 5px;
 }
 
@@ -96,6 +95,10 @@ body{
 
 #vidAnnotationInner > ul > li:nth-child(even) {
     background-color: #6a9666;
+}
+
+#vidAnnotationInner > ul > li > .vidAnnotationContent > img{
+	border: 2px black solid;
 }
 
 #vid-overlay {
