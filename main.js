@@ -374,6 +374,14 @@ function deleteAnnotationAtIndex(index){
   saveAnnotations();
 }
 
+//crude mouse fix from http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
 
 //canvas drawing stuff...
 //(quite a lot of this canvas stuff is shamefully stolen from http://atomicrobotdesign.com/blog/javascript/draw-a-rectangle-using-the-mouse-on-the-canvas-in-less-than-40-lines-of-javascript/)
@@ -386,8 +394,8 @@ function initCanvas() {
 function mouseDownCanvas(e) {
   //the user wants to begin drawing, if they're allowed, then begin
   if (canDraw){
-    rect.startX = e.pageX - this.offsetLeft;
-    rect.startY = e.pageY - this.offsetTop;
+    rect.startX = getMousePos(canvas, e).x;
+    rect.startY = getMousePos(canvas, e).y;
     console.log(rect);
     dragging = true;
   }
@@ -409,12 +417,13 @@ function mouseMoveCanvas(e) {
   if (dragging && canDraw) {
     console.log('pageX: ' + e.pageX + ' pageY: ' + e.pageY);
 
-    rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-    rect.h = (e.pageY - this.offsetTop) - rect.startY;
+    rect.w = getMousePos(canvas, e).x - rect.startX;
+    rect.h = getMousePos(canvas, e).y - rect.startY;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawCanvas();
   }
 }
+
 
 function drawCanvas() {
   if (canDraw){
