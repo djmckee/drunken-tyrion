@@ -267,7 +267,7 @@ function newAnnotationDrawingComplete(){
   var time = prompt("Please enter how long you want the annotation to stay on screen:", "");
   //literally at fkn pumpkin spice levels.
   //if the time entered isn't an integer set the time to 2 seconds
-  if ( time == null || isNaN(time)) {
+  if (time == null || isNaN(time)) {
     time = "2";
   }
 
@@ -286,7 +286,7 @@ function newAnnotationDrawingComplete(){
     drawnWidth = 40;
   }
 
-  if (title != null) {
+  if (title != null && title.length > 0) {
     var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)));
     annotationsArray.push(newAnnotation);
 
