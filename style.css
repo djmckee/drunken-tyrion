@@ -86,6 +86,12 @@ body{
 	background-color: #EE0000;
 }
 
+.annotation-on-screen {
+	padding: 5px;
+	background-color: rgba(89, 124, 86, 0.7);
+	overflow: auto;
+}
+
 .vidAnnotationType{
 	font-size: 50%;
 	text-transform: uppercase;
