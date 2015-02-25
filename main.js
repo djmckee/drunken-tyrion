@@ -290,7 +290,7 @@ function formatSecondsToString(numberOfSeconds){
 
 function updateProgressBar() {
     var bar = $(PROGRESS_BAR_SELECTOR);
-    var percent = Math.floor( (100/$(VIDEO_SELECTOR).duration) * ($(VIDEO_SELECTOR).currentTime) );
+    var percent = Math.floor( (100/document.getElementById('videoPlayer').duration) * (document.getElementById('videoPlayer').currentTime) );
     bar.value = percent;
     bar.innerHTML = percent + "%";
 }
