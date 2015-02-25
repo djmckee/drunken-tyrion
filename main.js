@@ -10,6 +10,15 @@ var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
 var PLAY_PAUSE_SELECTOR = 'button#playPauseButton';
 var PROGRESS_BAR_SELECTOR = 'progress#progress';
 
+var INFORMATION_TEXT_SELECTOR = "div#informationalText";
+
+//canvas variables
+var canvas = document.getElementById('vid-canvas');
+var ctx = canvas.getContext('2d');
+var rect = {};
+var dragging = false;
+var canDraw = false;
+
 //  global variables
 //  number of whole seconds that the video's been playing for.
 var currentTime = 0;
@@ -200,6 +209,8 @@ function setUp(){
   //populate the annotations list...
   populateAnnotationsList();
 
+  initCanvas();
+
 }
 
 // a convenience save function... we'll wanna call this after every edit, etc.
@@ -229,6 +240,23 @@ function clearStoredAnnotations(){
 }
 
 function addAnnotationClicked(){
+  //allow drawing to start and bring up an info dialog...
+  canDraw = true;
+
+  //tell the user...
+  $(INFORMATION_TEXT_SELECTOR).text("Begin drawing over the video...");
+}
+
+function newAnnotationDrawingComplete(){
+  //clear the canvas...
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  //the user isn't allowed to draw anymore...
+  canDraw = false;
+
+  //reset informational text...
+  $(INFORMATION_TEXT_SELECTOR).text("");
+
   console.log('Starting to add annotation...');
   //okay, first pause the video...
   $(VIDEO_SELECTOR).trigger('pause');
@@ -242,8 +270,24 @@ function addAnnotationClicked(){
   if ( time == null || isNaN(time)) {
     time = "2";
   }
+
+  //get x and y and width + height that has been drawn previously by the user...
+  var drawnX = rect.startX;
+  var drawnY = rect.startY;
+  var drawnWidth = rect.w;
+  var drawnHeight = rect.h;
+
+  //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
+  if (drawnWidth < 20){
+    drawnWidth = 20;
+  }
+
+  if (drawnWidth < 40){
+    drawnWidth = 40;
+  }
+
   if (title != null) {
-    var newAnnotation = new annotation(title, null, 0, 0, 180, 45, currentTime, (currentTime + parseInt(time)));
+    var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)));
     annotationsArray.push(newAnnotation);
 
     //let's save too!
@@ -272,19 +316,19 @@ function playPauseClicked() {
 function formatSecondsToString(numberOfSeconds){
   if(numberOfSeconds < 10){
     //if it's under 10 seconds, just return it...
-    return "0:0" + numberOfSeconds.toString();
+    return "0:0" + String(numberOfSeconds);
   }
 
 
   if(numberOfSeconds < 60){
     //if it's under a minute, just return it...
-    return "0:" + numberOfSeconds.toString();
+    return "0:" + String(numberOfSeconds);
   }
 
   var wholeMinutes = Math.floor(numberOfSeconds / 60);
   var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
 
-  return wholeMinutes + ":" + secondsRemaining;
+  return String(wholeMinutes) + ":" + String(secondsRemaining);
 
 }
 
@@ -330,6 +374,67 @@ function deleteAnnotationAtIndex(index){
   saveAnnotations();
 }
 
+//crude mouse fix from http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
+
+//canvas drawing stuff...
+//(quite a lot of this canvas stuff is shamefully stolen from http://atomicrobotdesign.com/blog/javascript/draw-a-rectangle-using-the-mouse-on-the-canvas-in-less-than-40-lines-of-javascript/)
+function initCanvas() {
+  canvas.addEventListener('mousedown', mouseDownCanvas, false);
+  canvas.addEventListener('mouseup', mouseUpCanvas, false);
+  canvas.addEventListener('mousemove', mouseMoveCanvas, false);
+}
+
+function mouseDownCanvas(e) {
+  //the user wants to begin drawing, if they're allowed, then begin
+  if (canDraw){
+    rect.startX = getMousePos(canvas, e).x;
+    rect.startY = getMousePos(canvas, e).y;
+    console.log(rect);
+    dragging = true;
+  }
+}
+
+function mouseUpCanvas() {
+  //if we're not supposed to be creating annotations at the moment, don't allow it - just give up...
+  if (!canDraw){
+    return;
+  }
+
+  dragging = false;
+
+  //drawing complete!!!!!1
+  newAnnotationDrawingComplete();
+}
+
+function mouseMoveCanvas(e) {
+  if (dragging && canDraw) {
+    console.log('pageX: ' + e.pageX + ' pageY: ' + e.pageY);
+
+    rect.w = getMousePos(canvas, e).x - rect.startX;
+    rect.h = getMousePos(canvas, e).y - rect.startY;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawCanvas();
+  }
+}
+
+
+function drawCanvas() {
+  if (canDraw){
+    //set the fill colour
+    ctx.fillStyle="#FF0000";
+
+    //and fill it in...
+    ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+  }
+}
+
 //  jQuery events.
 $(document).ready(function(){
   //the DOM has loaded, so let's begin...
@@ -340,7 +445,7 @@ $(document).ready(function(){
 
   //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
-  $(VIDEO_SELECTOR).bind("play", function() {
+  $(VIDEO_SELECTOR).bind('play', function() {
     console.log('started playing.');
     // NOTE: This is also called on resume from a pause, it's not unique to the video's first play.
     // call update manually - there could be annotations that need to be shown at 0 secs!
@@ -362,7 +467,7 @@ $(document).ready(function(){
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
     //  the current video play time, in whole seconds (rounded down)
-    newTime = Math.floor(this.currentTime);
+    var newTime = Math.floor(this.currentTime);
     // okay, we only care about updating if the time is different (in whole seconds)
     // otherwise, the user's getting absolutely hammered with the DOM redrawing etc.
     if(newTime != currentTime){
@@ -388,10 +493,10 @@ $(document).ready(function(){
     playPauseClicked();
   });
 
-  $(document).on("click", REMOVE_BUTTON_SELECTOR, function() {
+  $(document).on('click', REMOVE_BUTTON_SELECTOR, function() {
     //get the index to remove from the button data attribute...
     var index = $(this).data('annotation-id');
-    //call the remove...
+    //call the remove function, passing in the index from within the remove button's data attribute...
     deleteAnnotationAtIndex(index);
   });
 
@@ -401,14 +506,14 @@ $(document).ready(function(){
   $("#hideVA").click(function(){
     $("#hideVA").hide();
     $("#showVA").show();
-    $('video').animate({"width" : "600px"});
+    $(VIDEO_SELECTOR).animate({"width" : "600px"});
     $('#vidAnnotation').hide();
   });
 
   $("#showVA").click(function(){
     $("#showVA").hide();
     $("#hideVA").show();
-    $('video').animate({"width" : "400px"}, function(){
+    $(VIDEO_SELECTOR).animate({"width" : "400px"}, function(){
       $("#vidAnnotation").show();
     });
   });

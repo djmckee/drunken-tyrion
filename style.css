@@ -23,8 +23,8 @@ body{
 	padding-right: 20px;
 
 	-webkit-box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 }
 
 #vidTitle{
@@ -86,6 +86,12 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 	background-color: #EE0000;
 }
 
+.annotation-on-screen {
+	padding: 5px;
+	background-color: rgba(89, 124, 86, 0.7);
+	overflow: auto;
+}
+
 .vidAnnotationType{
 	font-size: 50%;
 	text-transform: uppercase;
@@ -121,12 +127,28 @@ box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.75);
 	/* this makes annotations actually work - pls don't break */
 	position: absolute;
 	z-index: 3000;
+}
 
+#vid-canvas {
+	/* this makes box drawing actually work - pls don't break */
+	position: absolute;
+	z-index: 4000;
 
+	/* QUICK HACK */
+	width: 400px;
+	height: 220px;
+
+	margin: 0;
+	padding: 0;
 }
 
 #vidContainer{
 	background-color: #333;
+}
+
+#informationalText{
+	float: left;
+	font-weight: bold;
 }
 
 .removeAnnotation{
