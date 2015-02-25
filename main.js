@@ -333,7 +333,7 @@ function formatSecondsToString(numberOfSeconds){
 }
 
 function updateProgressBar() {
-    var bar = $(PROGRESS_BAR_SELECTOR);
+    var bar = document.getElementById('progress');
     var percent = Math.floor( (100/document.getElementById('videoPlayer').duration) * (document.getElementById('videoPlayer').currentTime) );
     bar.value = percent;
     bar.innerHTML = percent + "%";
@@ -462,7 +462,7 @@ $(document).ready(function(){
     console.log('finished playing.');
     // reset current time variable (but do not call update!)
     currentTime = 0;
-    $(PROGRESS_BAR_SELECTOR).value = 0;
+    document.getElementById('progress').value = 0;
   });
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
