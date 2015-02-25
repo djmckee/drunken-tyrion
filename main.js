@@ -428,7 +428,7 @@ function mouseMoveCanvas(e) {
 function drawCanvas() {
   if (canDraw){
     //set the fill colour
-    ctx.fillStyle="#FF0000";
+    ctx.fillStyle="rgba(89, 124, 86, 0.85)";
 
     //and fill it in...
     ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);

@@ -61,7 +61,7 @@ body{
 }
 
 #annotationButton{
-	font-family: calibri;
+	font-family: 'Roboto Condensed', 'Helvetica Neue', 'Calibri', sans-serif;
 	float: right;
 	margin-top: 20px;
 	margin-right: 40px;
