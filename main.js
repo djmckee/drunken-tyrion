@@ -394,6 +394,11 @@ function mouseDownCanvas(e) {
 }
 
 function mouseUpCanvas() {
+  //if we're not supposed to be creating annotations at the moment, don't allow it - just give up...
+  if (!canDraw){
+    return;
+  }
+
   dragging = false;
 
   //drawing complete!!!!!1
@@ -431,7 +436,7 @@ $(document).ready(function(){
 
   //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
-  $(VIDEO_SELECTOR).bind("play", function() {
+  $(VIDEO_SELECTOR).bind('play', function() {
     console.log('started playing.');
     // NOTE: This is also called on resume from a pause, it's not unique to the video's first play.
     // call update manually - there could be annotations that need to be shown at 0 secs!
@@ -479,10 +484,10 @@ $(document).ready(function(){
     playPauseClicked();
   });
 
-  $(document).on("click", REMOVE_BUTTON_SELECTOR, function() {
+  $(document).on('click', REMOVE_BUTTON_SELECTOR, function() {
     //get the index to remove from the button data attribute...
     var index = $(this).data('annotation-id');
-    //call the remove...
+    //call the remove function, passing in the index from within the remove button's data attribute...
     deleteAnnotationAtIndex(index);
   });
 
