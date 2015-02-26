@@ -243,6 +243,11 @@ function addAnnotationClicked(){
   //allow drawing to start and bring up an info dialog...
   canDraw = true;
 
+  console.log('Starting to add annotation...');
+  
+  //okay, first pause the video...
+  $(VIDEO_SELECTOR).trigger('pause');
+
   //tell the user...
   $(INFORMATION_TEXT_SELECTOR).text("Begin drawing over the video...");
 }
@@ -256,10 +261,6 @@ function newAnnotationDrawingComplete(){
 
   //reset informational text...
   $(INFORMATION_TEXT_SELECTOR).text("");
-
-  console.log('Starting to add annotation...');
-  //okay, first pause the video...
-  $(VIDEO_SELECTOR).trigger('pause');
 
   //basic basic basic.
   var title = prompt("Please enter your annotation text:", "");
