@@ -21,7 +21,11 @@ var VOLUME_UP_SELECTOR = 'a#volume-up';
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
+
+//rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
+
+//booleans to tell the canvas wether or not it is currently drawing boxes, and wether or not it is allowed to.
 var dragging = false;
 var canDraw = false;
 
@@ -300,12 +304,12 @@ function newAnnotationDrawingComplete(){
   var drawnHeight = rect.h;
 
   //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
-  if (drawnWidth < 20){
-    drawnWidth = 20;
+  if (drawnHeight < 20){
+    drawnHeight = 20;
   }
 
-  if (drawnWidth < 40){
-    drawnWidth = 40;
+  if (drawnWidth < 30){
+    drawnWidth = 30;
   }
 
   if (title != null && title.length > 0) {
