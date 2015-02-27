@@ -5,6 +5,8 @@
 	<title>easyAnnotate Demo</title>
   <link rel="stylesheet" href="reset.css" type="text/css" />
 	<link rel="stylesheet" href="style.css" type="text/css" />
+	<!-- Font Awesome v4.3 gives us some cool icons... http://fortawesome.github.io/Font-Awesome/icons/ -->
+	<link rel="stylesheet" href="dependencies/fontawesome/css/font-awesome.css" type="text/css" />
 </head>
 <body>
 	<div id="container">
@@ -32,22 +34,23 @@
 		</div>
 		<div id="informationalText"></div>
 		<div id="annotationButton">
-			<p><a id="addAnnotation" href="#">Add Annotation</a><p>
+			<p><a id="addAnnotation" href="#">Add Annotation</a></p>
+		</div>
+		<div id="controls">
+		<p>
+			<a id="playPauseButton" class="control"><i class="fa fa-play"></i></a>
+
+			<progress id="progress" max="100" value="0">% played</progress>
+			<a class="control" id="volume-down"><i class="fa fa-volume-down"></i></a>
+			<a class="control" id="volume-up"><i class="fa fa-volume-up"></i></a>
+			<br />
+			<br />
+			<a id="hideVA" class="control">Hide Annotation List</a>
+			<a id="showVA" class="control">Show Annotation List</a>
+		</p>
 		</div>
 
-
 	</div>
-
-    <div id="controls">
-        <button id="playPauseButton">Play</button>
-        <button onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</button>
-        <button onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</button>
-
-		<button id="hideVA">Hide Annotation List</button>
-		<button id="showVA">Show Annotation List</button>
-    </div>
-    
-    <progress id="progress" max="100" value="0">% played</progress>
 
   <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
   <!-- We need jQuery and any other libraries (from the dependenices folder) first... -->

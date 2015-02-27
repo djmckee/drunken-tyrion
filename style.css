@@ -43,7 +43,7 @@ body{
 	width: 190px;
 	height: 210px;
 	background-color: #333;
-	/* background-color: #806060;  /*was once 666 rock SOC */
+	/* background-color: #806060;  /* was once 666 rock SOC */
 	background-image: url('resources/noAnnotations.png');
 	background-size: 80% auto;
 	background-position: 50% 15%;
@@ -193,6 +193,10 @@ a.control{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+a.control:hover {
+	background-color: #AAAAAA;
 }
 
 #progress{
