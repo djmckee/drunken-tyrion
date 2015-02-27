@@ -393,6 +393,11 @@ function populateAnnotationsList(){
 }
 
 function deleteAnnotationAtIndex(index){
+  //if the annotation happens to be on screen, try to remove it first...
+  var annotation = annotationsArray[i];
+  //remove swiftly and mercilessly (if we can)
+  removeAnnotationFromScreen(annotation);
+
   //remove 1 item, at the current index, from the annotations array...
   annotationsArray.splice(index, 1);
 
