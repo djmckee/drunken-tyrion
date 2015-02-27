@@ -178,11 +178,21 @@ a.control{
 	color: #000000;
 	text-decoration: none;
 	border: solid;
-	float: left; // to float or not to float, that is the question
+	float: left; /* to float or not to float, that is the question */
 	border-color: #222222;
 	background-color: #DDDDDD;
 	padding: 2px;
-	margin
+	min-width: 40px;
+	text-align: center;
+	height: 16px;
+
+	/* copying and pasting button text does not look pro... */
+	-webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #progress{

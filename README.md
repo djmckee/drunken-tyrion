@@ -9,6 +9,7 @@ Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful
 ##Libraries we've used
 * [jQuery](https://code.google.com/p/crypto-js/)
 * [Crypto-JS](https://code.google.com/p/crypto-js/)
+* [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/)
 
 ##Tutorials we looked at
 * http://www.creativebloq.com/html5/build-custom-html5-video-player-9134473

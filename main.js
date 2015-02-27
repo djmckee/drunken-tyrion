@@ -10,7 +10,10 @@ var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
 var PLAY_PAUSE_SELECTOR = 'a#playPauseButton';
 var PROGRESS_BAR_SELECTOR = 'progress#progress';
 
-var INFORMATION_TEXT_SELECTOR = "div#informationalText";
+var INFORMATION_TEXT_SELECTOR = 'div#informationalText';
+
+var VOLUME_DOWN_SELECTOR = 'a#volume-down';
+var VOLUME_UP_SELECTOR = 'a#volume-up';
 
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
@@ -244,7 +247,7 @@ function addAnnotationClicked(){
   canDraw = true;
 
   console.log('Starting to add annotation...');
-  
+
   //okay, first pause the video...
   $(VIDEO_SELECTOR).trigger('pause');
 
@@ -305,11 +308,11 @@ function newAnnotationDrawingComplete(){
 function playPauseClicked() {
     if(document.getElementById('videoPlayer').paused || document.getElementById('videoPlayer').ended) {
         document.getElementById('videoPlayer').play();
-        $(PLAY_PAUSE_SELECTOR).text("Pause");
+        $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-pause"></i>');
     }
     else {
         document.getElementById('videoPlayer').pause();
-        $(PLAY_PAUSE_SELECTOR).text("Play");
+        $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
 
     }
 }
@@ -455,7 +458,7 @@ $(document).ready(function(){
 
   $(VIDEO_SELECTOR).bind('pause', function() {
     console.log('playback paused.');
-    $(PLAY_PAUSE_SELECTOR).text("Play");
+    $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
 
   });
 
@@ -499,6 +502,26 @@ $(document).ready(function(){
     var index = $(this).data('annotation-id');
     //call the remove function, passing in the index from within the remove button's data attribute...
     deleteAnnotationAtIndex(index);
+  });
+
+  $(VOLUME_UP_SELECTOR).click(function() {
+    //check max volume...
+    if (document.getElementById('videoPlayer').volume == 1){
+      //can't increase...
+      return;
+    }
+
+    document.getElementById('videoPlayer').volume+=0.1;
+  });
+
+  $(VOLUME_DOWN_SELECTOR).click(function() {
+    //check for min volume...
+    if (document.getElementById('videoPlayer').volume == 0){
+      //can't go any lower...
+      return;
+    }
+
+    document.getElementById('videoPlayer').volume-=0.1;
   });
 
   //hidey-show
