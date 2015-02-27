@@ -173,3 +173,18 @@ body{
 	top: 600px;
 	z-index: 4000;
 }
+
+a.control{
+	color: #000000;
+	text-decoration: none;
+	border: solid;
+	float: left; // to float or not to float, that is the question
+	border-color: #222222;
+	background-color: #DDDDDD;
+	padding: 2px;
+	margin
+}
+
+#progress{
+
+}

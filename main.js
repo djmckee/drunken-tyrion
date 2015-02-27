@@ -7,7 +7,7 @@ var VIDEO_CONTAINER = 'div#vid-overlay';
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
 
-var PLAY_PAUSE_SELECTOR = 'button#playPauseButton';
+var PLAY_PAUSE_SELECTOR = 'a#playPauseButton';
 var PROGRESS_BAR_SELECTOR = 'progress#progress';
 
 var INFORMATION_TEXT_SELECTOR = "div#informationalText";

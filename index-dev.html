@@ -32,22 +32,23 @@
 		</div>
 		<div id="informationalText"></div>
 		<div id="annotationButton">
-			<p><a id="addAnnotation" href="#">Add Annotation</a><p>
+			<p><a id="addAnnotation" href="#">Add Annotation</a></p>
+		</div>
+		<div id="controls">
+		<p>
+			<a id="playPauseButton" class="control">Play</a>
+
+			<progress id="progress" max="100" value="0">% played</progress>
+
+			<a class="control" onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</a>
+			<a class="control" onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</a>
+
+			<a id="hideVA" class="control">Hide Annotation List</a>
+			<a id="showVA" class="control">Show Annotation List</a>
+		</p>
 		</div>
 
-
 	</div>
-
-    <div id="controls">
-        <button id="playPauseButton">Play</button>
-        <button onclick="document.getElementById('videoPlayer').volume+=0.1">VolumeUp</button>
-        <button onclick="document.getElementById('videoPlayer').volume-=0.1">VolumeDown</button>
-
-		<button id="hideVA">Hide Annotation List</button>
-		<button id="showVA">Show Annotation List</button>
-    </div>
-    
-    <progress id="progress" max="100" value="0">% played</progress>
 
   <!-- Linking JS at the end of the document to take advantage of lazy/faster loading -->
   <!-- We need jQuery and any other libraries (from the dependenices folder) first... -->
