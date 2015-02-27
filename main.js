@@ -34,7 +34,7 @@ var vidWidth = 400; //video starts at 400px wide
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
 
-//booleans to tell the canvas wether or not it is currently drawing boxes, and wether or not it is allowed to.
+//booleans to tell the canvas whether or not it is currently drawing boxes, and wether or not it is allowed to.
 var dragging = false;
 var canDraw = false;
 
