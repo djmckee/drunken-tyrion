@@ -77,8 +77,20 @@ function addAnnotationToScreen(a){
 
   console.log('attempting to add:' + annotationHtmlElement);
 
+  var height = a.aHeight;
+  //perform a 'lil bounds checking, we don't want stupidly small annotations...
+  if (height < 20){
+    height = 20;
+  }
+
+  var width = a.aWidth;
+  //perform a 'lil bounds checking, we don't want stupidly small annotations...
+  if (width < 30){
+    width = 30;
+  }
+
   //set height and width, and a high z-index so it shows over the video.
-  $(annotationSelector).css({"width": a.aWidth, "height": a.aHeight, "position": "relative", "top": a.yPosition, "left": a.xPosition});
+  $(annotationSelector).css({"width": width, "height": height, "position": "relative", "top": a.yPosition, "left": a.xPosition});
 
   var annotationString = a.textString;
 
@@ -544,7 +556,7 @@ $(document).ready(function(){
 
       //set the boolean...
       isPlayerLarge = false;
-      
+
     } else {
       //go big or go home!
       $(VIDEO_SELECTOR).animate({"width" : "600px"});
