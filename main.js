@@ -220,6 +220,36 @@ function update() {
     console.log(currentAnnotations);
 }
 
+//a function to add ANY annotations that should be on screen at the current time to the screen -
+//regardless of wether their current start time is *now*...
+//be careful when calling this - with great power comes great responsibility, etc.
+function putAllCurrentAnnotationsOnScreen(){
+    //find everything that should potentially be on screen...
+
+    // some funky jquery to search through the array.
+    var currentAnnotations = $.grep(annotationsArray, function (e) {
+        return (currentTime >= e.startTime && currentTime < e.endTime);
+    });
+
+    if (currentAnnotations != null) {
+        if (currentAnnotations.length > 0) {
+            //there's animations to load!
+            console.log('have new annotations to load');
+
+            for (var i = 0; i < currentAnnotations.length; i++) {
+                //make a new annotation div, set it's id tag to the unique ID for this particular annotation
+                //add all of the releveant attributes from the annotation, then add it to the video player...
+                console.log('need to add something.');
+                var newAnnotation = currentAnnotations[i];
+                console.log(newAnnotation);
+                addAnnotationToScreen(newAnnotation);
+            }
+        }
+    }
+
+
+}
+
 // perform some basic setup tasks such as loading in the existing array of annotations from local storage...
 function setUp() {
     //data-easyannotation-file-id is the attribute that holds our local storage file id, get it...
@@ -658,14 +688,14 @@ $(document).ready(function () {
           $('div.annotation-on-screen').remove();
 
         } else {
-          //if they're off - turn them on (and call update to add any that need to be on at the current settting)
+          //if they're off - turn them on (and put any current annotations that need to be on the screen onto the screen).
           shouldDisplayAnnotations = true;
 
           //reset button text
           $(this).text("Turn off annotations");
 
-          //call update to add any that start within the current second...
-          update();
+          //put any current annotations on the screen!!!
+          putAllCurrentAnnotationsOnScreen();
         }
 
     });
