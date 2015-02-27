@@ -18,6 +18,9 @@ var INFORMATION_TEXT_SELECTOR = 'div#informationalText';
 var VOLUME_DOWN_SELECTOR = 'a#volume-down';
 var VOLUME_UP_SELECTOR = 'a#volume-up';
 
+var HIDEY_SHOW_BUTTON = 'a#hidey-showy';
+var CLEAR_ALL_BUTTON = 'a#delete-everything-button';
+
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
@@ -550,8 +553,28 @@ $(document).ready(function(){
     VIDEO_PLAYER_ELEMENT.volume-=0.1;
   });
 
+  $(CLEAR_ALL_BUTTON).click(function() {
+    //check first before deleting literally everything ever!!!
+    var shouldDelete = confirm('This will delete ALL annotations for every video in easyAnnotate. Do you wish to continue?');
+    // :o
+    if (shouldDelete){
+      //Delete our beautiful content mercilessly.
+      clearStoredAnnotations();
+
+      //save a blank list into local storage...
+      saveAnnotations();
+
+      //and redraw the blank list...
+      populateAnnotationsList();
+
+      //also - remove any currently on screen annotations instantly
+      $('div.annotation-on-screen').remove();
+
+    }
+  });
+
   //hidey-show
-  $("#hidey-showy").click(function(){
+  $(HIDEY_SHOW_BUTTON).click(function(){
     if (isPlayerLarge){
       //make it small...
       $(VIDEO_SELECTOR).animate({"width" : "400px"}, function(){

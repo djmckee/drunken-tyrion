@@ -174,9 +174,7 @@ body{
 	z-index: 4000;
 }
 
-#hidey-showy {
-	padding: 5px;
-}
+
 
 a.control{
 	color: #000000;
@@ -201,6 +199,14 @@ a.control{
 
 a.control:hover {
 	background-color: #AAAAAA;
+}
+
+.padded-button {
+	/* using !important as a quick hack to override a.control's padding! */
+	padding: 5px !important;
+	/* living on the edge. */
+
+	margin-right: 5px;
 }
 
 /* Quite a bit of these CSS Selectors are from http://cssdeck.com/labs/styling-html5-progress-bars */
