@@ -454,6 +454,8 @@ $(document).ready(function(){
     // NOTE: This is also called on resume from a pause, it's not unique to the video's first play.
     // call update manually - there could be annotations that need to be shown at 0 secs!
     update();
+
+    $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-pause"></i>');
   });
 
   $(VIDEO_SELECTOR).bind('pause', function() {
@@ -467,6 +469,8 @@ $(document).ready(function(){
     // reset current time variable (but do not call update!)
     currentTime = 0;
     document.getElementById('progress').value = 0;
+    $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
+
   });
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
