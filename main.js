@@ -22,6 +22,8 @@ var VOLUME_UP_SELECTOR = 'a#volume-up';
 var HIDEY_SHOW_BUTTON = 'a#hidey-showy';
 var CLEAR_ALL_BUTTON = 'a#delete-everything-button';
 
+var TOGGLE_ANNOTATIONS_BUTTON = 'a#toggle-annotations-button';
+
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
@@ -44,6 +46,9 @@ var annotationsArray = [];
 
 //is the player large at the moment? (starts off small...)
 var isPlayerLarge = false;
+
+//should we even bother displaying annotations!? :o
+var shouldDisplayAnnotations = true;
 
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime) {
@@ -78,6 +83,12 @@ function testAnnotation(name) {
 }
 
 function addAnnotationToScreen(a) {
+    //see if we should even be displaying annotations...
+    if (!shouldDisplayAnnotations){
+      //we shouldn't be showing anything - give up and go home...
+      return;
+    }
+
     //get a unique id first...
     var id = uniqueIdForAnnotation(a);
 
@@ -632,6 +643,31 @@ $(document).ready(function () {
             vidWidth = 600;
 
         }
+    });
+
+
+    $(TOGGLE_ANNOTATIONS_BUTTON).click(function () {
+        if (shouldDisplayAnnotations){
+          //if annotations are on - turn them off (and remove current ones)
+          shouldDisplayAnnotations = false;
+
+          //reset button text
+          $(this).text("Turn on annotations");
+
+          //and remove any current ones on screen...
+          $('div.annotation-on-screen').remove();
+
+        } else {
+          //if they're off - turn them on (and call update to add any that need to be on at the current settting)
+          shouldDisplayAnnotations = true;
+
+          //reset button text
+          $(this).text("Turn off annotations");
+
+          //call update to add any that start within the current second...
+          update();
+        }
+
     });
 
     //Bind some keyboard shortcuts... (thanks Mousetrap for making this pleasant!)
