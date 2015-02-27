@@ -2,7 +2,10 @@
 
 // define a 'constant' so we can easily select video, no matter what we choose to call it in final HTML implementation...
 var VIDEO_SELECTOR = 'video';
+var VIDEO_PLAYER_ELEMENT = document.getElementById('videoPlayer');
+
 var VIDEO_CONTAINER = 'div#vid-overlay';
+
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
 var REMOVE_BUTTON_SELECTOR = 'a.removeAnnotation';
@@ -321,12 +324,12 @@ function newAnnotationDrawingComplete(){
 // **Control Stuff**
 
 function playPauseClicked() {
-    if(document.getElementById('videoPlayer').paused || document.getElementById('videoPlayer').ended) {
-        document.getElementById('videoPlayer').play();
+    if(VIDEO_PLAYER_ELEMENT.paused || VIDEO_PLAYER_ELEMENT.ended) {
+        VIDEO_PLAYER_ELEMENT.play();
         $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-pause"></i>');
     }
     else {
-        document.getElementById('videoPlayer').pause();
+        VIDEO_PLAYER_ELEMENT.pause();
         $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
 
     }
@@ -353,7 +356,7 @@ function formatSecondsToString(numberOfSeconds){
 
 function updateProgressBar() {
     var bar = document.getElementById('progress');
-    var percent = Math.floor( (100/document.getElementById('videoPlayer').duration) * (document.getElementById('videoPlayer').currentTime) );
+    var percent = Math.floor( (100/VIDEO_PLAYER_ELEMENT.duration) * (VIDEO_PLAYER_ELEMENT.currentTime) );
     bar.value = percent;
     bar.innerHTML = percent + "%";
 }
@@ -525,22 +528,22 @@ $(document).ready(function(){
 
   $(VOLUME_UP_SELECTOR).click(function() {
     //check max volume...
-    if (document.getElementById('videoPlayer').volume == 1){
+    if (VIDEO_PLAYER_ELEMENT.volume == 1){
       //can't increase...
       return;
     }
 
-    document.getElementById('videoPlayer').volume+=0.1;
+    VIDEO_PLAYER_ELEMENT.volume+=0.1;
   });
 
   $(VOLUME_DOWN_SELECTOR).click(function() {
     //check for min volume...
-    if (document.getElementById('videoPlayer').volume == 0){
+    if (VIDEO_PLAYER_ELEMENT.volume == 0){
       //can't go any lower...
       return;
     }
 
-    document.getElementById('videoPlayer').volume-=0.1;
+    VIDEO_PLAYER_ELEMENT.volume-=0.1;
   });
 
   //hidey-show
