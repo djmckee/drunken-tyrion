@@ -64,7 +64,7 @@ function uniqueIdForAnnotation(a) {
 
     //make sure it's in string form, then return it
     return hash.toString();
-    
+
 }
 
 function testAnnotation(name) {
@@ -351,6 +351,16 @@ function playPauseClicked() {
 }
 
 function formatSecondsToString(numberOfSeconds) {
+
+
+    var wholeMinutes = Math.floor(numberOfSeconds / 60);
+    var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
+
+    if (secondsRemaining < 10){
+      //if it's under 10 seconds, make it "0:01" not "0:1"
+      secondsRemaining = "0" + String(secondsRemaining);
+    }
+
     if (numberOfSeconds < 10) {
         //if it's under 10 seconds, just return it...
         return "0:0" + String(numberOfSeconds);
@@ -361,9 +371,6 @@ function formatSecondsToString(numberOfSeconds) {
         //if it's under a minute, just return it...
         return "0:" + String(numberOfSeconds);
     }
-
-    var wholeMinutes = Math.floor(numberOfSeconds / 60);
-    var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
 
     return String(wholeMinutes) + ":" + String(secondsRemaining);
 
@@ -509,6 +516,9 @@ $(document).ready(function () {
         currentTime = 0;
         document.getElementById('progress').value = 0;
         $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
+
+        //remove any currently on screen annotations instantly
+        $('div.annotation-on-screen').remove();
 
     });
 
