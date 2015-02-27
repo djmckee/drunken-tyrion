@@ -395,6 +395,7 @@ function populateAnnotationsList(){
 function deleteAnnotationAtIndex(index){
   //if the annotation happens to be on screen, try to remove it first...
   var annotation = annotationsArray[i];
+
   //remove swiftly and mercilessly (if we can)
   removeAnnotationFromScreen(annotation);
 
@@ -504,6 +505,9 @@ $(document).ready(function(){
   });
 
   $(VIDEO_SELECTOR).bind('timeupdate', function() {
+    //update the progress bar no matter what...
+    updateProgressBar();
+
     //  the current video play time, in whole seconds (rounded down)
     var newTime = Math.floor(this.currentTime);
     // okay, we only care about updating if the time is different (in whole seconds)
@@ -514,9 +518,6 @@ $(document).ready(function(){
 
       //update current time to new time.
       currentTime = newTime;
-
-      updateProgressBar();
-
       update();
     }
   });
