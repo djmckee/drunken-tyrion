@@ -26,6 +26,9 @@ var CLEAR_ALL_BUTTON = 'a#delete-everything-button';
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
 
+//variable storing width of video currently
+var vidWidth = 400; //video starts at 400px wide
+
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
 
@@ -103,11 +106,11 @@ function addAnnotationToScreen(a) {
 
     //set height and width, and a high z-index so it shows over the video.
     $(annotationSelector).css({
-        "width": width,
-        "height": height,
+        "width": (width * vidWidth / 400),
+        "height": (height * vidWidth / 400),
         "position": "relative",
-        "top": a.yPosition,
-        "left": a.xPosition
+        "top": (a.yPosition * vidWidth / 400),
+        "left": (a.xPosition * vidWidth / 400)
     });
 
     var annotationString = a.textString;
@@ -611,6 +614,9 @@ $(document).ready(function () {
             //set the boolean...
             isPlayerLarge = false;
 
+            //set the video width to 400
+            vidWidth = 400;
+
         } else {
             //go big or go home!
             $(VIDEO_SELECTOR).animate({"width": "600px"});
@@ -621,6 +627,9 @@ $(document).ready(function () {
 
             //set the boolean...
             isPlayerLarge = true;
+
+            //set the video width to 600
+            vidWidth = 600;
 
         }
     });
