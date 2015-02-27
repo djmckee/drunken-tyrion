@@ -28,6 +28,9 @@ var currentTime = 0;
 //  an array that holds annotation objects.
 var annotationsArray = [];
 
+//is the player large at the moment? (starts off small...)
+var isPlayerLarge = false;
+
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime) {
     this.textString = text;
@@ -529,21 +532,33 @@ $(document).ready(function(){
   });
 
   //hidey-show
-  $("#showVA").hide();
+  $("#hidey-showy").click(function(){
+    if (isPlayerLarge){
+      //make it small...
+      $(VIDEO_SELECTOR).animate({"width" : "400px"}, function(){
+        $("#vidAnnotation").show();
+      });
 
-  $("#hideVA").click(function(){
-    $("#hideVA").hide();
-    $("#showVA").show();
-    $(VIDEO_SELECTOR).animate({"width" : "600px"});
-    $('#vidAnnotation').hide();
+      //reset button text...
+      $(this).text("Hide Annotation List");
+
+      //set the boolean...
+      isPlayerLarge = false;
+      
+    } else {
+      //go big or go home!
+      $(VIDEO_SELECTOR).animate({"width" : "600px"});
+      $('#vidAnnotation').hide();
+
+      //change button text...
+      $(this).text("Show Annotation List");
+
+      //set the boolean...
+      isPlayerLarge = true;
+
+    }
   });
 
-  $("#showVA").click(function(){
-    $("#showVA").hide();
-    $("#hideVA").show();
-    $(VIDEO_SELECTOR).animate({"width" : "400px"}, function(){
-      $("#vidAnnotation").show();
-    });
-  });
+
 
 });
