@@ -394,7 +394,7 @@ function populateAnnotationsList(){
 
 function deleteAnnotationAtIndex(index){
   //if the annotation happens to be on screen, try to remove it first...
-  var annotation = annotationsArray[i];
+  var annotation = annotationsArray[index];
 
   //remove swiftly and mercilessly (if we can)
   removeAnnotationFromScreen(annotation);
@@ -606,6 +606,13 @@ $(document).ready(function(){
 
     }
   });
+
+  //Bind some keyboard shortcuts... (thanks Mousetrap for making this pleasant!)
+  Mousetrap.bind('space', function() { /*play/pause the video by simulating a play/pause click with jQuery */ $(PLAY_PAUSE_SELECTOR).trigger('click'); });
+  Mousetrap.bind('up', function() { /* volume up... */ $(VOLUME_UP_SELECTOR).trigger('click'); });
+  Mousetrap.bind('down', function() { /* volume down... */ $(VOLUME_DOWN_SELECTOR).trigger('click'); });
+  Mousetrap.bind('n', function() { /* make new annotation... */ addAnnotationClicked(); });
+  Mousetrap.bind('h', function() { /* hide/show annotation list... */ $(HIDEY_SHOW_BUTTON).trigger('click');  });
 
 
 
