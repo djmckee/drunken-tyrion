@@ -365,10 +365,10 @@ function newAnnotationDrawingComplete() {
       var drawnHeight = (rect.h / 1.5);
     }
     else{ //the values will fit the smaller video size perfectly
-    var drawnX = rect.startX;
-    var drawnY = rect.startY;
-    var drawnWidth = rect.w;
-    var drawnHeight = rect.h;
+      var drawnX = rect.startX;
+      var drawnY = rect.startY;
+      var drawnWidth = rect.w;
+      var drawnHeight = rect.h;
     }
 
     //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
@@ -378,6 +378,15 @@ function newAnnotationDrawingComplete() {
 
     if (drawnWidth < 30) {
         drawnWidth = 30;
+    }
+
+    //ensure that annotations can't be outside the video
+    if(drawnX + drawnWidth > 390){
+      drawnX = 390 - drawnWidth;
+    }
+
+    if(drawnY + drawnHeight > 210){
+      drawnY = 210 - drawnHeight;
     }
 
     if (title != null && title.length > 0) {
