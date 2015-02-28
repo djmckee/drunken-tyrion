@@ -181,13 +181,14 @@ body{
 	resize: none;
 }
 
-#form-colour-container{
+#form-colour-container div{
 	vertical-align: middle;
+	display: inline-table;
 }
 
+
+
 #colour-button {
-	position: relative;
-	display: inline-block;
 	width: 30px;
 	padding: 4px;
 	height: 20px;

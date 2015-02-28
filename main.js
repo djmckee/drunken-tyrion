@@ -26,6 +26,7 @@ var TOGGLE_ANNOTATIONS_BUTTON = 'a#toggle-annotations-button';
 
 var RUNNING_TIME = 'span#play-time';
 
+var ANNOTATION_FORM_SELECTOR = '#addAnnotationForm';
 var FORM_SAVE_BUTTON = 'a#saveAddForm';
 var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
@@ -626,12 +627,12 @@ function drawCanvas() {
 
 function toggleAddAnnotationForm() {
     if (isAnnotationFormVisible) { //form currently visible, let's hide that
-        $('#addAnnotationForm').hide();
+        $(ANNOTATION_FORM_SELECTOR).hide();
         $('#vidTitle').css('margin-top', '14px');
         isAnnotationFormVisible = false; //since the form is now hidden
     }
     else { //form isn't visible, let's show it
-        $('#addAnnotationForm').show();
+        $(ANNOTATION_FORM_SELECTOR).show();
         $('#vidTitle').css('margin-top', '-200px');
         $(COLOUR_BUTTON).colorPicker(); // that's it
         isAnnotationFormVisible = true; //since the form is now visible
@@ -647,7 +648,7 @@ $(document).ready(function () {
     setUp();
 
     //hide annotation form
-    $('#addAnnotationForm').hide();
+    $(ANNOTATION_FORM_SELECTOR).hide();
 
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
@@ -810,7 +811,7 @@ $(document).ready(function () {
             });
 
             //move annotation form
-            $("#addAnnotationForm").animate({"top": "330px"});
+            $(ANNOTATION_FORM_SELECTOR).animate({"top": "330px"});
 
         } else {
             //go big or go home!
@@ -855,7 +856,7 @@ $(document).ready(function () {
             });
 
             //move annotation form
-            $("#addAnnotationForm").animate({"top": "440px"});
+            $(ANNOTATION_FORM_SELECTOR).animate({"top": "440px"});
         }
     });
 
