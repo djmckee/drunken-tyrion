@@ -705,6 +705,9 @@ $(document).ready(function () {
                 console.log('Annotation style adjusted for smaller video size.');
             });
 
+            //move annotation form
+            $("#addAnnotationForm").animate({"top": "330px"});
+
         } else {
             //go big or go home!
             $(VIDEO_SELECTOR).animate({"width": "600px"});
@@ -744,6 +747,9 @@ $(document).ready(function () {
 
                 console.log('Annotation style adjusted for larger video size.');
             });
+
+            //move annotation form
+            $("#addAnnotationForm").animate({"top": "440px"});
         }
     });
 
