@@ -834,6 +834,8 @@ $(document).ready(function () {
             canvas.width = 600;
             canvas.height = 330;
 
+            var ANTI_ROC_SOC_CONSTANT = 1.5;
+
             //redraw the annotations so they fit the video
             $('.annotation-on-screen').each(function (i, obj) {
                 var currentWidth = $(this).width();
@@ -841,10 +843,10 @@ $(document).ready(function () {
                 var currentX = $(this).position().left;
                 var currentY = $(this).position().top;
 
-                var newWidth = currentWidth * 1.5;
-                var newHeight = currentHeight * 1.5;
-                var newX = currentX * 1.5;
-                var newY = currentY * 1.5;
+                var newWidth = currentWidth * ANTI_ROC_SOC_CONSTANT;
+                var newHeight = currentHeight * ANTI_ROC_SOC_CONSTANT;
+                var newX = currentX * ANTI_ROC_SOC_CONSTANT;
+                var newY = currentY * ANTI_ROC_SOC_CONSTANT;
 
                 $(this).animate({
                     width: newWidth + 'px',
