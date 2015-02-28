@@ -166,7 +166,7 @@ body{
 
 #addAnnotationForm{
 	width: 175px;
-	height: 140px;
+	height: 180px;
 	position: relative;
 	padding: 10px;
 	background-color: #597c56;
@@ -179,6 +179,28 @@ body{
 
 #addAnnotationForm textarea{
 	resize: none;
+}
+
+#form-colour-container div{
+	vertical-align: middle;
+	display: inline-table;
+}
+
+
+
+#colour-button {
+	width: 30px;
+	padding: 4px;
+	height: 20px;
+	border: 1px solid #666;
+	border-radius: 5px;
+	background: #eee;
+
+}
+
+.cp-color-picker{
+	/* make sure it can be seen over all of the other ridiculous z indicies!! */
+	z-index: 5000;
 }
 
 a.control{
