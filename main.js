@@ -49,6 +49,9 @@ var annotationsArray = [];
 //is the player large at the moment? (starts off small...)
 var isPlayerLarge = false;
 
+//is the annotation button visible (no by default)
+var isAnnotationFormVisible = false;
+
 //should we even bother displaying annotations!? :o
 var shouldDisplayAnnotations = true;
 
@@ -557,6 +560,9 @@ $(document).ready(function () {
     //set-up video (load in array of annotations...)
     setUp();
 
+    //hide annotation form
+    $('#addAnnotationForm').hide();
+
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
     $(VIDEO_SELECTOR).bind('play', function () {
@@ -660,6 +666,20 @@ $(document).ready(function () {
             $('div.annotation-on-screen').remove();
 
         }
+    });
+
+    //add annotation
+    $('#annotationButton').click(function (){
+      if(isAnnotationFormVisible){ //form currently visible, let's hide that
+        $('#addAnnotationForm').hide();
+        $('#vidTitle').css('margin-top','0px');
+        isAnnotationFormVisible = false //since the form is now hidden
+      }
+      else{ //form isn't visible, let's show it
+        $('#addAnnotationForm').show();
+        $('#vidTitle').css('margin-top','-140px');
+        isAnnotationFormVisible = true; //since the form is now visible
+      }
     });
 
     //hidey-show
