@@ -789,7 +789,7 @@ $(document).ready(function () {
             canvas.width = 400;
             canvas.height = 220;
 
-            var ROC_SOC_CONSTANT = 0.666
+            var ROC_SOC_CONSTANT = 0.666;
 
             //redraw the annotations so they fit the video
             $('.annotation-on-screen').each(function (i, obj) {
