@@ -672,12 +672,12 @@ $(document).ready(function () {
     $('#annotationButton').click(function (){
       if(isAnnotationFormVisible){ //form currently visible, let's hide that
         $('#addAnnotationForm').hide();
-        $('#vidTitle').css('margin-top','0px');
+        $('#vidTitle').css('margin-top','14px');
         isAnnotationFormVisible = false //since the form is now hidden
       }
       else{ //form isn't visible, let's show it
         $('#addAnnotationForm').show();
-        $('#vidTitle').css('margin-top','-140px');
+        $('#vidTitle').css('margin-top','-150px');
         isAnnotationFormVisible = true; //since the form is now visible
       }
     });
