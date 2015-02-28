@@ -30,7 +30,7 @@ body{
 #vidTitle{
 	text-align: center;
 	font-size: 200%;
-
+	margin-top: -140px;
 }
 
 #vid{
@@ -163,18 +163,22 @@ body{
 	color: #FF0000;
 }
 
-
 #addAnnotationForm{
-	width: 250px;
-	height: 150px;
-	position: absolute;
-	background-color: #000;
-	left: 300px;
-	top: 600px;
+	width: 180px;
+	height: auto;
+	position: relative;
+	padding: 10px;
+	background-color: #597c56;
+	border: 2px solid #333;
+	color: #FFF;
+	left: 390px;
+	top: 330px;
 	z-index: 4000;
 }
 
-
+#addAnnotationForm textarea{
+	resize: none;
+}
 
 a.control{
 	color: #000000;
