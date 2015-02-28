@@ -695,10 +695,12 @@ $(document).ready(function () {
                 var newX = currentX * 0.666;
                 var newY = currentY * 0.666;
 
-                $(this).width(newWidth)
-                $(this).height(newHeight)
-                $(this).css('left', newX + 'px');
-                $(this).css('top', newY + 'px');
+                $(this).animate({
+                  width: newWidth + 'px',
+                  height: newHeight + 'px',
+                  left: newX + 'px',
+                  top: newY + 'px'
+                })
 
                 console.log('Annotation style adjusted for smaller video size.');
             });
@@ -733,10 +735,12 @@ $(document).ready(function () {
                 var newX = currentX * 1.5;
                 var newY = currentY * 1.5;
 
-                $(this).width(newWidth)
-                $(this).height(newHeight)
-                $(this).css('left', newX + 'px');
-                $(this).css('top', newY + 'px');
+                $(this).animate({
+                  width: newWidth + 'px',
+                  height: newHeight + 'px',
+                  left: newX + 'px',
+                  top: newY + 'px'
+                })
 
                 console.log('Annotation style adjusted for larger video size.');
             });
