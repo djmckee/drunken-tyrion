@@ -539,12 +539,23 @@ function populateAnnotationsList() {
     for (var i = 0; i < annotationsArray.length; i++) {
         //get the current list item...
         var currentAnnotation = annotationsArray[i];
+
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem"><a class="removeAnnotation" href="#" data-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
 
+    //if there are some annotations, remove the background image that claims there aren't!
+    if (annotationsArray.length > 0){
+      //there's annotations - make it so...
+      $(ANNOTATION_PANE).css({'background-image': "none"});
+
+    } else {
+      //there's no annotations - use the pretty placeholder...
+      $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
+
+    }
 }
 
 function deleteAnnotationAtIndex(index) {
@@ -618,7 +629,7 @@ function mouseMoveCanvas(e) {
 function drawCanvas() {
     if (canDraw) {
         //set the fill colour
-        ctx.fillStyle = "rgba(89, 124, 86, 0.85)";
+        ctx.fillStyle = DEFAULT_ANNOTATION_COLOUR;
 
         //and fill it in...
         ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
