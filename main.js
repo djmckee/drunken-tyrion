@@ -358,10 +358,18 @@ function newAnnotationDrawingComplete() {
     }
 
     //get x and y and width + height that has been drawn previously by the user...
+    if (isPlayerLarge == true){ //adjust the values to fit the smaller video size
+      var drawnX = (rect.startX / 1.5);
+      var drawnY = (rect.startY / 1.5);
+      var drawnWidth = (rect.w / 1.5);
+      var drawnHeight = (rect.h / 1.5);
+    }
+    else{ //the values will fit the smaller video size perfectly
     var drawnX = rect.startX;
     var drawnY = rect.startY;
     var drawnWidth = rect.w;
     var drawnHeight = rect.h;
+    }
 
     //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
     if (drawnHeight < 20) {
@@ -662,6 +670,10 @@ $(document).ready(function () {
             //set the video width to 400
             vidWidth = 400;
 
+            //and set the canvas size
+            canvas.width = 400;
+            canvas.height = 220;
+
         } else {
             //go big or go home!
             $(VIDEO_SELECTOR).animate({"width": "600px"});
@@ -676,6 +688,9 @@ $(document).ready(function () {
             //set the video width to 600
             vidWidth = 600;
 
+            //and set the canvas size
+            canvas.width = 600;
+            canvas.height = 330;
         }
     });
 
