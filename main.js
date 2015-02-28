@@ -914,6 +914,9 @@ $(document).ready(function () {
     Mousetrap.bind('h', function () { /* hide/show annotation list... */
         $(HIDEY_SHOW_BUTTON).trigger('click');
     });
+    Mousetrap.bind('a', function () { /* toggle annotations... */
+        $(TOGGLE_ANNOTATIONS_BUTTON).trigger('click');
+    });
 
 
 });
