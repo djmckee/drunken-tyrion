@@ -806,7 +806,7 @@ $(document).ready(function () {
                     height: newHeight + 'px',
                     left: newX + 'px',
                     top: newY + 'px'
-                })
+                });
 
                 console.log('Annotation style adjusted for smaller video size.');
             });
