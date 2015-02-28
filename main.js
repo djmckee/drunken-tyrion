@@ -634,7 +634,9 @@ function toggleAddAnnotationForm() {
     else { //form isn't visible, let's show it
         $(ANNOTATION_FORM_SELECTOR).show();
         $('#vidTitle').css('margin-top', '-200px');
-        $(COLOUR_BUTTON).colorPicker(); // that's it
+        //give it a default colour...
+        $(COLOUR_BUTTON).attr('value', DEFAULT_ANNOTATION_COLOUR);
+        $(COLOUR_BUTTON).colorPicker(); // initialise colour picker
         isAnnotationFormVisible = true; //since the form is now visible
     }
 }
