@@ -212,7 +212,7 @@ a.control:hover {
 /* Quite a bit of these CSS Selectors are from http://cssdeck.com/labs/styling-html5-progress-bars */
 
 #progress{
-	width: 240px;
+	width: 200px;
 	height: 16px;
 	margin-left: 5px;
 	margin-top: 5px;

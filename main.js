@@ -24,6 +24,8 @@ var CLEAR_ALL_BUTTON = 'a#delete-everything-button';
 
 var TOGGLE_ANNOTATIONS_BUTTON = 'a#toggle-annotations-button';
 
+var RUNNING_TIME = 'span#play-time';
+
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
@@ -165,6 +167,9 @@ function removeAnnotationFromScreen(a) {
 //  the update method, to be called every time the running time of the video changes by a whole second
 function update() {
     console.log('update called.');
+    //update running time...
+    $(RUNNING_TIME).text(formatSecondsToString(currentTime));
+
     // we want annotations that have a start time greater than or equal to the current playback time,
     // but also an end time less than the current time.
 
@@ -395,8 +400,6 @@ function playPauseClicked() {
 }
 
 function formatSecondsToString(numberOfSeconds) {
-
-
     var wholeMinutes = Math.floor(numberOfSeconds / 60);
     var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
 
@@ -569,6 +572,7 @@ $(document).ready(function () {
     $(VIDEO_SELECTOR).bind('timeupdate', function () {
         //update the progress bar no matter what...
         updateProgressBar();
+
 
         //  the current video play time, in whole seconds (rounded down)
         var newTime = Math.floor(this.currentTime);
