@@ -55,8 +55,11 @@ var isAnnotationFormVisible = false;
 //should we even bother displaying annotations!? :o
 var shouldDisplayAnnotations = true;
 
+//z-index for annotation counter (newer annotations have pirority, counter)
+var zIndex = 3000; //starts at 3000
+
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime) {
+function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex) {
     this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
@@ -65,6 +68,7 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.aHeight = height;
     this.startTime = startTime;
     this.endTime = endTime;
+    this.zIndex = zIndex;
 }
 
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
@@ -124,9 +128,10 @@ function addAnnotationToScreen(a) {
     $(annotationSelector).css({
         "width": (width * vidWidth / 400),
         "height": (height * vidWidth / 400),
-        "position": "relative",
+        "position": "absolute",
         "top": (a.yPosition * vidWidth / 400),
-        "left": (a.xPosition * vidWidth / 400)
+        "left": (a.xPosition * vidWidth / 400),
+        "z-index": a.zIndex
     });
 
     var annotationString = a.textString;
@@ -393,7 +398,7 @@ function newAnnotationDrawingComplete() {
     }
 
     if (title != null && title.length > 0) {
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)));
+        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex);
         annotationsArray.push(newAnnotation);
 
         //let's save too!
@@ -402,6 +407,8 @@ function newAnnotationDrawingComplete() {
         //and re-populate the list...
         populateAnnotationsList();
 
+        //and increase zIndex
+        zIndex = zIndex + 1;
     }
 }
 

@@ -126,7 +126,7 @@ body{
 #vid-overlay {
 	/* this makes annotations actually work - pls don't break */
 	position: absolute;
-	z-index: 3000;
+	/*z-index: 3000;*/
 }
 
 #vid-canvas {
