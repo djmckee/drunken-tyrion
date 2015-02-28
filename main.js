@@ -31,6 +31,9 @@ var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
 
+var COLOUR_BUTTON = "#colour-button";
+var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
+
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
@@ -63,12 +66,8 @@ var shouldDisplayAnnotations = true;
 //z-index for annotation counter (newer annotations have pirority, counter)
 var zIndex = 3000; //starts at 3000
 
-//color annotation array
-var colorArray = ['red', 'green', 'blue'];
-var colorArrayCounter = 0 //and it's counter (variety is the spice of life...)
-
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex) {
+function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour) {
     this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
@@ -78,6 +77,7 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.startTime = startTime;
     this.endTime = endTime;
     this.zIndex = zIndex;
+    this.backgroundColour = backgroundColour;
 }
 
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
@@ -94,7 +94,7 @@ function uniqueIdForAnnotation(a) {
 }
 
 function testAnnotation(name) {
-    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000);
+    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR);
     annotationsArray.push(newAnnotation);
     console.log(annotationsArray);
 
@@ -133,15 +133,12 @@ function addAnnotationToScreen(a) {
         width = 30;
     }
 
-    //set up the color of the annotations
-    if (colorArray[colorArrayCounter] == 'red') {
-        var annotationColor = "rgba(255, 38, 0, 0.7)";
-    }
-    else if (colorArray[colorArrayCounter] == 'green') {
-        var annotationColor = "rgba(89, 124, 86, 0.7)";
-    }
-    else if (colorArray[colorArrayCounter] == 'blue') {
-        var annotationColor = "rgba(3, 58, 255, 0.7)";
+    //try the default colour...
+    var annotationColour = DEFAULT_ANNOTATION_COLOUR;
+
+    //if the annotation has a colour associated with it, use it instead...
+    if (a.backgroundColour){
+      annotationColour = a.backgroundColour;
     }
 
     //set height and width, and a high z-index so it shows over the video.
@@ -152,7 +149,7 @@ function addAnnotationToScreen(a) {
         "top": (a.yPosition * vidWidth / 400),
         "left": (a.xPosition * vidWidth / 400),
         "z-index": a.zIndex,
-        "background-color": annotationColor
+        "background-color": annotationColour
     });
 
     var annotationString = a.textString;
@@ -180,11 +177,6 @@ function addAnnotationToScreen(a) {
 
     }
 
-    if (colorArrayCounter < 2) {
-        colorArrayCounter = colorArrayCounter + 1;
-    } else {
-        colorArrayCounter = 0;
-    }
 
 }
 
@@ -454,8 +446,11 @@ function saveAnnotationButtonClicked() {
         drawnY = 210 - drawnHeight;
     }
 
+    //try to get a background colour...
+    var backgroundColor = $(COLOUR_BUTTON).css("background-color");
+
     if (title != null && title.length > 0) {
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex);
+        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor);
         annotationsArray.push(newAnnotation);
 
         //let's save too!
@@ -633,11 +628,12 @@ function toggleAddAnnotationForm() {
     if (isAnnotationFormVisible) { //form currently visible, let's hide that
         $('#addAnnotationForm').hide();
         $('#vidTitle').css('margin-top', '14px');
-        isAnnotationFormVisible = false //since the form is now hidden
+        isAnnotationFormVisible = false; //since the form is now hidden
     }
     else { //form isn't visible, let's show it
         $('#addAnnotationForm').show();
-        $('#vidTitle').css('margin-top', '-150px');
+        $('#vidTitle').css('margin-top', '-200px');
+        $(COLOUR_BUTTON).colorPicker(); // that's it
         isAnnotationFormVisible = true; //since the form is now visible
     }
 }
