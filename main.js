@@ -26,6 +26,11 @@ var TOGGLE_ANNOTATIONS_BUTTON = 'a#toggle-annotations-button';
 
 var RUNNING_TIME = 'span#play-time';
 
+var FORM_SAVE_BUTTON = 'a#saveAddForm';
+var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
+var FORM_TEXT_FIELD = '#form-annotation-text';
+var FORM_LENGTH_FIELD = '#form-annotation-length';
+
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
@@ -89,7 +94,7 @@ function uniqueIdForAnnotation(a) {
 }
 
 function testAnnotation(name) {
-    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5);
+    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000);
     annotationsArray.push(newAnnotation);
     console.log(annotationsArray);
 
@@ -97,9 +102,9 @@ function testAnnotation(name) {
 
 function addAnnotationToScreen(a) {
     //see if we should even be displaying annotations...
-    if (!shouldDisplayAnnotations){
-      //we shouldn't be showing anything - give up and go home...
-      return;
+    if (!shouldDisplayAnnotations) {
+        //we shouldn't be showing anything - give up and go home...
+        return;
     }
 
     //get a unique id first...
@@ -129,14 +134,14 @@ function addAnnotationToScreen(a) {
     }
 
     //set up the color of the annotations
-    if(colorArray[colorArrayCounter] == 'red'){
-      var annotationColor = "rgba(255, 38, 0, 0.7)";
+    if (colorArray[colorArrayCounter] == 'red') {
+        var annotationColor = "rgba(255, 38, 0, 0.7)";
     }
-    else if(colorArray[colorArrayCounter] == 'green'){
-      var annotationColor = "rgba(89, 124, 86, 0.7)";
+    else if (colorArray[colorArrayCounter] == 'green') {
+        var annotationColor = "rgba(89, 124, 86, 0.7)";
     }
-    else if(colorArray[colorArrayCounter] == 'blue'){
-      var annotationColor = "rgba(3, 58, 255, 0.7)";
+    else if (colorArray[colorArrayCounter] == 'blue') {
+        var annotationColor = "rgba(3, 58, 255, 0.7)";
     }
 
     //set height and width, and a high z-index so it shows over the video.
@@ -175,10 +180,10 @@ function addAnnotationToScreen(a) {
 
     }
 
-    if(colorArrayCounter < 2){
-      colorArrayCounter = colorArrayCounter + 1;
-    } else{
-      colorArrayCounter = 0;
+    if (colorArrayCounter < 2) {
+        colorArrayCounter = colorArrayCounter + 1;
+    } else {
+        colorArrayCounter = 0;
     }
 
 }
@@ -258,7 +263,7 @@ function update() {
 //a function to add ANY annotations that should be on screen at the current time to the screen -
 //regardless of wether their current start time is *now*...
 //be careful when calling this - with great power comes great responsibility, etc.
-function putAllCurrentAnnotationsOnScreen(){
+function putAllCurrentAnnotationsOnScreen() {
     //find everything that should potentially be on screen...
 
     // some funky jquery to search through the array.
@@ -355,6 +360,10 @@ function clearStoredAnnotations() {
 }
 
 function addAnnotationClicked() {
+    //we really don't want multiple adds to happen at once...
+    //hide the button just incase...
+    $(ADD_BUTTON_SELECTOR).fadeTo("fast", 0);
+
     //allow drawing to start and bring up an info dialog...
     canDraw = true;
 
@@ -377,28 +386,54 @@ function newAnnotationDrawingComplete() {
     //reset informational text...
     $(INFORMATION_TEXT_SELECTOR).text("");
 
-    //basic basic basic.
-    var title = prompt("Please enter your annotation text:", "");
-    //asks how long the annotation should run for
-    var time = prompt("Please enter how long you want the annotation to stay on screen:", "");
-    //literally at fkn pumpkin spice levels.
+    //show the add annotation form...
+    toggleAddAnnotationForm();
+
+
+}
+
+function saveAnnotationButtonClicked() {
+    //not so freakin' basic.
+
+    //get a title from our fanciful form.
+    var title = $(FORM_TEXT_FIELD).val();
+
+    //check the title is actually a thing - if not, warn the user and give up for now...
+    if (title == null || title.length < 1){
+      alert("An annotation title is required - please enter one.");
+      return;
+    }
+
+    //get how long the annotation should run for
+    var time = $(FORM_LENGTH_FIELD).val();
+
+    //and allow the adding of more annotations...
+    $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
+
+    //close the form...
+    toggleAddAnnotationForm();
+
+    //and clear the old values to defaults so new annotations don't have set ones...
+    $(FORM_TEXT_FIELD).val("");
+    $(FORM_LENGTH_FIELD).val("2");
+
     //if the time entered isn't an integer set the time to 2 seconds
     if (time == null || isNaN(time)) {
         time = "2";
     }
 
     //get x and y and width + height that has been drawn previously by the user...
-    if (isPlayerLarge == true){ //adjust the values to fit the smaller video size
-      var drawnX = (rect.startX / 1.5);
-      var drawnY = (rect.startY / 1.5);
-      var drawnWidth = (rect.w / 1.5);
-      var drawnHeight = (rect.h / 1.5);
+    if (isPlayerLarge == true) { //adjust the values to fit the smaller video size
+        var drawnX = (rect.startX / 1.5);
+        var drawnY = (rect.startY / 1.5);
+        var drawnWidth = (rect.w / 1.5);
+        var drawnHeight = (rect.h / 1.5);
     }
-    else{ //the values will fit the smaller video size perfectly
-      var drawnX = rect.startX;
-      var drawnY = rect.startY;
-      var drawnWidth = rect.w;
-      var drawnHeight = rect.h;
+    else { //the values will fit the smaller video size perfectly
+        var drawnX = rect.startX;
+        var drawnY = rect.startY;
+        var drawnWidth = rect.w;
+        var drawnHeight = rect.h;
     }
 
     //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
@@ -411,12 +446,12 @@ function newAnnotationDrawingComplete() {
     }
 
     //ensure that annotations can't be outside the video
-    if(drawnX + drawnWidth > 390){
-      drawnX = 390 - drawnWidth;
+    if (drawnX + drawnWidth > 390) {
+        drawnX = 390 - drawnWidth;
     }
 
-    if(drawnY + drawnHeight > 210){
-      drawnY = 210 - drawnHeight;
+    if (drawnY + drawnHeight > 210) {
+        drawnY = 210 - drawnHeight;
     }
 
     if (title != null && title.length > 0) {
@@ -432,6 +467,19 @@ function newAnnotationDrawingComplete() {
         //and increase zIndex
         zIndex = zIndex + 1;
     }
+}
+
+function cancelAnnotationFormButtonClicked() {
+    //give up and go home.
+    //close the form...
+    toggleAddAnnotationForm();
+
+    //and clear the old values to defaults so new annotations don't have set ones...
+    $(FORM_TEXT_FIELD).val("");
+    $(FORM_LENGTH_FIELD).val("2");
+
+    //and allow the adding of more annotations...
+    $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
 }
 
 // **Control Stuff**
@@ -452,9 +500,9 @@ function formatSecondsToString(numberOfSeconds) {
     var wholeMinutes = Math.floor(numberOfSeconds / 60);
     var secondsRemaining = numberOfSeconds - (wholeMinutes * 60);
 
-    if (secondsRemaining < 10){
-      //if it's under 10 seconds, make it "0:01" not "0:1"
-      secondsRemaining = "0" + String(secondsRemaining);
+    if (secondsRemaining < 10) {
+        //if it's under 10 seconds, make it "0:01" not "0:1"
+        secondsRemaining = "0" + String(secondsRemaining);
     }
 
     if (numberOfSeconds < 10) {
@@ -581,6 +629,19 @@ function drawCanvas() {
     }
 }
 
+function toggleAddAnnotationForm() {
+    if (isAnnotationFormVisible) { //form currently visible, let's hide that
+        $('#addAnnotationForm').hide();
+        $('#vidTitle').css('margin-top', '14px');
+        isAnnotationFormVisible = false //since the form is now hidden
+    }
+    else { //form isn't visible, let's show it
+        $('#addAnnotationForm').show();
+        $('#vidTitle').css('margin-top', '-150px');
+        isAnnotationFormVisible = true; //since the form is now visible
+    }
+}
+
 //  jQuery events.
 $(document).ready(function () {
     //the DOM has loaded, so let's begin...
@@ -646,6 +707,16 @@ $(document).ready(function () {
         addAnnotationClicked();
     });
 
+    $(FORM_SAVE_BUTTON).click(function () {
+        //get saving...
+        saveAnnotationButtonClicked();
+    });
+
+    $(FORM_CANCEL_BUTTON).click(function () {
+        //get cancellin'...
+        cancelAnnotationFormButtonClicked();
+    });
+
     $(PLAY_PAUSE_SELECTOR).click(function () {
         playPauseClicked();
     });
@@ -697,20 +768,6 @@ $(document).ready(function () {
         }
     });
 
-    //add annotation
-    $('#annotationButton').click(function (){
-      if(isAnnotationFormVisible){ //form currently visible, let's hide that
-        $('#addAnnotationForm').hide();
-        $('#vidTitle').css('margin-top','14px');
-        isAnnotationFormVisible = false //since the form is now hidden
-      }
-      else{ //form isn't visible, let's show it
-        $('#addAnnotationForm').show();
-        $('#vidTitle').css('margin-top','-150px');
-        isAnnotationFormVisible = true; //since the form is now visible
-      }
-    });
-
     //hidey-show
     $(HIDEY_SHOW_BUTTON).click(function () {
         if (isPlayerLarge) {
@@ -733,7 +790,7 @@ $(document).ready(function () {
             canvas.height = 220;
 
             //redraw the annotations so they fit the video
-            $('.annotation-on-screen').each(function(i, obj) {
+            $('.annotation-on-screen').each(function (i, obj) {
                 var currentWidth = $(this).width();
                 var currentHeight = $(this).height();
                 var currentX = $(this).position().left;
@@ -745,10 +802,10 @@ $(document).ready(function () {
                 var newY = currentY * 0.666;
 
                 $(this).animate({
-                  width: newWidth + 'px',
-                  height: newHeight + 'px',
-                  left: newX + 'px',
-                  top: newY + 'px'
+                    width: newWidth + 'px',
+                    height: newHeight + 'px',
+                    left: newX + 'px',
+                    top: newY + 'px'
                 })
 
                 console.log('Annotation style adjusted for smaller video size.');
@@ -776,7 +833,7 @@ $(document).ready(function () {
             canvas.height = 330;
 
             //redraw the annotations so they fit the video
-            $('.annotation-on-screen').each(function(i, obj) {
+            $('.annotation-on-screen').each(function (i, obj) {
                 var currentWidth = $(this).width();
                 var currentHeight = $(this).height();
                 var currentX = $(this).position().left;
@@ -788,10 +845,10 @@ $(document).ready(function () {
                 var newY = currentY * 1.5;
 
                 $(this).animate({
-                  width: newWidth + 'px',
-                  height: newHeight + 'px',
-                  left: newX + 'px',
-                  top: newY + 'px'
+                    width: newWidth + 'px',
+                    height: newHeight + 'px',
+                    left: newX + 'px',
+                    top: newY + 'px'
                 })
 
                 console.log('Annotation style adjusted for larger video size.');
@@ -804,25 +861,25 @@ $(document).ready(function () {
 
 
     $(TOGGLE_ANNOTATIONS_BUTTON).click(function () {
-        if (shouldDisplayAnnotations){
-          //if annotations are on - turn them off (and remove current ones)
-          shouldDisplayAnnotations = false;
+        if (shouldDisplayAnnotations) {
+            //if annotations are on - turn them off (and remove current ones)
+            shouldDisplayAnnotations = false;
 
-          //reset button text
-          $(this).text("Turn on annotations");
+            //reset button text
+            $(this).text("Turn on annotations");
 
-          //and remove any current ones on screen...
-          $('div.annotation-on-screen').remove();
+            //and remove any current ones on screen...
+            $('div.annotation-on-screen').remove();
 
         } else {
-          //if they're off - turn them on (and put any current annotations that need to be on the screen onto the screen).
-          shouldDisplayAnnotations = true;
+            //if they're off - turn them on (and put any current annotations that need to be on the screen onto the screen).
+            shouldDisplayAnnotations = true;
 
-          //reset button text
-          $(this).text("Turn off annotations");
+            //reset button text
+            $(this).text("Turn off annotations");
 
-          //put any current annotations on the screen!!!
-          putAllCurrentAnnotationsOnScreen();
+            //put any current annotations on the screen!!!
+            putAllCurrentAnnotationsOnScreen();
         }
 
     });

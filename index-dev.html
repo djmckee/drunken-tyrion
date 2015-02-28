@@ -13,10 +13,13 @@
 	<div id="container">
 		<div id="addAnnotationForm">
 			<form>
-				<textarea name="annotationText" rows=5 cols=23>Enter your annotation text here...</textarea>
+				<textarea name="annotationText" id="form-annotation-text" rows=5 cols=23 placeholder="Enter your annotation text here..."></textarea>
 				<br />
-				Length (seconds): <input type="text" name="length" size=3 />
-				<input type="submit"/>
+				Length (seconds): <input type="text" name="length" size=3 value="2" id="form-annotation-length" />
+				<br />
+				<br />
+				<a class="control" id="saveAddForm">Save</a>
+				<a class="control" id="clearAddForm">Cancel</a>
 			</form>
 		</div>
     <div id="vidTitle">
@@ -47,15 +50,18 @@
 		</div>
 		<div id="controls">
 		<p>
-			<a id="playPauseButton" class="control"><i class="fa fa-play"></i></a>
+			<a id="playPauseButton" class="control player-button"><i class="fa fa-play"></i></a>
 
 			<progress id="progress" max="100" value="0">% played</progress>
-			<a class="control" id="volume-down"><i class="fa fa-volume-down"></i></a>
-			<a class="control" id="volume-up"><i class="fa fa-volume-up"></i></a>
+			<span id="play-time">0:00</span>
+			<a class="control player-button" id="volume-down"><i class="fa fa-volume-down"></i></a>
+			<a class="control player-button" id="volume-up"><i class="fa fa-volume-up"></i></a>
 			<br />
 			<br />
-			<a id="hidey-showy" class="control padded-button">Hide Annotation List</a>
-			<a id="delete-everything-button" class="control padded-button">Clear all annotations forever</a>
+			<br />
+			<a id="hidey-showy" class="control padded-button player-button">Hide Annotation List</a>
+			<a id="delete-everything-button" class="control padded-button player-button">Clear all annotations forever</a>
+			<a id="toggle-annotations-button" class="control padded-button player-button">Turn off annotations</a>
 		</p>
 		</div>
 

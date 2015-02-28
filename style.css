@@ -86,6 +86,7 @@ body{
 	background-color: #EE0000;
 }
 
+
 .annotation-on-screen {
 	padding: 5px;
 	/*background-color: rgba(89, 124, 86, 0.7);*/
@@ -164,15 +165,15 @@ body{
 }
 
 #addAnnotationForm{
-	width: 180px;
+	width: 175px;
 	height: 140px;
 	position: relative;
 	padding: 10px;
 	background-color: #597c56;
 	border: 2px solid #333;
 	color: #FFF;
-	left: 390px;
-	top: 330px;
+	left: 400px;
+	top: 60px;
 	z-index: 4000;
 }
 
@@ -184,7 +185,6 @@ a.control{
 	color: #000000;
 	text-decoration: none;
 	border: solid;
-	float: left; /* to float or not to float, that is the question */
 	border-color: #222222;
 	background-color: #DDDDDD;
 	padding: 2px;
@@ -201,6 +201,11 @@ a.control{
   user-select: none;
 }
 
+a.player-button {
+	float: left; /* to float or not to float, that is the question */
+
+}
+
 a.control:hover {
 	background-color: #AAAAAA;
 }
@@ -212,6 +217,7 @@ a.control:hover {
 
 	margin-right: 5px;
 }
+
 
 /* Quite a bit of these CSS Selectors are from http://cssdeck.com/labs/styling-html5-progress-bars */
 
