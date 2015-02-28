@@ -11,6 +11,14 @@
 </head>
 <body>
 	<div id="container">
+		<div id="addAnnotationForm">
+			<form>
+				<textarea name="annotationText" rows=5 cols=23>Enter your annotation text here...</textarea>
+				<br />
+				Length (seconds): <input type="text" name="length" size=3 />
+				<input type="submit"/>
+			</form>
+		</div>
     <div id="vidTitle">
       <h1 id="title">Video Title</h1>
     </div>
@@ -42,16 +50,12 @@
 			<a id="playPauseButton" class="control"><i class="fa fa-play"></i></a>
 
 			<progress id="progress" max="100" value="0">% played</progress>
-			<span id="play-time">0:00</span>
 			<a class="control" id="volume-down"><i class="fa fa-volume-down"></i></a>
 			<a class="control" id="volume-up"><i class="fa fa-volume-up"></i></a>
 			<br />
 			<br />
-			<br />
 			<a id="hidey-showy" class="control padded-button">Hide Annotation List</a>
 			<a id="delete-everything-button" class="control padded-button">Clear all annotations forever</a>
-			<a id="toggle-annotations-button" class="control padded-button">Turn off annotations</a>
-
 		</p>
 		</div>
 
