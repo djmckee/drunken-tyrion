@@ -683,6 +683,26 @@ $(document).ready(function () {
             canvas.width = 400;
             canvas.height = 220;
 
+            //redraw the annotations so they fit the video
+            $('.annotation-on-screen').each(function(i, obj) {
+                var currentWidth = $(this).width();
+                var currentHeight = $(this).height();
+                var currentX = $(this).position().left;
+                var currentY = $(this).position().top;
+
+                var newWidth = currentWidth * 0.666;
+                var newHeight = currentHeight * 0.666;
+                var newX = currentX * 0.666;
+                var newY = currentY * 0.666;
+
+                $(this).width(newWidth)
+                $(this).height(newHeight)
+                $(this).css('left', newX + 'px');
+                $(this).css('top', newY + 'px');
+
+                console.log('Annotation style adjusted for smaller video size.');
+            });
+
         } else {
             //go big or go home!
             $(VIDEO_SELECTOR).animate({"width": "600px"});
@@ -700,6 +720,26 @@ $(document).ready(function () {
             //and set the canvas size
             canvas.width = 600;
             canvas.height = 330;
+
+            //redraw the annotations so they fit the video
+            $('.annotation-on-screen').each(function(i, obj) {
+                var currentWidth = $(this).width();
+                var currentHeight = $(this).height();
+                var currentX = $(this).position().left;
+                var currentY = $(this).position().top;
+
+                var newWidth = currentWidth * 1.5;
+                var newHeight = currentHeight * 1.5;
+                var newX = currentX * 1.5;
+                var newY = currentY * 1.5;
+
+                $(this).width(newWidth)
+                $(this).height(newHeight)
+                $(this).css('left', newX + 'px');
+                $(this).css('top', newY + 'px');
+
+                console.log('Annotation style adjusted for larger video size.');
+            });
         }
     });
 
