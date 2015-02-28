@@ -58,6 +58,10 @@ var shouldDisplayAnnotations = true;
 //z-index for annotation counter (newer annotations have pirority, counter)
 var zIndex = 3000; //starts at 3000
 
+//color annotation array
+var colorArray = ['red', 'green', 'blue'];
+var colorArrayCounter = 0 //and it's counter (variety is the spice of life...)
+
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex) {
     this.textString = text;
@@ -124,6 +128,17 @@ function addAnnotationToScreen(a) {
         width = 30;
     }
 
+    //set up the color of the annotations
+    if(colorArray[colorArrayCounter] == 'red'){
+      var annotationColor = "rgba(255, 38, 0, 0.7)";
+    }
+    else if(colorArray[colorArrayCounter] == 'green'){
+      var annotationColor = "rgba(89, 124, 86, 0.7)";
+    }
+    else if(colorArray[colorArrayCounter] == 'blue'){
+      var annotationColor = "rgba(3, 58, 255, 0.7)";
+    }
+
     //set height and width, and a high z-index so it shows over the video.
     $(annotationSelector).css({
         "width": (width * vidWidth / 400),
@@ -131,7 +146,8 @@ function addAnnotationToScreen(a) {
         "position": "absolute",
         "top": (a.yPosition * vidWidth / 400),
         "left": (a.xPosition * vidWidth / 400),
-        "z-index": a.zIndex
+        "z-index": a.zIndex,
+        "background-color": annotationColor
     });
 
     var annotationString = a.textString;
@@ -157,6 +173,12 @@ function addAnnotationToScreen(a) {
         //do a 'lil styling
         $(imageSelector).css({"width": "100%", "height": "auto"});
 
+    }
+
+    if(colorArrayCounter < 2){
+      colorArrayCounter = colorArrayCounter + 1;
+    } else{
+      colorArrayCounter = 0;
     }
 
 }
