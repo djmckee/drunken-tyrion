@@ -5,7 +5,7 @@
 			rgb:   {r: [0, 255], g: [0, 255], b: [0, 255]},
 			hsv:   {h: [0, 360], s: [0, 100], v: [0, 100]},
 			hsl:   {h: [0, 360], s: [0, 100], l: [0, 100]},
-			alpha: {alpha: 1, 1]},
+			alpha: {alpha: [1, 1]},
 			HEX:   {HEX: [0, 16777215]} // maybe we don't need this
 		},
 
