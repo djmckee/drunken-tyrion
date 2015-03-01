@@ -13,6 +13,7 @@
 #dependency names can all be changed below...
 
 import os   #so that we can delete existing copies of the file.
+import re   #so we can run regex to remove console.log messages from production code
 from slimit import minify #so we can minify the javascript!
 from py_w3c.validators.html.validator import HTMLValidator #HTML Validation
 
@@ -33,6 +34,8 @@ with open (js_file_name) as js_file:
     js_string = js_file.read()
     #run the minifier...
     minified = minify(js_string, mangle=do_you_want_your_javascript_mangled, mangle_toplevel=do_you_want_your_javascript_mangled)
+    #remove any console.log's - this is production grade JS!
+    minified = re.sub(r'console.log((.*?));', ' ', minified)
     #work out a suitable file name...
     minified_js_name = js_file_name.replace('.js', '.min.js')
     #remove old versions of the file...
@@ -103,4 +106,3 @@ with open (input_file_name) as html_file:
     except:
         print '\n  ___\n /~ ~\   ___________________________\n| 0 0 | /"' + "I'm so so sorry :'(" + '" /\n|  ^  |-----------------------------\n|  O  |\n \\___/\n'
         print "Sorry, I can't validate your XHTML at the moment."
-        print 'God HATES flags.'
