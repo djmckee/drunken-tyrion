@@ -138,17 +138,20 @@ function addAnnotationToScreen(a) {
     var annotationColour = DEFAULT_ANNOTATION_COLOUR;
 
     //if the annotation has a colour associated with it, use it instead...
-    if (a.backgroundColour){
-      annotationColour = a.backgroundColour;
+    if (a.backgroundColour) {
+        annotationColour = a.backgroundColour;
     }
 
     //set height and width, and a high z-index so it shows over the video.
+
+    var DEFAULT_VID_WIDTH = 400;
+
     $(annotationSelector).css({
-        "width": (width * vidWidth / 400),
-        "height": (height * vidWidth / 400),
+        "width": (width * vidWidth / DEFAULT_VID_WIDTH),
+        "height": (height * vidWidth / DEFAULT_VID_WIDTH),
         "position": "absolute",
-        "top": (a.yPosition * vidWidth / 400),
-        "left": (a.xPosition * vidWidth / 400),
+        "top": (a.yPosition * vidWidth / DEFAULT_VID_WIDTH),
+        "left": (a.xPosition * vidWidth / DEFAULT_VID_WIDTH),
         "z-index": a.zIndex,
         "background-color": annotationColour
     });
@@ -392,9 +395,9 @@ function saveAnnotationButtonClicked() {
     var title = $(FORM_TEXT_FIELD).val();
 
     //check the title is actually a thing - if not, warn the user and give up for now...
-    if (title == null || title.length < 1){
-      alert("An annotation title is required - please enter one.");
-      return;
+    if (title == null || title.length < 1) {
+        alert("An annotation title is required - please enter one.");
+        return;
     }
 
     //get how long the annotation should run for
@@ -547,13 +550,13 @@ function populateAnnotationsList() {
     }
 
     //if there are some annotations, remove the background image that claims there aren't!
-    if (annotationsArray.length > 0){
-      //there's annotations - make it so...
-      $(ANNOTATION_PANE).css({'background-image': "none"});
+    if (annotationsArray.length > 0) {
+        //there's annotations - make it so...
+        $(ANNOTATION_PANE).css({'background-image': "none"});
 
     } else {
-      //there's no annotations - use the pretty placeholder...
-      $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
+        //there's no annotations - use the pretty placeholder...
+        $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
 
     }
 }
