@@ -86,13 +86,6 @@ body{
 	background-color: #EE0000;
 }
 
-
-.annotation-on-screen {
-	padding: 5px;
-	/*background-color: rgba(89, 124, 86, 0.7);*/
-	overflow: auto;
-}
-
 .vidAnnotationType{
 	font-size: 50%;
 	text-transform: uppercase;
@@ -112,14 +105,6 @@ body{
 	padding: 10px;
 }
 
-#vidAnnotationInner > ul > li:nth-child(odd) {
-    background-color: #597c56;
-}
-
-#vidAnnotationInner > ul > li:nth-child(even) {
-    background-color: #6a9666;
-}
-
 #vidAnnotationInner > ul > li > .vidAnnotationContent > img{
 	border: 2px black solid;
 }
@@ -134,11 +119,6 @@ body{
 	/* this makes box drawing actually work - pls don't break */
 	position: absolute;
 	z-index: 4000;
-
-	/* QUICK HACK */
-	/*width: 400px;
-	height: 220px;*/
-
 	margin: 0;
 	padding: 0;
 }

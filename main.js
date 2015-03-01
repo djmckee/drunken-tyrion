@@ -5,7 +5,8 @@ var VIDEO_SELECTOR = 'video';
 var VIDEO_PLAYER_ELEMENT = document.getElementById('videoPlayer');
 
 var VIDEO_CONTAINER = 'div#vid-overlay';
-var ANNOTATION_PANE = '#vidAnnotation'
+var ANNOTATION_PANE = '#vidAnnotation';
+var ANNOTATIONS_ON_SCREEN_SELECTOR = 'div.annotation-on-screen';
 
 // and a 'constant' to select our add button...
 var ADD_BUTTON_SELECTOR = 'a#addAnnotation';
@@ -34,13 +35,19 @@ var FORM_LENGTH_FIELD = '#form-annotation-length';
 
 var COLOUR_BUTTON = "#colour-button";
 var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
+var DEFAULT_VID_WIDTH = 400;
+var LARGE_VID_WIDTH = 600;
+var VID_WIDTH_TO_HEIGHT_MULTIPLIER = 0.55;
+
+//Fun fact: 1.5 is the least metal number.
+var ANTI_ROC_SOC_CONSTANT = 1.5;
 
 //canvas variables
 var canvas = document.getElementById('vid-canvas');
 var ctx = canvas.getContext('2d');
 
 //variable storing width of video currently
-var vidWidth = 400; //video starts at 400px wide
+var vidWidth = DEFAULT_VID_WIDTH; //video starts at 400px wide
 
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
@@ -143,13 +150,12 @@ function addAnnotationToScreen(a) {
     }
 
     //set height and width, and a high z-index so it shows over the video.
-
-    var DEFAULT_VID_WIDTH = 400;
-
     $(annotationSelector).css({
         "width": (width * vidWidth / DEFAULT_VID_WIDTH),
         "height": (height * vidWidth / DEFAULT_VID_WIDTH),
         "position": "absolute",
+        "padding": "5px",
+        "overflow": "auto",
         "top": (a.yPosition * vidWidth / DEFAULT_VID_WIDTH),
         "left": (a.xPosition * vidWidth / DEFAULT_VID_WIDTH),
         "z-index": a.zIndex,
@@ -235,7 +241,7 @@ function update() {
     // and get annotations that need to be removed (i.e. have an end time of the current second)
     var oldAnnotations = $.grep(annotationsArray, function (e) {
         return (currentTime == e.endTime);
-    })
+    });
 
     if (oldAnnotations != null) {
         if (oldAnnotations.length > 0) {
@@ -394,12 +400,6 @@ function saveAnnotationButtonClicked() {
     //get a title from our fanciful form.
     var title = $(FORM_TEXT_FIELD).val();
 
-    //check the title is actually a thing - if not, warn the user and give up for now...
-    if (title == null || title.length < 1) {
-        alert("An annotation title is required - please enter one.");
-        return;
-    }
-
     //get how long the annotation should run for
     var time = $(FORM_LENGTH_FIELD).val();
 
@@ -419,17 +419,17 @@ function saveAnnotationButtonClicked() {
     }
 
     //get x and y and width + height that has been drawn previously by the user...
-    if (isPlayerLarge == true) { //adjust the values to fit the smaller video size
-        var drawnX = (rect.startX / 1.5);
-        var drawnY = (rect.startY / 1.5);
-        var drawnWidth = (rect.w / 1.5);
-        var drawnHeight = (rect.h / 1.5);
-    }
-    else { //the values will fit the smaller video size perfectly
-        var drawnX = rect.startX;
-        var drawnY = rect.startY;
-        var drawnWidth = rect.w;
-        var drawnHeight = rect.h;
+    var drawnX = rect.startX;
+    var drawnY = rect.startY;
+    var drawnWidth = rect.w;
+    var drawnHeight = rect.h;
+
+    //if the player's currently large, then the values need adjusting to fit the smaller player.
+    if (isPlayerLarge) { //adjust the values to fit the smaller video size
+        drawnX = (drawnX / ANTI_ROC_SOC_CONSTANT);
+        drawnY = (drawnY / ANTI_ROC_SOC_CONSTANT);
+        drawnWidth = (drawnWidth / ANTI_ROC_SOC_CONSTANT);
+        drawnHeight = (drawnHeight / ANTI_ROC_SOC_CONSTANT);
     }
 
     //do some minimum checking, we don't want the drawn rect to be too ridiculously small so an annotation can't physically fit...
@@ -442,19 +442,23 @@ function saveAnnotationButtonClicked() {
     }
 
     //ensure that annotations can't be outside the video
-    if (drawnX + drawnWidth > 390) {
+    if (drawnX + drawnWidth > (DEFAULT_VID_WIDTH - 10)) {
         drawnX = 390 - drawnWidth;
     }
 
-    if (drawnY + drawnHeight > 210) {
+    if (drawnY + drawnHeight > ((DEFAULT_VID_WIDTH * VID_WIDTH_TO_HEIGHT_MULTIPLIER) - 10)) {
         drawnY = 210 - drawnHeight;
     }
 
-    //try to get a background colour...
+    //get a background colour from the colour picker element...
     var backgroundColor = $(COLOUR_BUTTON).css("background-color");
 
+    //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
+        //create a new annotation with the variables we've got
         var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor);
+
+        //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
 
         //let's save too!
@@ -465,6 +469,10 @@ function saveAnnotationButtonClicked() {
 
         //and increase zIndex
         zIndex = zIndex + 1;
+    } else {
+        //the user hasn't entered a title - show an error!
+        alert("An annotation title is required - please enter one.");
+
     }
 }
 
@@ -544,7 +552,7 @@ function populateAnnotationsList() {
         var currentAnnotation = annotationsArray[i];
 
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
@@ -691,7 +699,7 @@ $(document).ready(function () {
         $(PLAY_PAUSE_SELECTOR).html('<i class="fa fa-play"></i>');
 
         //remove any currently on screen annotations instantly
-        $('div.annotation-on-screen').remove();
+        $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
     });
 
@@ -736,7 +744,7 @@ $(document).ready(function () {
 
     $(document).on('click', REMOVE_BUTTON_SELECTOR, function () {
         //get the index to remove from the button data attribute...
-        var index = $(this).data('annotation-id');
+        var index = $(this).data('easyannotation-annotation-id');
         //call the remove function, passing in the index from within the remove button's data attribute...
         deleteAnnotationAtIndex(index);
     });
@@ -776,7 +784,7 @@ $(document).ready(function () {
             populateAnnotationsList();
 
             //also - remove any currently on screen annotations instantly
-            $('div.annotation-on-screen').remove();
+            $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
         }
     });
@@ -785,7 +793,7 @@ $(document).ready(function () {
     $(HIDEY_SHOW_BUTTON).click(function () {
         if (isPlayerLarge) {
             //make it small...
-            $(VIDEO_SELECTOR).animate({"width": "400px"}, function () {
+            $(VIDEO_SELECTOR).animate({"width": (DEFAULT_VID_WIDTH + "px")}, function () {
                 $(ANNOTATION_PANE).show();
             });
 
@@ -796,11 +804,11 @@ $(document).ready(function () {
             isPlayerLarge = false;
 
             //set the video width to 400
-            vidWidth = 400;
+            vidWidth = DEFAULT_VID_WIDTH;
 
             //and set the canvas size
-            canvas.width = 400;
-            canvas.height = 220;
+            canvas.width = DEFAULT_VID_WIDTH;
+            canvas.height = (DEFAULT_VID_WIDTH * VID_WIDTH_TO_HEIGHT_MULTIPLIER);
 
             var ROC_SOC_CONSTANT = 0.666;
 
@@ -841,13 +849,11 @@ $(document).ready(function () {
             isPlayerLarge = true;
 
             //set the video width to 600
-            vidWidth = 600;
+            vidWidth = LARGE_VID_WIDTH;
 
             //and set the canvas size
-            canvas.width = 600;
-            canvas.height = 330;
-
-            var ANTI_ROC_SOC_CONSTANT = 1.5;
+            canvas.width = LARGE_VID_WIDTH;
+            canvas.height = (LARGE_VID_WIDTH * VID_WIDTH_TO_HEIGHT_MULTIPLIER);
 
             //redraw the annotations so they fit the video
             $('.annotation-on-screen').each(function (i, obj) {
@@ -866,7 +872,7 @@ $(document).ready(function () {
                     height: newHeight + 'px',
                     left: newX + 'px',
                     top: newY + 'px'
-                })
+                });
 
                 console.log('Annotation style adjusted for larger video size.');
             });
@@ -886,7 +892,7 @@ $(document).ready(function () {
             $(this).text("Turn on annotations");
 
             //and remove any current ones on screen...
-            $('div.annotation-on-screen').remove();
+            $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
         } else {
             //if they're off - turn them on (and put any current annotations that need to be on the screen onto the screen).
