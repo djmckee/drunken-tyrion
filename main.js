@@ -929,13 +929,16 @@ $(document).ready(function () {
 
     //Bind clicks within the progress bar to an appropriate event...
     $(PROGRESS_BAR_SELECTOR).bind('click', function (ev) {
-        var $div = $(ev.target);
+        //get the x offset of the progress bar within the page
+        var offset = $(PROGRESS_BAR_SELECTOR).offset().left;
 
-        var offset = $div.offset();
-        var x = ev.clientX - offset.left;
+        //the click x value that we want (relative to the progress bar) is going to
+        //be equal to the mouse click x, minus the offset of the progress bar within the page.
+        var x = ev.clientX - offset;
 
         //x contains where the user clicked within the bar... let's turn this into something useful...
-        var selectedTime = ((x / VIDEO_PLAYER_ELEMENT.duration) /2);
+        //(not entirely sure about the 2 here - was a magic number that seemed to work well...)
+        var selectedTime = ((x / VIDEO_PLAYER_ELEMENT.duration) / 2);
         console.log('selected time = ' + selectedTime);
         //check the chosen time is within bounds, then update the video's current play time...
         if (selectedTime >= 0 && selectedTime <= VIDEO_PLAYER_ELEMENT.duration){
@@ -947,6 +950,7 @@ $(document).ready(function () {
           //and re-set the video's current time, automagically calling update and all other relevant methods/callbacks with it...
           VIDEO_PLAYER_ELEMENT.currentTime = selectedTime;
         }
+        
     });
 
     //Bind some keyboard shortcuts... (thanks Mousetrap for making this pleasant!)
