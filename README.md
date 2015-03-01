@@ -19,3 +19,4 @@ Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful
 * http://atomicrobotdesign.com/blog/javascript/draw-a-rectangle-using-the-mouse-on-the-canvas-in-less-than-40-lines-of-javascript/
 * http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
 * http://cssdeck.com/labs/styling-html5-progress-bars
+* http://stackoverflow.com/questions/20793506/html-progress-bar-click-and-update

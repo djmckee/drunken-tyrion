@@ -907,6 +907,23 @@ $(document).ready(function () {
 
     });
 
+    //Bind clicks within the progress bar to an appropriate event...
+    $(PROGRESS_BAR_SELECTOR).bind('click', function (ev) {
+        var $div = $(ev.target);
+
+        var offset = $div.offset();
+        var x = ev.clientX - offset.left;
+
+        //x contains where the user clicked within the bar... let's turn this into something useful...
+        var selectedTime = Math.floor((x / VIDEO_PLAYER_ELEMENT.duration) /2);
+        console.log(selectedTime);
+        //check the chosen time is within bounds, then update the video's current play time...
+        if (selectedTime >= 0 && selectedTime <= VIDEO_PLAYER_ELEMENT.duration){
+          //it's within bounds - use it!
+          VIDEO_PLAYER_ELEMENT.currentTime = selectedTime;
+        }
+    });
+
     //Bind some keyboard shortcuts... (thanks Mousetrap for making this pleasant!)
     Mousetrap.bind('space', function () { /*play/pause the video by simulating a play/pause click with jQuery */
         $(PLAY_PAUSE_SELECTOR).trigger('click');
