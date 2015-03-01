@@ -915,7 +915,7 @@ $(document).ready(function () {
         var x = ev.clientX - offset.left;
 
         //x contains where the user clicked within the bar... let's turn this into something useful...
-        var selectedTime = Math.floor((x / VIDEO_PLAYER_ELEMENT.duration) /2);
+        var selectedTime = ((x / VIDEO_PLAYER_ELEMENT.duration) /2);
         console.log(selectedTime);
         //check the chosen time is within bounds, then update the video's current play time...
         if (selectedTime >= 0 && selectedTime <= VIDEO_PLAYER_ELEMENT.duration){
