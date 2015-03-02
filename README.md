@@ -7,7 +7,7 @@ Ham Sandwich
 Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful-links
 
 ##Libraries we've used
-* [jQuery](https://code.google.com/p/crypto-js/)
+* [jQuery](http://jquery.com/)
 * [Crypto-JS](https://code.google.com/p/crypto-js/)
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/icons/)
 * [Mousetrap](http://craig.is/killing/mice)
