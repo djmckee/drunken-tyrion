@@ -34,6 +34,13 @@ var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
 var FORM_LINK_FIELD = '#form-annotation-link';
 
+
+var FORM_IMAGE_URL_FIELD = '#form-image-url';
+var TEXT_TAB_LINK = '#textTab';
+var IMAGE_TAB_LINK = '#imageTab';
+var TEXT_TAB_CONTENT = '#textTabContent';
+var IMAGE_TAB_CONTENT = '#imageTabContent';
+
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
 var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
@@ -79,6 +86,9 @@ var zIndex = 3000; //starts at 3000
 
 //if we're skipping via the progress bar, we wanna add *all* possible annotations to screen during the next call of update...
 var isSkipping = false;
+
+//default tab is text
+var tab = 1;
 
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
@@ -458,6 +468,24 @@ function saveAnnotationButtonClicked() {
     //get how long the annotation should run for
     var time = $(FORM_LENGTH_FIELD).val();
 
+    //see if it's an image annotation?
+    var imageUrl = $(FORM_IMAGE_URL_FIELD).val();
+
+    //if there's something there, validate it...
+    if (imageUrl != null){
+      if (isValidUrl(imageUrl) || imageUrl.length < 4){
+        //it's valid
+        //make title nothing... (1 blank char. to pass validation later on!)
+        title = ' ';
+
+      } else {
+        //INVALID!
+        //warn user, give up, go home.
+        alert('Invalid image URL! Please check and try again...');
+        return;
+      }
+    }
+
     //and allow the adding of more annotations...
     $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
 
@@ -515,7 +543,7 @@ function saveAnnotationButtonClicked() {
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour, link);
+        var newAnnotation = new annotation(title, imageUrl, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
@@ -594,6 +622,16 @@ function updateProgressBar() {
     bar.innerHTML = percent + "%";
 }
 
+//the following function's regex was from http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
+function isValidUrl(url){
+  //ugly ugly regex checking provided by http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
+  if(/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function populateAnnotationsList() {
     //sort the array so earlier annotations come first...
     annotationsArray.sort(function (a, b) {
@@ -611,8 +649,21 @@ function populateAnnotationsList() {
         //get the current list item...
         var currentAnnotation = annotationsArray[i];
 
+        //assume it's a text annotation...
+        var annotationTypeString = 'Text annotation';
+
+        //check to see if it's a fancy image one?
+        var imageElement = '';
+        if (currentAnnotation.imageUrl != null){
+          //okay there's an image url... it's actually an image annotation...
+          annotationTypeString = 'Image annotation';
+
+          //create an image tag...
+          imageElement = '<img style="width: 100%; height: auto; margin-top: 5px;" src="' + currentAnnotation.imageUrl + '"/>';
+        }
+
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div></li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
@@ -737,6 +788,9 @@ $(document).ready(function () {
     //hide annotation form
     $(ANNOTATION_FORM_SELECTOR).hide();
 
+    //hide image tab in annotation form
+    $(IMAGE_TAB_CONTENT).hide();
+
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
     $(VIDEO_SELECTOR).bind('play', function () {
@@ -850,6 +904,33 @@ $(document).ready(function () {
             $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
         }
+    });
+
+    //tab work
+    $(TEXT_TAB_LINK).click(function(){
+      //show/hide relevant blocks
+      $(TEXT_TAB_CONTENT).show();
+      $(IMAGE_TAB_CONTENT).hide();
+
+      //highlight the correct tab
+      $(TEXT_TAB_LINK).addClass("selected");
+      $(IMAGE_TAB_LINK).removeClass("selected");
+
+      //so we can distinguish between the tabs (for input handling)
+      tab = 1;
+    });
+
+    $(IMAGE_TAB_LINK).click(function(){
+      //show/hide relevant blocks
+      $(IMAGE_TAB_CONTENT).show();
+      $(TEXT_TAB_CONTENT).hide();
+
+      //highlight the correct tab
+      $(IMAGE_TAB_LINK).addClass("selected");
+      $(TEXT_TAB_LINK).removeClass("selected");
+
+      //so we can distinguish between the tabs (for input handling)
+      tab = 2;
     });
 
     //hidey-show

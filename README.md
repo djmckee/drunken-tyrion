@@ -20,3 +20,4 @@ Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful
 * http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
 * http://cssdeck.com/labs/styling-html5-progress-bars
 * http://stackoverflow.com/questions/20793506/html-progress-bar-click-and-update
+* http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin

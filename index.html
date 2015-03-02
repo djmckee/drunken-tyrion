@@ -12,18 +12,34 @@
 <body>
 	<div id="container">
 		<div id="addAnnotationForm">
-			<form>
-				<textarea name="annotationText" id="form-annotation-text" rows=5 cols=23 placeholder="Enter your annotation text here..."></textarea>
-				<br />
-				Length (seconds): <input type="text" name="length" size=3 value="2" id="form-annotation-length" />
-				<br />
-				<div class="form-colour-container">Colour:<div id="background-colour-button" class="colour-button"></div></div>
-				<div class="form-colour-container">Text:<div id="text-colour-button" class="colour-button"></div></div>
-				<br />
-				<br />
-				<a class="control" id="saveAddForm">Save</a>
-				<a class="control" id="cancelAddForm">Cancel</a>
-			</form>
+			<ul id="tabNav">
+				<li><a href="#" class="control selected" id="textTab">Text</a></li>
+				<li><a href="#" class="control" id="imageTab">Image</a></li>
+			</ul>
+			<div id="textTabContent">
+				<form>
+					<textarea name="annotationText" id="form-annotation-text" rows=5 cols=23 placeholder="Enter your annotation text here..."></textarea>
+					<br />
+					<div class="form-colour-container">Colour:<div id="background-colour-button" class="colour-button"></div></div>
+					<div class="form-colour-container">Text:<div id="text-colour-button" class="colour-button"></div></div>
+					
+				</form>
+			</div>
+
+			<div id="imageTabContent">
+				<h2>Image URL</h2>
+				<form>
+					<input type="text" name="image-url" size=26 value="" id="form-image-url" placeholder="http://google.com/cool-img.jpg" />
+					<br />
+
+				</form>
+			</div>
+			<br />
+			Length (seconds): <input type="text" name="length" size=3 value="2" id="form-annotation-length" />
+			<br />
+			<br />
+			<a class="control" id="saveAddForm">Save</a>
+			<a class="control" id="cancelAddForm">Cancel</a>
 		</div>
     <div id="vidTitle">
       <h1 id="title">Video Title</h1>
