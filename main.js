@@ -701,7 +701,7 @@ function populateAnnotationsList() {
             else {
                 linkFormatted = currentAnnotation.link;
             }
-            linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link + '" target="_blank">' + linkFormatted + '</a></div>';
+            linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link + '" target="_blank"><i class="fa fa-link"></i> ' + linkFormatted + '</a></div>';
         }
 
         console.log(linkText);

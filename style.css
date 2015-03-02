@@ -290,8 +290,6 @@ progress::-webkit-progress-value {
 .annotationLink{
 	font-size: 60%;
 	margin-top: 5px;
-	padding-left: 15px;
-	background-image: url('resources/EmbedBtn.png');
 	background-repeat: no-repeat;
 	background-size: auto 10px;
 }
