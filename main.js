@@ -654,7 +654,7 @@ function populateAnnotationsList() {
 
         //check to see if it's a fancy image one?
         var imageElement = '';
-        if (currentAnnotation.imageUrl != null){
+        if (currentAnnotation.imageUrl != null && currentAnnotation.imageUrl.length > 0){
           //okay there's an image url... it's actually an image annotation...
           annotationTypeString = 'Image annotation';
 
