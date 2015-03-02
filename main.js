@@ -146,7 +146,7 @@ function addAnnotationToScreen(a) {
     }
 
     //create our annotation html...
-    var annotationHtmlElement = '<div class="annotation-on-screen" data-easyannotation-annotation-href="' + annotationLink + '" id="' + id + '"></div>';
+    var annotationHtmlElement = '<div class="annotation-on-screen" data-easyannotation-annotation-href="' + annotationLink + '" title="' + annotationLink + '" id="' + id + '"></div>';
 
     //work out the current annotation's selector so we can select and set attributes in jQuery
     var annotationSelector = 'div#' + id;
@@ -693,7 +693,7 @@ function populateAnnotationsList() {
           else{
             linkFormatted = currentAnnotation.link;
           }
-          linkText = '<div class="annotationLink">' + linkFormatted + '</div>';
+          linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link +'" target="_blank">' + linkFormatted + '</a></div>';
         }
 
         console.log(linkText);
@@ -908,8 +908,12 @@ $(document).ready(function () {
         var href = $(this).data('easyannotation-annotation-href');
         if (href.length > 1){
           //there's a link (maybes!)
-          //pause the video and open it...
-          $(PLAY_PAUSE_SELECTOR).trigger('click');
+          //check the video's not already paused...
+          if (!VIDEO_PLAYER_ELEMENT.paused) {
+            //pause the video and open it...
+            $(PLAY_PAUSE_SELECTOR).trigger('click');
+          }
+          //now open the link (in a new tab)
           window.open(href, '_blank');
           //debugging: console.log(href);
         }

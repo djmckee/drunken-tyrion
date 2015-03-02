@@ -293,3 +293,8 @@ progress::-webkit-progress-value {
 	background-repeat: no-repeat;
 	background-size: auto 10px;
 }
+
+.annotationLink a, .annotationLink a:hover, .annotationLink a:visited{
+	text-decoration: none;
+	color: #AAAAAA;
+}
