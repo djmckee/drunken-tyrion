@@ -463,6 +463,9 @@ function saveAnnotationButtonClicked() {
     if (imageUrl != null){
       if (isValidUrl(imageUrl) || imageUrl.length < 4){
         //it's valid
+        //make title nothing... (1 blank char. to pass validation later on!)
+        title = ' ';
+
       } else {
         //INVALID!
         //warn user, give up, go home.
@@ -527,7 +530,7 @@ function saveAnnotationButtonClicked() {
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
+        var newAnnotation = new annotation(title, imageUrl, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
@@ -636,13 +639,17 @@ function populateAnnotationsList() {
         var annotationTypeString = 'Text annotation';
 
         //check to see if it's a fancy image one?
+        var imageElement = '';
         if (currentAnnotation.imageUrl != null){
           //okay there's an image url... it's actually an image annotation...
           annotationTypeString = 'Image annotation';
+
+          //create an image tag...
+          imageElement = '<img style="width: 100%; height: auto; margin-top: 5px;" src="' + currentAnnotation.imageUrl + '"/>';
         }
 
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div></li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
