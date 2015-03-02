@@ -32,6 +32,9 @@ var FORM_SAVE_BUTTON = 'a#saveAddForm';
 var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
+
+
+var FORM_IMAGE_URL_FIELD = '#form-image-url';
 var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
 var TEXT_TAB_CONTENT = '#textTabContent';
@@ -452,6 +455,21 @@ function saveAnnotationButtonClicked() {
 
     //get how long the annotation should run for
     var time = $(FORM_LENGTH_FIELD).val();
+
+    //see if it's an image annotation?
+    var imageUrl = $(FORM_IMAGE_URL_FIELD).val();
+
+    //if there's something there, validate it...
+    if (imageUrl != null){
+      if (isValidUrl(imageUrl) || imageUrl.length < 4){
+        //it's valid
+      } else {
+        //INVALID!
+        //warn user, give up, go home.
+        alert('Invalid image URL! Please check and try again...');
+        return;
+      }
+    }
 
     //and allow the adding of more annotations...
     $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
