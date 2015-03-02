@@ -13,8 +13,8 @@
 	<div id="container">
 		<div id="addAnnotationForm">
 			<ul id="tabNav">
-				<li><a href="#" class="control selected" id="textTab">Text</a></li>
-				<li><a href="#" class="control" id="imageTab">Image</a></li>
+				<li><a href="#" class="control selected no-select" id="textTab">Text</a></li>
+				<li><a href="#" class="control no-select" id="imageTab">Image</a></li>
 			</ul>
 			<div id="textTabContent">
 				<form>
@@ -39,8 +39,8 @@
 			Length (seconds): <input type="text" name="length" size=3 value="2" id="form-annotation-length" />
 			<br />
 			<br />
-			<a class="control" id="saveAddForm">Save</a>
-			<a class="control" id="cancelAddForm">Cancel</a>
+			<a class="control no-select" id="saveAddForm">Save</a>
+			<a class="control no-select" id="cancelAddForm">Cancel</a>
 
 		</div>
     <div id="vidTitle">
@@ -71,18 +71,18 @@
 		</div>
 		<div id="controls">
 		<p>
-			<a id="playPauseButton" class="control player-button"><i class="fa fa-play"></i></a>
+			<a id="playPauseButton" class="control player-button no-select"><i class="fa fa-play"></i></a>
 
 			<progress id="progress" max="100" value="0">% played</progress>
 			<span id="play-time">0:00</span>
-			<a class="control player-button" id="volume-down"><i class="fa fa-volume-down"></i></a>
-			<a class="control player-button" id="volume-up"><i class="fa fa-volume-up"></i></a>
+			<a class="control player-button no-select" id="volume-down"><i class="fa fa-volume-down"></i></a>
+			<a class="control player-button no-select" id="volume-up"><i class="fa fa-volume-up"></i></a>
 			<br />
 			<br />
 			<br />
-			<a id="hidey-showy" class="control padded-button player-button">Hide Annotation List</a>
-			<a id="delete-everything-button" class="control padded-button player-button">Clear all annotations forever</a>
-			<a id="toggle-annotations-button" class="control padded-button player-button">Turn off annotations</a>
+			<a id="hidey-showy" class="control padded-button player-button no-select">Hide Annotation List</a>
+			<a id="delete-everything-button" class="control padded-button player-button no-select">Clear all annotations forever</a>
+			<a id="toggle-annotations-button" class="control padded-button player-button no-select">Turn off annotations</a>
 		</p>
 		</div>
 

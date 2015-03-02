@@ -208,6 +208,8 @@ function addAnnotationToScreen(a) {
         "color": textColour
     });
 
+    //add the no-select class - selecting annotation text does not look pro
+    $(annotationSelector).addClass('no-select');
 
     var annotationString = a.textString;
 
