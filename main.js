@@ -90,6 +90,12 @@ var isSkipping = false;
 //default tab is text
 var tab = 1;
 
+//default font size is 16
+var fontSize = 16;
+
+//font size for larger video is 1.5x larger (like the video)
+var largerFontSize = fontSize * ANTI_ROC_SOC_CONSTANT;
+
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
     this.textString = text;
@@ -203,7 +209,8 @@ function addAnnotationToScreen(a) {
         "max-height": maxHeight,
         "z-index": a.zIndex,
         "background-color": annotationColour,
-        "color": textColour
+        "color": textColour,
+        "font-size": fontSize
     });
 
 
@@ -978,8 +985,10 @@ $(document).ready(function () {
                     width: newWidth + 'px',
                     height: newHeight + 'px',
                     left: newX + 'px',
-                    top: newY + 'px'
+                    top: newY + 'px',
                 });
+
+                $(this).css('font-size', fontSize + 'px');
 
                 console.log('Annotation style adjusted for smaller video size.');
             });
@@ -1021,9 +1030,12 @@ $(document).ready(function () {
                     width: newWidth + 'px',
                     height: newHeight + 'px',
                     left: newX + 'px',
-                    top: newY + 'px'
+                    top: newY + 'px',
                 });
 
+                $(this).css('font-size', largerFontSize + 'px');
+
+                console.log(fontSize);
                 console.log('Annotation style adjusted for larger video size.');
             });
 

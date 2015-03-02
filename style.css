@@ -280,3 +280,7 @@ progress::-webkit-progress-value {
 #tabNav .selected{
 	background-color: #AAAAAA;
 }
+
+.annotation-on-screen{
+	font-size: 16px;
+}
