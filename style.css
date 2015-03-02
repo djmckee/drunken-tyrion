@@ -277,6 +277,6 @@ progress::-webkit-progress-value {
 	display: inline;
 }
 
-#tabNav > #selected{
+#tabNav .selected{
 	background-color: #AAAAAA;
 }

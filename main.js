@@ -32,6 +32,10 @@ var FORM_SAVE_BUTTON = 'a#saveAddForm';
 var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
+var TEXT_TAB_LINK = '#textTab';
+var IMAGE_TAB_LINK = '#imageTab';
+var TEXT_TAB_CONTENT = '#textTabContent';
+var IMAGE_TAB_CONTENT = '#imageTabContent';
 
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
@@ -78,6 +82,9 @@ var zIndex = 3000; //starts at 3000
 
 //if we're skipping via the progress bar, we wanna add *all* possible annotations to screen during the next call of update...
 var isSkipping = false;
+
+//default tab is text
+var tab = 1;
 
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour) {
@@ -723,6 +730,9 @@ $(document).ready(function () {
     //hide annotation form
     $(ANNOTATION_FORM_SELECTOR).hide();
 
+    //hide image tab in annotation form
+    $(IMAGE_TAB_CONTENT).hide();
+
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
     $(VIDEO_SELECTOR).bind('play', function () {
@@ -836,6 +846,33 @@ $(document).ready(function () {
             $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
         }
+    });
+
+    //tab work
+    $(TEXT_TAB_LINK).click(function(){
+      //show/hide relevant blocks
+      $(TEXT_TAB_CONTENT).show();
+      $(IMAGE_TAB_CONTENT).hide();
+
+      //highlight the correct tab
+      $(TEXT_TAB_LINK).addClass("selected");
+      $(IMAGE_TAB_LINK).removeClass("selected");
+
+      //so we can distinguish between the tabs (for input handling)
+      tab = 1;
+    });
+
+    $(IMAGE_TAB_LINK).click(function(){
+      //show/hide relevant blocks
+      $(IMAGE_TAB_CONTENT).show();
+      $(TEXT_TAB_CONTENT).hide();
+
+      //highlight the correct tab
+      $(IMAGE_TAB_LINK).addClass("selected");
+      $(TEXT_TAB_LINK).removeClass("selected");
+
+      //so we can distinguish between the tabs (for input handling)
+      tab = 2;
     });
 
     //hidey-show
