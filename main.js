@@ -33,7 +33,7 @@ var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
 var FORM_LINK_FIELD = '#form-annotation-link';
-
+var CANVAS_SELECTOR = 'canvas';
 
 var FORM_IMAGE_URL_FIELD = '#form-image-url';
 var TEXT_TAB_LINK = '#textTab';
