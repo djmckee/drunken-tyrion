@@ -298,3 +298,9 @@ progress::-webkit-progress-value {
 	text-decoration: none;
 	color: #AAAAAA;
 }
+
+/* override fugly default styles that firefox has */
+form textarea, form input {
+	font-family: 'Roboto Condensed', sans-serif;
+	width: 100%;
+}
