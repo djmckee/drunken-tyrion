@@ -287,5 +287,10 @@ progress::-webkit-progress-value {
 
 .annotationLink{
 	font-size: 60%;
-	margin-top: 5px;	
+	margin-top: 5px;
+}
+
+.annotationLink a, .annotationLink a:hover, .annotationLink a:visited{
+	text-decoration: none;
+	color: #AAAAAA;
 }
