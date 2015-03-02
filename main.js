@@ -683,8 +683,16 @@ function populateAnnotationsList() {
           imageElement = '<img style="width: 100%; height: auto; margin-top: 5px;" src="' + currentAnnotation.imageUrl + '"/>';
         }
 
+        var linkText = '';
+        console.log(currentAnnotation.link);
+        if(currentAnnotation.link != null){
+          linkText = '<div class="annotationLink">' + currentAnnotation.link + '</div>';
+        }
+
+        console.log(linkText);
+
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div>' + linkText + '</li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }

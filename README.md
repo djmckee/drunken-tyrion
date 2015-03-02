@@ -4,6 +4,8 @@
 
 Ham Sandwich
 
+**Programmer Excuse of the Day: "Oh, you said you DIDN'T want that to happen?"**
+
 Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful-links
 
 ##Libraries we've used
