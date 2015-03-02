@@ -701,7 +701,7 @@ function populateAnnotationsList() {
             else {
                 linkFormatted = currentAnnotation.link;
             }
-            linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link + '" target="_blank"><i class="fa fa-link"></i> ' + linkFormatted + '</a></div>';
+            linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link + '" target="_blank"><i class="fa fa-link"></i>&nbsp;' + linkFormatted + '</a></div>';
         }
 
         console.log(linkText);
@@ -1166,6 +1166,10 @@ $(document).ready(function () {
     Mousetrap.bind('a', function () { /* toggle annotations... */
         $(TOGGLE_ANNOTATIONS_BUTTON).trigger('click');
     });
-
+    Mousetrap.bind('esc', function() {
+      canDraw = false;
+      $(INFORMATION_TEXT_SELECTOR).text('');
+      $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
+    });
 
 });
