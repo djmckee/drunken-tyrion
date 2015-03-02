@@ -908,8 +908,12 @@ $(document).ready(function () {
         var href = $(this).data('easyannotation-annotation-href');
         if (href.length > 1){
           //there's a link (maybes!)
-          //pause the video and open it...
-          $(PLAY_PAUSE_SELECTOR).trigger('click');
+          //check the video's not already paused...
+          if (!VIDEO_PLAYER_ELEMENT.paused) {
+            //pause the video and open it...
+            $(PLAY_PAUSE_SELECTOR).trigger('click');
+          }
+          //now open the link (in a new tab)
           window.open(href, '_blank');
           //debugging: console.log(href);
         }
