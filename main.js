@@ -146,7 +146,7 @@ function addAnnotationToScreen(a) {
     }
 
     //create our annotation html...
-    var annotationHtmlElement = '<div class="annotation-on-screen" data-easyannotation-annotation-href="' + annotationLink + '" id="' + id + '"></div>';
+    var annotationHtmlElement = '<div class="annotation-on-screen" data-easyannotation-annotation-href="' + annotationLink + '" title="' + annotationLink + '" id="' + id + '"></div>';
 
     //work out the current annotation's selector so we can select and set attributes in jQuery
     var annotationSelector = 'div#' + id;
@@ -693,7 +693,7 @@ function populateAnnotationsList() {
           else{
             linkFormatted = currentAnnotation.link;
           }
-          linkText = '<div class="annotationLink"><a href="' + currentAnnotation.link +'" target="_blank">' + linkFormatted + '</a></div>';
+          linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link +'" target="_blank">' + linkFormatted + '</a></div>';
         }
 
         console.log(linkText);
