@@ -139,8 +139,14 @@ function addAnnotationToScreen(a) {
     //get a unique id first...
     var id = uniqueIdForAnnotation(a);
 
+    var annotationLink = '';
+
+    if(a.link != null && a.link.length > 0){
+      annotationLink = a.link;
+    }
+
     //create our annotation html...
-    var annotationHtmlElement = '<div class="annotation-on-screen" id="' + id + '"></div>';
+    var annotationHtmlElement = '<div class="annotation-on-screen" data-easyannotation-annotation-href="' + annotationLink + '" id="' + id + '"></div>';
 
     //work out the current annotation's selector so we can select and set attributes in jQuery
     var annotationSelector = 'div#' + id;
@@ -212,10 +218,6 @@ function addAnnotationToScreen(a) {
     }
 
     annotationString = '<p>' + annotationString + '</p>'
-
-    if(a.link != null && a.link.length > 0){
-      annotationString = '<a href="' + a.link + '">' + annotationString + '</a>';
-    }
 
     $(annotationSelector).html(annotationString);
 
@@ -884,6 +886,17 @@ $(document).ready(function () {
         var index = $(this).data('easyannotation-annotation-id');
         //call the remove function, passing in the index from within the remove button's data attribute...
         deleteAnnotationAtIndex(index);
+    });
+
+    $(document).on('click', ANNOTATIONS_ON_SCREEN_SELECTOR, function () {
+        console.log('clicked annotation...');
+        var href = $(this).data('easyannotation-annotation-href');
+        if (href.length > 1){
+          //there's a link (maybes!)
+          //pause the video and open it...
+          window.open(href, '_blank');
+          console.log(href);
+        }
     });
 
     $(VOLUME_UP_SELECTOR).click(function () {

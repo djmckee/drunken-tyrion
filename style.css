@@ -117,7 +117,7 @@ body{
 #vid-canvas {
 	/* this makes box drawing actually work - pls don't break */
 	position: absolute;
-	z-index: 4000;
+	z-index: 2000;
 	margin: 0;
 	padding: 0;
 }
