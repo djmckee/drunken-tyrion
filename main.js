@@ -463,6 +463,9 @@ function saveAnnotationButtonClicked() {
     if (imageUrl != null){
       if (isValidUrl(imageUrl) || imageUrl.length < 4){
         //it's valid
+        //make title nothing... (1 blank char. to pass validation later on!)
+        title = ' ';
+
       } else {
         //INVALID!
         //warn user, give up, go home.
@@ -527,7 +530,7 @@ function saveAnnotationButtonClicked() {
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
+        var newAnnotation = new annotation(title, imageUrl, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
