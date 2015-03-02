@@ -472,8 +472,8 @@ function saveAnnotationButtonClicked() {
     var imageUrl = $(FORM_IMAGE_URL_FIELD).val();
 
     //if there's something there, validate it...
-    if (imageUrl != null){
-      if (isValidUrl(imageUrl) || imageUrl.length < 4){
+    if (imageUrl != null && imageUrl.length > 0){
+      if (isValidUrl(imageUrl) && imageUrl.length > 4){
         //it's valid
         //make title nothing... (1 blank char. to pass validation later on!)
         title = ' ';
