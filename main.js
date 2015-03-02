@@ -90,6 +90,9 @@ var isSkipping = false;
 //default tab is text
 var tab = 1;
 
+//default font size is 16
+var fontSize = 16;
+
 //  annotation object prototype.
 function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
     this.textString = text;
@@ -973,6 +976,8 @@ $(document).ready(function () {
 
             var ROC_SOC_CONSTANT = 0.666;
 
+            fontSize = fontSize * ROC_SOC_CONSTANT;
+
             //redraw the annotations so they fit the video
             $('.annotation-on-screen').each(function (i, obj) {
                 var currentWidth = $(this).width();
@@ -1016,6 +1021,10 @@ $(document).ready(function () {
             canvas.width = LARGE_VID_WIDTH;
             canvas.height = (LARGE_VID_WIDTH * VID_WIDTH_TO_HEIGHT_MULTIPLIER);
 
+            console.log(fontSize);
+
+            fontSize = fontSize * ANTI_ROC_SOC_CONSTANT;
+
             //redraw the annotations so they fit the video
             $('.annotation-on-screen').each(function (i, obj) {
                 var currentWidth = $(this).width();
@@ -1035,6 +1044,9 @@ $(document).ready(function () {
                     top: newY + 'px'
                 });
 
+                $(this).css('font-size', fontSize + 'px');
+
+                console.log(fontSize);
                 console.log('Annotation style adjusted for larger video size.');
             });
 
