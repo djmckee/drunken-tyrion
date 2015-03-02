@@ -515,10 +515,8 @@ function saveAnnotationButtonClicked() {
     //close the form...
     toggleAddAnnotationForm();
 
-    //and clear the old values to defaults so new annotations don't have set ones...
-    $(FORM_TEXT_FIELD).val("");
-    $(FORM_LINK_FIELD).val("");
-    $(FORM_LENGTH_FIELD).val("2");
+    //clear form values back to the default...
+    resetFormValues();
 
     //if the time entered isn't an integer set the time to 2 seconds
     if (time == null || isNaN(time)) {
@@ -586,15 +584,21 @@ function saveAnnotationButtonClicked() {
     }
 }
 
+function resetFormValues(){
+    //and clear the old values to defaults so new annotations don't have set ones...
+    $(FORM_TEXT_FIELD).val("");
+    $(FORM_LINK_FIELD).val("");
+    $(FORM_IMAGE_URL_FIELD).val("");
+    $(FORM_LENGTH_FIELD).val("2");
+}
+
 function cancelAnnotationFormButtonClicked() {
     //give up and go home.
     //close the form...
     toggleAddAnnotationForm();
 
     //and clear the old values to defaults so new annotations don't have set ones...
-    $(FORM_TEXT_FIELD).val("");
-    $(FORM_LINK_FIELD).val("");
-    $(FORM_LENGTH_FIELD).val("2");
+    resetFormValues();
 
     //and allow the adding of more annotations...
     $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
