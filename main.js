@@ -684,9 +684,16 @@ function populateAnnotationsList() {
         }
 
         var linkText = '';
+        var linkFormatted = '';
         console.log(currentAnnotation.link);
         if(currentAnnotation.link != null){
-          linkText = '<div class="annotationLink">' + currentAnnotation.link + '</div>';
+          if(currentAnnotation.link.length > 35){
+            linkFormatted = currentAnnotation.link.substring(0, 32) + "...";
+          }
+          else{
+            linkFormatted = currentAnnotation.link;
+          }
+          linkText = '<div class="annotationLink">' + linkFormatted + '</div>';
         }
 
         console.log(linkText);
