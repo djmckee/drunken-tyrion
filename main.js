@@ -894,8 +894,9 @@ $(document).ready(function () {
         if (href.length > 1){
           //there's a link (maybes!)
           //pause the video and open it...
+          $(PLAY_PAUSE_SELECTOR).trigger('click');
           window.open(href, '_blank');
-          console.log(href);
+          //debugging: console.log(href);
         }
     });
 
