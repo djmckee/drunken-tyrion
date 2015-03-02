@@ -225,7 +225,7 @@ function addAnnotationToScreen(a) {
     $(annotationSelector).text(annotationString);
 
     //if there's an image, add it...
-    if (a.imageUrl != null) {
+    if (a.imageUrl != null && a.imageUrl.length > 1) {
         //create an image tag...
         var imageElement = '<img src="' + a.imageUrl + '"/>';
 
