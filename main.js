@@ -32,6 +32,7 @@ var FORM_SAVE_BUTTON = 'a#saveAddForm';
 var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
+var FORM_LINK_FIELD = '#form-annotation-link';
 
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
@@ -80,7 +81,7 @@ var zIndex = 3000; //starts at 3000
 var isSkipping = false;
 
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour) {
+function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
     this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
@@ -92,6 +93,7 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.zIndex = zIndex;
     this.backgroundColour = backgroundColour;
     this.textColour = textColour;
+    this.link = link;
 }
 
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
@@ -108,7 +110,7 @@ function uniqueIdForAnnotation(a) {
 }
 
 function testAnnotation(name) {
-    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR, DEFAULT_TEXT_COLOUR);
+    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR, DEFAULT_TEXT_COLOUR, null);
     annotationsArray.push(newAnnotation);
     console.log(annotationsArray);
 
@@ -125,8 +127,15 @@ function addAnnotationToScreen(a) {
     var id = uniqueIdForAnnotation(a);
 
     //create our annotation html...
-    var annotationHtmlElement = '<div class="annotation-on-screen" id="' + id + '"></div>';
-
+    //divs arent clickable fml pls fix :)
+    var annotationHtmlElement = '';
+    if(a.link != null){
+      annotationHtmlElement += '<a href="' + a.link + '">';
+    }
+    annotationHtmlElement += '<div class="annotation-on-screen" id="' + id + '"></div>';
+    if(a.link != null){
+      annotationHtmlElement += '</a>';
+    }
     //work out the current annotation's selector so we can select and set attributes in jQuery
     var annotationSelector = 'div#' + id;
 
@@ -443,6 +452,9 @@ function saveAnnotationButtonClicked() {
     //get a title from our fanciful form.
     var title = $(FORM_TEXT_FIELD).val();
 
+    //get the what the form links to
+    var link = $(FORM_LINK_FIELD).val();
+
     //get how long the annotation should run for
     var time = $(FORM_LENGTH_FIELD).val();
 
@@ -454,6 +466,7 @@ function saveAnnotationButtonClicked() {
 
     //and clear the old values to defaults so new annotations don't have set ones...
     $(FORM_TEXT_FIELD).val("");
+    $(FORM_LINK_FIELD).val("");
     $(FORM_LENGTH_FIELD).val("2");
 
     //if the time entered isn't an integer set the time to 2 seconds
@@ -502,7 +515,7 @@ function saveAnnotationButtonClicked() {
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
+        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour, link);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
@@ -529,6 +542,7 @@ function cancelAnnotationFormButtonClicked() {
 
     //and clear the old values to defaults so new annotations don't have set ones...
     $(FORM_TEXT_FIELD).val("");
+    $(FORM_LINK_FIELD).val("");
     $(FORM_LENGTH_FIELD).val("2");
 
     //and allow the adding of more annotations...
