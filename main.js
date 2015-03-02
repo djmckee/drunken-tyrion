@@ -144,6 +144,15 @@ function addAnnotationToScreen(a) {
         width = 30;
     }
 
+    width = (width * vidWidth / DEFAULT_VID_WIDTH);
+    height = (height * vidWidth / DEFAULT_VID_WIDTH);
+    var x = (a.xPosition * vidWidth / DEFAULT_VID_WIDTH);
+    var y = (a.yPosition * vidWidth / DEFAULT_VID_WIDTH);
+
+    //we don't want annotations to end up bigger than the player...
+    var maxHeight = ((vidWidth * VID_WIDTH_TO_HEIGHT_MULTIPLIER) - y);
+    var maxWidth = (vidWidth - x);
+
     //try the default colour...
     var annotationColour = DEFAULT_ANNOTATION_COLOUR;
 
@@ -152,18 +161,22 @@ function addAnnotationToScreen(a) {
         annotationColour = a.backgroundColour;
     }
 
+
     //set height and width, and a high z-index so it shows over the video.
     $(annotationSelector).css({
-        "width": (width * vidWidth / DEFAULT_VID_WIDTH),
-        "height": (height * vidWidth / DEFAULT_VID_WIDTH),
+        "width": width,
+        "height": height,
         "position": "absolute",
         "padding": "5px",
         "overflow": "auto",
-        "top": (a.yPosition * vidWidth / DEFAULT_VID_WIDTH),
-        "left": (a.xPosition * vidWidth / DEFAULT_VID_WIDTH),
+        "top": y,
+        "left": x,
+        "max-width": maxWidth,
+        "max-height": maxHeight,
         "z-index": a.zIndex,
         "background-color": annotationColour
     });
+
 
     var annotationString = a.textString;
 
