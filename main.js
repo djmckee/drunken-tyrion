@@ -791,6 +791,12 @@ $(document).ready(function () {
     //hide image tab in annotation form
     $(IMAGE_TAB_CONTENT).hide();
 
+    //make div clickable!!!
+    $(ANNOTATIONS_ON_SCREEN_SELECTOR).click(function() {
+      window.location = $(this).find("a").attr("href");
+      return false;
+      });
+
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
 
     $(VIDEO_SELECTOR).bind('play', function () {
