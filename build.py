@@ -105,4 +105,4 @@ with open (input_file_name) as html_file:
 
     except:
         print '\n  ___\n /~ ~\   ___________________________\n| 0 0 | /"' + "I'm so so sorry :'(" + '" /\n|  ^  |-----------------------------\n|  O  |\n \\___/\n'
-        print "Sorry, I can't validate your XHTML at the moment."
+        print "Sorry, I can't validate your HTML at the moment."
