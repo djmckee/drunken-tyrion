@@ -434,6 +434,8 @@ function addAnnotationClicked() {
     //hide the button just incase...
     $(ADD_BUTTON_SELECTOR).fadeTo("fast", 0);
 
+    $(CANVAS_SELECTOR).css('z-index', 5000);
+
     //allow drawing to start and bring up an info dialog...
     canDraw = true;
 
@@ -459,7 +461,7 @@ function newAnnotationDrawingComplete() {
     //show the add annotation form...
     toggleAddAnnotationForm();
 
-
+    $(CANVAS_SELECTOR).css('z-index', 2000);
 }
 
 function saveAnnotationButtonClicked() {
