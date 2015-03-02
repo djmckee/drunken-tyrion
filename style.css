@@ -79,12 +79,11 @@ body{
 	border-bottom-right-radius: 20px;
 	padding: 5px;
 }
+
 #addAnnotation:hover{
 	background-color: #AAAAAA;
 }
-#addAnnotation:active{
-	background-color: #EE0000;
-}
+
 
 .vidAnnotationType{
 	font-size: 50%;
