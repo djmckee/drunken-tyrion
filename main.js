@@ -214,17 +214,17 @@ function update() {
     //if we're skipping via the progress bar, we want to remove everything, add all possible annotations on screen
     //and then set the skip variable to no, and return.
     if (isSkipping) {
-      //remove any annotations currently on screen - correct ones are gonna be re-drawn next...
-      $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
+        //remove any annotations currently on screen - correct ones are gonna be re-drawn next...
+        $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
-      //draw any annotations on screen that should be on at this second (regardless of wether or not it's their exact start time)
-      putAllCurrentAnnotationsOnScreen();
+        //draw any annotations on screen that should be on at this second (regardless of wether or not it's their exact start time)
+        putAllCurrentAnnotationsOnScreen();
 
-      //set the skipping variable to false so that this doesn't happen every time!
-      isSkipping = false;
+        //set the skipping variable to false so that this doesn't happen every time!
+        isSkipping = false;
 
-      //and return, so as not to draw stuff twice...
-      return;
+        //and return, so as not to draw stuff twice...
+        return;
     }
 
     // we want annotations that have a start time greater than or equal to the current playback time,
@@ -941,16 +941,16 @@ $(document).ready(function () {
         var selectedTime = ((x / VIDEO_PLAYER_ELEMENT.duration) / 2);
         console.log('selected time = ' + selectedTime);
         //check the chosen time is within bounds, then update the video's current play time...
-        if (selectedTime >= 0 && selectedTime <= VIDEO_PLAYER_ELEMENT.duration){
-          //it's within bounds - use it!
+        if (selectedTime >= 0 && selectedTime <= VIDEO_PLAYER_ELEMENT.duration) {
+            //it's within bounds - use it!
 
-          //let the update method know that we're skipping via the progress bar...
-          isSkipping = true;
+            //let the update method know that we're skipping via the progress bar...
+            isSkipping = true;
 
-          //and re-set the video's current time, automagically calling update and all other relevant methods/callbacks with it...
-          VIDEO_PLAYER_ELEMENT.currentTime = selectedTime;
+            //and re-set the video's current time, automagically calling update and all other relevant methods/callbacks with it...
+            VIDEO_PLAYER_ELEMENT.currentTime = selectedTime;
         }
-        
+
     });
 
     //Bind some keyboard shortcuts... (thanks Mousetrap for making this pleasant!)
