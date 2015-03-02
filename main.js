@@ -141,8 +141,8 @@ function addAnnotationToScreen(a) {
 
     var annotationLink = '';
 
-    if(a.link != null && a.link.length > 0){
-      annotationLink = a.link;
+    if (a.link != null && a.link.length > 0) {
+        annotationLink = a.link;
     }
 
     //create our annotation html...
@@ -188,8 +188,8 @@ function addAnnotationToScreen(a) {
     //see if there's a text colour...
     var textColour = DEFAULT_TEXT_COLOUR;
 
-    if (textColour != null){
-      textColour = a.textColour;
+    if (textColour != null) {
+        textColour = a.textColour;
     }
 
     //set height and width, and a high z-index so it shows over the video.
@@ -471,19 +471,19 @@ function saveAnnotationButtonClicked() {
     //get the what the form links to
     var link = $(FORM_LINK_FIELD).val();
 
-    if (link != null && link.length > 0){
-      if (isValidUrl(link) || link.length < 4){
-        // LINK IS VALID!
-        console.log('valid link: ' + link);
-      } else {
-        //INVALID!
-        //warn user, give up, go home.
-        alert('Invalid link URL! Please check and try again...');
-        return;
-      }
+    if (link != null && link.length > 0) {
+        if (isValidUrl(link) || link.length < 4) {
+            // LINK IS VALID!
+            console.log('valid link: ' + link);
+        } else {
+            //INVALID!
+            //warn user, give up, go home.
+            alert('Invalid link URL! Please check and try again...');
+            return;
+        }
 
     } else {
-      link = null;
+        link = null;
     }
 
     //get how long the annotation should run for
@@ -493,20 +493,20 @@ function saveAnnotationButtonClicked() {
     var imageUrl = $(FORM_IMAGE_URL_FIELD).val();
 
     //if there's something there, validate it...
-    if (imageUrl != null && imageUrl.length > 0){
-      if (isValidUrl(imageUrl) || imageUrl.length < 4){
-        //it's valid
-        //make title nothing... (1 blank char. to pass validation later on!)
-        title = ' ';
+    if (imageUrl != null && imageUrl.length > 0) {
+        if (isValidUrl(imageUrl) || imageUrl.length < 4) {
+            //it's valid
+            //make title nothing... (1 blank char. to pass validation later on!)
+            title = ' ';
 
-      } else {
-        //INVALID!
-        //warn user, give up, go home.
-        alert('Invalid image URL! Please check and try again...');
-        return;
-      }
+        } else {
+            //INVALID!
+            //warn user, give up, go home.
+            alert('Invalid image URL! Please check and try again...');
+            return;
+        }
     } else {
-      imageUrl = null;
+        imageUrl = null;
     }
 
     //and allow the adding of more annotations...
@@ -646,13 +646,13 @@ function updateProgressBar() {
 }
 
 //the following function's regex was from http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
-function isValidUrl(url){
-  //ugly ugly regex checking provided by http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
-  if(/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url)) {
-    return true;
-  } else {
-    return false;
-  }
+function isValidUrl(url) {
+    //ugly ugly regex checking provided by http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
+    if (/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function populateAnnotationsList() {
@@ -677,31 +677,31 @@ function populateAnnotationsList() {
 
         //check to see if it's a fancy image one?
         var imageElement = '';
-        if (currentAnnotation.imageUrl != null){
-          //okay there's an image url... it's actually an image annotation...
-          annotationTypeString = 'Image annotation';
+        if (currentAnnotation.imageUrl != null) {
+            //okay there's an image url... it's actually an image annotation...
+            annotationTypeString = 'Image annotation';
 
-          //create an image tag...
-          imageElement = '<img style="width: 100%; height: auto; margin-top: 5px;" src="' + currentAnnotation.imageUrl + '"/>';
+            //create an image tag...
+            imageElement = '<img style="width: 100%; height: auto; margin-top: 5px;" src="' + currentAnnotation.imageUrl + '"/>';
         }
 
         var linkText = '';
         var linkFormatted = '';
         console.log(currentAnnotation.link);
-        if(currentAnnotation.link != null){
-          if(currentAnnotation.link.length > 35){
-            linkFormatted = currentAnnotation.link.substring(0, 32) + "...";
-          }
-          else{
-            linkFormatted = currentAnnotation.link;
-          }
-          linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link +'" target="_blank">' + linkFormatted + '</a></div>';
+        if (currentAnnotation.link != null) {
+            if (currentAnnotation.link.length > 35) {
+                linkFormatted = currentAnnotation.link.substring(0, 32) + "...";
+            }
+            else {
+                linkFormatted = currentAnnotation.link;
+            }
+            linkText = '<div class="annotationLink" title="' + currentAnnotation.link + '"><a href="' + currentAnnotation.link + '" target="_blank">' + linkFormatted + '</a></div>';
         }
 
         console.log(linkText);
 
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div>' + linkText + '</li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">' + annotationTypeString + '</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: ' + currentAnnotation.textColour + ';">' + imageElement + currentAnnotation.textString + '</div>' + linkText + '</li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
@@ -908,16 +908,16 @@ $(document).ready(function () {
     $(document).on('click', ANNOTATIONS_ON_SCREEN_SELECTOR, function () {
         console.log('clicked annotation...');
         var href = $(this).data('easyannotation-annotation-href');
-        if (href.length > 1){
-          //there's a link (maybes!)
-          //check the video's not already paused...
-          if (!VIDEO_PLAYER_ELEMENT.paused) {
-            //pause the video and open it...
-            $(PLAY_PAUSE_SELECTOR).trigger('click');
-          }
-          //now open the link (in a new tab)
-          window.open(href, '_blank');
-          //debugging: console.log(href);
+        if (href.length > 1) {
+            //there's a link (maybes!)
+            //check the video's not already paused...
+            if (!VIDEO_PLAYER_ELEMENT.paused) {
+                //pause the video and open it...
+                $(PLAY_PAUSE_SELECTOR).trigger('click');
+            }
+            //now open the link (in a new tab)
+            window.open(href, '_blank');
+            //debugging: console.log(href);
         }
     });
 
@@ -962,30 +962,30 @@ $(document).ready(function () {
     });
 
     //tab work
-    $(TEXT_TAB_LINK).click(function(){
-      //show/hide relevant blocks
-      $(TEXT_TAB_CONTENT).show();
-      $(IMAGE_TAB_CONTENT).hide();
+    $(TEXT_TAB_LINK).click(function () {
+        //show/hide relevant blocks
+        $(TEXT_TAB_CONTENT).show();
+        $(IMAGE_TAB_CONTENT).hide();
 
-      //highlight the correct tab
-      $(TEXT_TAB_LINK).addClass("selected");
-      $(IMAGE_TAB_LINK).removeClass("selected");
+        //highlight the correct tab
+        $(TEXT_TAB_LINK).addClass("selected");
+        $(IMAGE_TAB_LINK).removeClass("selected");
 
-      //so we can distinguish between the tabs (for input handling)
-      tab = 1;
+        //so we can distinguish between the tabs (for input handling)
+        tab = 1;
     });
 
-    $(IMAGE_TAB_LINK).click(function(){
-      //show/hide relevant blocks
-      $(IMAGE_TAB_CONTENT).show();
-      $(TEXT_TAB_CONTENT).hide();
+    $(IMAGE_TAB_LINK).click(function () {
+        //show/hide relevant blocks
+        $(IMAGE_TAB_CONTENT).show();
+        $(TEXT_TAB_CONTENT).hide();
 
-      //highlight the correct tab
-      $(IMAGE_TAB_LINK).addClass("selected");
-      $(TEXT_TAB_LINK).removeClass("selected");
+        //highlight the correct tab
+        $(IMAGE_TAB_LINK).addClass("selected");
+        $(TEXT_TAB_LINK).removeClass("selected");
 
-      //so we can distinguish between the tabs (for input handling)
-      tab = 2;
+        //so we can distinguish between the tabs (for input handling)
+        tab = 2;
     });
 
     //hidey-show
