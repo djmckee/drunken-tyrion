@@ -33,8 +33,10 @@ var FORM_CANCEL_BUTTON = 'a#cancelAddForm';
 var FORM_TEXT_FIELD = '#form-annotation-text';
 var FORM_LENGTH_FIELD = '#form-annotation-length';
 
-var COLOUR_BUTTON = "#colour-button";
+var COLOUR_BUTTON = "#background-colour-button";
+var TEXT_COLOUR_BUTTON = "#text-colour-button";
 var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
+var DEFAULT_TEXT_COLOUR = "rgba(0, 0, 0, 1.0)";
 var DEFAULT_VID_WIDTH = 400;
 var LARGE_VID_WIDTH = 600;
 var VID_WIDTH_TO_HEIGHT_MULTIPLIER = 0.55;
@@ -78,7 +80,7 @@ var zIndex = 3000; //starts at 3000
 var isSkipping = false;
 
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour) {
+function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour) {
     this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
@@ -89,6 +91,7 @@ function annotation(text, imageUrl, xPosition, yPosition, width, height, startTi
     this.endTime = endTime;
     this.zIndex = zIndex;
     this.backgroundColour = backgroundColour;
+    this.textColour = textColour;
 }
 
 //create an md5 hash consisting of the annotation's start time, end time, x, y, and text....
@@ -105,7 +108,7 @@ function uniqueIdForAnnotation(a) {
 }
 
 function testAnnotation(name) {
-    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR);
+    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR, DEFAULT_TEXT_COLOUR);
     annotationsArray.push(newAnnotation);
     console.log(annotationsArray);
 
@@ -161,6 +164,12 @@ function addAnnotationToScreen(a) {
         annotationColour = a.backgroundColour;
     }
 
+    //see if there's a text colour...
+    var textColour = DEFAULT_TEXT_COLOUR;
+
+    if (textColour != null){
+      textColour = a.textColour;
+    }
 
     //set height and width, and a high z-index so it shows over the video.
     $(annotationSelector).css({
@@ -174,7 +183,8 @@ function addAnnotationToScreen(a) {
         "max-width": maxWidth,
         "max-height": maxHeight,
         "z-index": a.zIndex,
-        "background-color": annotationColour
+        "background-color": annotationColour,
+        "color": textColour
     });
 
 
@@ -486,10 +496,13 @@ function saveAnnotationButtonClicked() {
     //get a background colour from the colour picker element...
     var backgroundColor = $(COLOUR_BUTTON).css("background-color");
 
+    //try and get a text colour too...
+    var textColour = $(TEXT_COLOUR_BUTTON).css("background-color");
+
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor);
+        var newAnnotation = new annotation(title, null, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
@@ -585,7 +598,7 @@ function populateAnnotationsList() {
         var currentAnnotation = annotationsArray[i];
 
         //formulate our new li HTML...
-        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent">' + currentAnnotation.textString + '</div></li>';
+        var newListElement = '<li class="vidAnnotationListItem" style="background-color: ' + currentAnnotation.backgroundColour + ';" ><a class="removeAnnotation" href="#" data-easyannotation-annotation-id="' + i + '">X</a><div class="vidAnnotationType">Text annotation</div><div class="vidAnnotationTimes">' + formatSecondsToString(currentAnnotation.startTime) + ' - ' + formatSecondsToString(currentAnnotation.endTime) + '</div><div class="vidAnnotationContent" style="color: '  + currentAnnotation.textColour + ';">' + currentAnnotation.textString + '</div></li>';
         //and add it to the end of the list...
         $("ul#vidAnnotationList").append(newListElement);
     }
@@ -691,7 +704,10 @@ function toggleAddAnnotationForm() {
         $('#vidTitle').css('margin-top', '-200px');
         //give it a default colour...
         $(COLOUR_BUTTON).attr('value', DEFAULT_ANNOTATION_COLOUR);
+        $(TEXT_COLOUR_BUTTON).attr('value', DEFAULT_TEXT_COLOUR);
+
         $(COLOUR_BUTTON).colorPicker(); // initialise colour picker
+        $(TEXT_COLOUR_BUTTON).colorPicker();
         isAnnotationFormVisible = true; //since the form is now visible
     }
 }

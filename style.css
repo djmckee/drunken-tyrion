@@ -161,14 +161,17 @@ body{
 	resize: none;
 }
 
-#form-colour-container div{
+.form-colour-container {
+	display: inline;
+}
+
+.form-colour-container div{
 	vertical-align: middle;
 	display: inline-table;
 }
 
 
-
-#colour-button {
+.colour-button {
 	width: 30px;
 	padding: 4px;
 	height: 20px;
