@@ -45,7 +45,7 @@ var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
 var TEXT_TAB_CONTENT = '#textTabContent';
 var IMAGE_TAB_CONTENT = '#imageTabContent';
-
+var FORM_IMAGE_WHITESPACE = '#form-remove-whitespace';
 
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
@@ -559,6 +559,9 @@ function saveAnnotationButtonClicked() {
     //see if it's an image annotation?
     var imageUrl = $(FORM_IMAGE_URL_FIELD).val();
 
+    //see if whitespace box clicked
+    var imageWhitespace = $(FORM_IMAGE_WHITESPACE).val();
+
     //if there's something there, validate it...
     if (imageUrl != null && imageUrl.length > 0) {
         if (isValidUrl(imageUrl) || imageUrl.length < 4) {
@@ -611,6 +614,12 @@ function saveAnnotationButtonClicked() {
 
     if (drawnWidth < 30) {
         drawnWidth = 30;
+    }
+
+    if(imageWhitespace){
+      //user wants the annotation to only be as big as the image
+      console.log('height set to auto as user wanted fitting annotation');
+      drawnHeight = 'auto';
     }
 
     //ensure that annotations can't be outside the video
