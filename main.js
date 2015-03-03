@@ -609,6 +609,9 @@ function updateVideoURLClicked(){
     return false;
   }
 
+  //close the update form - we're happy with the url and we're gonna update...
+  toggleChangeVideoForm();
+
   //set the video unique element id to videoElementID
   $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
 
