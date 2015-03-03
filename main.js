@@ -1167,9 +1167,14 @@ $(document).ready(function () {
         $(TOGGLE_ANNOTATIONS_BUTTON).trigger('click');
     });
     Mousetrap.bind('esc', function() {
-      canDraw = false;
-      $(INFORMATION_TEXT_SELECTOR).text('');
-      $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
+      if( canDraw == true ){
+        canDraw = false;
+        $(INFORMATION_TEXT_SELECTOR).text('');
+        $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
+      }
+      else if( $(ANNOTATION_FORM_SELECTOR).is(':visible') ){
+        cancelAnnotationFormButtonClicked();
+      }
     });
 
 });
