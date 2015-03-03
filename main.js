@@ -373,6 +373,46 @@ function putAllCurrentAnnotationsOnScreen() {
 
 // perform some basic setup tasks such as loading in the existing array of annotations from local storage...
 function setUp() {
+    //see if we have a saved video URL in local storage...
+    if (localStorage.getItem('easyannotate-video-url')) {
+        //if we do, set our player to use it...
+        var videoURL = localStorage.getItem('easyannotate-video-url');
+
+        $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+
+        $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
+            var width = this.videoWidth;
+            var height = this.videoHeight;
+            console.log(width);
+            console.log(height);
+
+            if ((width / height) > 1.818) {
+                //width is the problem in this case, so set the newWidth to vidWidth
+                var newWidth = vidWidth;
+                $(VIDEO_PLAYER_ELEMENT).width(newWidth)
+            }
+            else { //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
+                var newHeight = vidHeight;
+                $(VIDEO_PLAYER_ELEMENT).height(newHeight)
+            }
+
+        });
+
+        console.log(videoElementID);
+        //load into the player
+        VIDEO_PLAYER_ELEMENT.load();
+
+        //reset play time to 0 seconds...
+        VIDEO_PLAYER_ELEMENT.currentTime = 0;
+    }
+
+    //see if there's a saved unique video ID in local storage...
+    //set the video unique element id to videoElementID
+    if (localStorage.getItem('easyannotate-video-id')) {
+        var videoElementID = localStorage.getItem('easyannotate-video-id');
+        $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
+    }
+
     //data-easyannotation-file-id is the attribute that holds our local storage file id, get it...
     var localStorageId = $(VIDEO_SELECTOR).attr('data-easyannotation-file-id');
     console.log(localStorageId);
@@ -617,36 +657,17 @@ function updateVideoURLClicked() {
     //close the update form - we're happy with the url and we're gonna update...
     toggleChangeVideoForm();
 
-    //set the video unique element id to videoElementID
-    $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
+    //save the new video URL into local storage...
+    localStorage.setItem('easyannotate-video-url', videoURL);
 
-    $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+    //and save the easyAnnotate ID into local storage...
+    localStorage.setItem('easyannotate-video-id', videoElementID);
 
-    $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
-        var width = this.videoWidth;
-        var height = this.videoHeight;
-        console.log(width);
-        console.log(height);
-
-        if ((width / height) > 1.818) {
-            //width is the problem in this case, so set the newWidth to vidWidth
-            var newWidth = vidWidth;
-            $(VIDEO_PLAYER_ELEMENT).width(newWidth)
-        }
-        else { //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
-            var newHeight = vidHeight;
-            $(VIDEO_PLAYER_ELEMENT).height(newHeight)
-        }
-    });
-
-    console.log(videoElementID);
-
-    $(VIDEO_PLAYER_ELEMENT).load();
-
+    //reset annotation list...
     annotationsArray = [];
-
     populateAnnotationsList();
 
+    //in the setup method, we attempt to load a video/video URL from local storage...
     setUp();
 
     console.log(videoURL);
