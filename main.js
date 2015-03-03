@@ -445,7 +445,7 @@ function addAnnotationClicked() {
     $(VIDEO_SELECTOR).trigger('pause');
 
     //tell the user...
-    $(INFORMATION_TEXT_SELECTOR).text("Begin drawing over the video...");
+    $(INFORMATION_TEXT_SELECTOR).text("Begin drawing over the video...(press escape to exit)");
 }
 
 function newAnnotationDrawingComplete() {
