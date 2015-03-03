@@ -49,7 +49,9 @@ var TEXT_COLOUR_BUTTON = "#text-colour-button";
 var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
 var DEFAULT_TEXT_COLOUR = "rgba(255, 255, 255, 1.0)";
 var DEFAULT_VID_WIDTH = 400;
+var DEFAULT_VID_HEIGHT = 220;
 var LARGE_VID_WIDTH = 600;
+var LARGE_VID_HEIGHT = 330;
 var VID_WIDTH_TO_HEIGHT_MULTIPLIER = 0.55;
 
 //Fun fact: 1.5 is the least metal number.
@@ -61,6 +63,9 @@ var ctx = canvas.getContext('2d');
 
 //variable storing width of video currently
 var vidWidth = DEFAULT_VID_WIDTH; //video starts at 400px wide
+
+//variable storing height of video currently
+var vidHeight = DEFAULT_VID_HEIGHT; //video starts at 220px high
 
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
@@ -605,12 +610,28 @@ function updateVideoURLClicked(){
   //set the video unique element id to videoElementID
   $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
 
-  //setUp()
-
   $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+
+  $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
+        var width = this.videoWidth;
+        var height = this.videoHeight;
+        console.log(width);
+        console.log(height);
+
+        if((width / height) > 1.818){
+          //width is the problem in this case, so set the newWidth to vidWidth
+          var newWidth = vidWidth;
+          $(VIDEO_PLAYER_ELEMENT).width(newWidth)
+        }
+        else{ //height is the problem in this case, so set the newHeight to vidHeight
+          var newHeight = vidHeight;
+          $(VIDEO_PLAYER_ELEMENT).height(newHeight)
+        }
+    });
+
   $(VIDEO_PLAYER_ELEMENT).load();
 
-
+  setUp();
 
   console.log(videoURL);
 }
@@ -1043,6 +1064,7 @@ $(document).ready(function () {
 
             //set the video width to 400
             vidWidth = DEFAULT_VID_WIDTH;
+            vidHeight = DEFAULT_VID_HEIGHT;
 
             //and set the canvas size
             canvas.width = DEFAULT_VID_WIDTH;
@@ -1090,6 +1112,7 @@ $(document).ready(function () {
 
             //set the video width to 600
             vidWidth = LARGE_VID_WIDTH;
+            vidHeight = LARGE_VID_HEIGHT;
 
             //and set the canvas size
             canvas.width = LARGE_VID_WIDTH;
