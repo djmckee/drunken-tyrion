@@ -148,14 +148,14 @@ body{
 
 #addAnnotationForm{
 	width: 175px;
-	height: 180px;
+	height: 200px;
 	position: relative;
 	padding: 10px;
 	background-color: #597c56;
 	border: 2px solid #333;
 	color: #FFF;
 	left: 400px;
-	top: 60px;
+	top: 350px;
 	z-index: 4000;
 }
 

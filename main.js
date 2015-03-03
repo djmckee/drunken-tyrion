@@ -1188,7 +1188,7 @@ $(document).ready(function () {
             });
 
             //move annotation form
-            $(ANNOTATION_FORM_SELECTOR).animate({"top": "330px"});
+            $(ANNOTATION_FORM_SELECTOR).animate({"top": "350px"});
 
         } else {
             //go big or go home!
@@ -1243,7 +1243,7 @@ $(document).ready(function () {
             });
 
             //move annotation form
-            $(ANNOTATION_FORM_SELECTOR).animate({"top": "440px"});
+            $(ANNOTATION_FORM_SELECTOR).animate({"top": "460px"});
         }
     });
 
