@@ -1174,6 +1174,10 @@ $(document).ready(function () {
                 console.log('Annotation style adjusted for smaller video size.');
             });
 
+            $('#vid').animate({
+              height: '223px'
+            });
+
             //move annotation form
             $(ANNOTATION_FORM_SELECTOR).animate({"top": "330px"});
 
@@ -1223,6 +1227,10 @@ $(document).ready(function () {
 
                 console.log(fontSize);
                 console.log('Annotation style adjusted for larger video size.');
+            });
+
+            $('#vid').animate({
+              height: '333px'
             });
 
             //move annotation form
