@@ -45,8 +45,8 @@ var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
 var TEXT_TAB_CONTENT = '#textTabContent';
 var IMAGE_TAB_CONTENT = '#imageTabContent';
-var FORM_IMAGE_WHITESPACE = '#form-remove-whitespace';
-var FORM_TEXT_WHITESPACE = '#form-remove-image-whitespace';
+var FORM_IMAGE_WHITESPACE = '#form-remove-image-whitespace';
+var FORM_TEXT_WHITESPACE = '#form-remove-text-whitespace';
 
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
