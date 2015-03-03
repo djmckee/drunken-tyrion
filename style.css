@@ -304,3 +304,11 @@ form textarea, form input {
 	font-family: 'Roboto Condensed', sans-serif;
 	width: 100%;
 }
+
+#videoURL input{
+	display: inline;
+}
+
+#videoURLText{
+	width: 100%;
+}
