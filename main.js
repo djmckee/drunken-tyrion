@@ -371,7 +371,8 @@ function putAllCurrentAnnotationsOnScreen() {
 // perform some basic setup tasks such as loading in the existing array of annotations from local storage...
 function setUp() {
     //data-easyannotation-file-id is the attribute that holds our local storage file id, get it...
-    var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
+    var localStorageId = $(VIDEO_SELECTOR).attr('data-easyannotation-file-id');
+    console.log(localStorageId);
 
     //check there's actually something to load in first...
     if (localStorage.getItem(localStorageId)) {
@@ -597,15 +598,13 @@ function saveAnnotationButtonClicked() {
 function updateVideoURLClicked(){
   //get the url from the form
   var videoURL = $(FORM_VIDEO_URL_FIELD).val();
+  var videoElementID = CryptoJS.MD5(videoURL);
 
   //check it's a accurate URL
   if(!isValidUrl(videoURL)){
     //don't do anything because the video URL isn't correct (maybe add some message to user?)
     return false;
   }
-
-  //get a unique element id so we can give it unique annotations
-  var videoElementID = CryptoJS.MD5(videoURL);
 
   //set the video unique element id to videoElementID
   $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
@@ -623,13 +622,19 @@ function updateVideoURLClicked(){
           var newWidth = vidWidth;
           $(VIDEO_PLAYER_ELEMENT).width(newWidth)
         }
-        else{ //height is the problem in this case, so set the newHeight to vidHeight
+        else{ //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
           var newHeight = vidHeight;
           $(VIDEO_PLAYER_ELEMENT).height(newHeight)
         }
     });
 
+  console.log(videoElementID);
+
   $(VIDEO_PLAYER_ELEMENT).load();
+
+  annotationsArray = [];
+
+  populateAnnotationsList();
 
   setUp();
 
@@ -772,6 +777,15 @@ function populateAnnotationsList() {
         $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
 
     }
+}
+
+//this is to be used when changing videos
+function clearAnnotationsList(){
+  //clear any existing annotations in the list...
+  $("li.vidAnnotationListItem").each(function () {
+      //remove it!
+      this.remove();
+  });
 }
 
 function deleteAnnotationAtIndex(index) {
