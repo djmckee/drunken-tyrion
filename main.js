@@ -74,7 +74,7 @@ var vidHeight = DEFAULT_VID_HEIGHT; //video starts at 220px high
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
 
-//booleans to tell the canvas whether or not it is currently drawing boxes, and wether or not it is allowed to.
+//booleans to tell the canvas whether or not it is currently drawing boxes, and whether or not it is allowed to.
 var dragging = false;
 var canDraw = false;
 
@@ -93,7 +93,7 @@ var isAnnotationFormVisible = false;
 //should we even bother displaying annotations!? :o
 var shouldDisplayAnnotations = true;
 
-//z-index for annotation counter (newer annotations have pirority, counter)
+//z-index for annotation counter (newer annotations have priority, counter)
 var zIndex = 3000; //starts at 3000
 
 //if we're skipping via the progress bar, we wanna add *all* possible annotations to screen during the next call of update...
@@ -106,7 +106,7 @@ var tab = 1;
 var fontSize = 16;
 
 //  annotation object prototype.
-function annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
+function Annotation(text, imageUrl, xPosition, yPosition, width, height, startTime, endTime, zIndex, backgroundColour, textColour, link) {
     this.textString = text;
     this.imageUrl = imageUrl;
     this.xPosition = xPosition;
@@ -135,7 +135,7 @@ function uniqueIdForAnnotation(a) {
 }
 
 function testAnnotation(name) {
-    var newAnnotation = new annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR, DEFAULT_TEXT_COLOUR, null);
+    var newAnnotation = new Annotation(name, null, 30, 30, 30, 30, 3, 5, 3000, DEFAULT_ANNOTATION_COLOUR, DEFAULT_TEXT_COLOUR, null);
     annotationsArray.push(newAnnotation);
     console.log(annotationsArray);
 
@@ -231,7 +231,7 @@ function addAnnotationToScreen(a) {
         annotationString = "";
     }
 
-    annotationString = '<p>' + annotationString + '</p>'
+    annotationString = '<p>' + annotationString + '</p>';
 
     $(annotationSelector).html(annotationString);
 
@@ -277,7 +277,7 @@ function update() {
         //remove any annotations currently on screen - correct ones are gonna be re-drawn next...
         $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
-        //draw any annotations on screen that should be on at this second (regardless of wether or not it's their exact start time)
+        //draw any annotations on screen that should be on at this second (regardless of whether or not it's their exact start time)
         putAllCurrentAnnotationsOnScreen();
 
         //set the skipping variable to false so that this doesn't happen every time!
@@ -309,7 +309,7 @@ function update() {
 
             for (var i = 0; i < newAnnotations.length; i++) {
                 //make a new annotation div, set it's id tag to the unique ID for this particular annotation
-                //add all of the releveant attributes from the annotation, then add it to the video player...
+                //add all of the relevant attributes from the annotation, then add it to the video player...
                 console.log('need to add something.');
                 var newAnnotation = newAnnotations[i];
                 console.log(newAnnotation);
@@ -343,7 +343,7 @@ function update() {
 }
 
 //a function to add ANY annotations that should be on screen at the current time to the screen -
-//regardless of wether their current start time is *now*...
+//regardless of whether their current start time is *now*...
 //be careful when calling this - with great power comes great responsibility, etc.
 function putAllCurrentAnnotationsOnScreen() {
     //find everything that should potentially be on screen...
@@ -360,7 +360,7 @@ function putAllCurrentAnnotationsOnScreen() {
 
             for (var i = 0; i < currentAnnotations.length; i++) {
                 //make a new annotation div, set it's id tag to the unique ID for this particular annotation
-                //add all of the releveant attributes from the annotation, then add it to the video player...
+                //add all of the relevant attributes from the annotation, then add it to the video player...
                 console.log('need to add something.');
                 var newAnnotation = currentAnnotations[i];
                 console.log(newAnnotation);
@@ -389,17 +389,14 @@ function setUp() {
 
             if ((width / height) > 1.818) {
                 //width is the problem in this case, so set the newWidth to vidWidth
-                var newWidth = vidWidth;
-                $(VIDEO_PLAYER_ELEMENT).width(newWidth)
+                $(VIDEO_PLAYER_ELEMENT).width(vidWidth);
             }
             else { //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
-                var newHeight = vidHeight;
-                $(VIDEO_PLAYER_ELEMENT).height(newHeight)
+                $(VIDEO_PLAYER_ELEMENT).height(vidHeight);
             }
 
         });
 
-        console.log(videoElementID);
         //load into the player
         VIDEO_PLAYER_ELEMENT.load();
 
@@ -425,7 +422,7 @@ function setUp() {
         var localData = JSON.parse(localStorage.getItem(localStorageId));
 
         //if the array is null, then set our array of annotations to a blank array (so we're not having null pointer issues)
-        //otherwise, set it to the parsed array we've retrived from local storage (stored in localData currently...)
+        //otherwise, set it to the parsed array we've retrieved from local storage (stored in localData currently...)
         if (localData == null) {
             // there's no saved data to load in, use a blank array...
             annotationsArray = [];
@@ -470,15 +467,15 @@ function saveAnnotations() {
 }
 
 //clear just the current video's annotations from local storage...
-function clearStoredAnnotations(){
-  //get the relevant local storage ID from the html data attribute...
-  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
+function clearStoredAnnotations() {
+    //get the relevant local storage ID from the html data attribute...
+    var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
 
-  //save null...
-  localStorage.setItem(localStorageId, null);
+    //save null...
+    localStorage.setItem(localStorageId, null);
 
-  //re-set local list variable...
-  annotationsArray = [];
+    //re-set local list variable...
+    annotationsArray = [];
 
 }
 
@@ -497,7 +494,7 @@ function clearAllStoredAnnotations() {
 
 function addAnnotationClicked() {
     //we really don't want multiple adds to happen at once...
-    //hide the button just incase...
+    //hide the button just in case...
     $(ADD_BUTTON_SELECTOR).fadeTo("fast", 0);
 
     $(CANVAS_SELECTOR).css('z-index', 5000);
@@ -618,10 +615,10 @@ function saveAnnotationButtonClicked() {
         drawnWidth = 30;
     }
 
-    if(imageWhitespace || textWhitespace){
-      //user wants the annotation to only be as big as the image/text
-      console.log('height set to auto as user wanted fitting annotation');
-      drawnHeight = 'auto';
+    if (imageWhitespace || textWhitespace) {
+        //user wants the annotation to only be as big as the image/text
+        console.log('height set to auto as user wanted fitting annotation');
+        drawnHeight = 'auto';
     }
 
     //ensure that annotations can't be outside the video
@@ -642,7 +639,7 @@ function saveAnnotationButtonClicked() {
     //check that there's a proper title, and if so, go ahead adding the annotation...
     if (title != null && title.length > 0) {
         //create a new annotation with the variables we've got
-        var newAnnotation = new annotation(title, imageUrl, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour, link);
+        var newAnnotation = new Annotation(title, imageUrl, drawnX, drawnY, drawnWidth, drawnHeight, currentTime, (currentTime + parseInt(time)), zIndex, backgroundColor, textColour, link);
 
         //add the new annotation that we've created into the array...
         annotationsArray.push(newAnnotation);
@@ -765,11 +762,7 @@ function updateProgressBar() {
 //the following function's regex was from http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
 function isValidUrl(url) {
     //ugly ugly regex checking provided by http://stackoverflow.com/questions/2723140/validating-url-with-jquery-without-the-validate-plugin
-    if (/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url)) {
-        return true;
-    } else {
-        return false;
-    }
+    return !!/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
 }
 
 function populateAnnotationsList() {
@@ -779,7 +772,7 @@ function populateAnnotationsList() {
     });
 
     //clear any existing annotations in the list...
-    $("li.vidAnnotationListItem").each(function (index) {
+    $("li.vidAnnotationListItem").each(function () {
         //remove it!
         this.remove();
     });
@@ -833,15 +826,6 @@ function populateAnnotationsList() {
         $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
 
     }
-}
-
-//this is to be used when changing videos
-function clearAnnotationsList() {
-    //clear any existing annotations in the list...
-    $("li.vidAnnotationListItem").each(function () {
-        //remove it!
-        this.remove();
-    });
 }
 
 function deleteAnnotationAtIndex(index) {
@@ -1040,7 +1024,7 @@ $(document).ready(function () {
 
     $(VIDEO_URL_BUTTON).click(function () {
         updateVideoURLClicked();
-    })
+    });
 
     $(document).on('click', REMOVE_BUTTON_SELECTOR, function () {
         //get the index to remove from the button data attribute...
@@ -1164,7 +1148,7 @@ $(document).ready(function () {
             fontSize = fontSize * ROC_SOC_CONSTANT;
 
             //redraw the annotations so they fit the video
-            $('.annotation-on-screen').each(function (i, obj) {
+            $('.annotation-on-screen').each(function () {
                 var currentWidth = $(this).width();
                 var currentHeight = $(this).height();
                 var currentX = $(this).position().left;
@@ -1186,7 +1170,7 @@ $(document).ready(function () {
             });
 
             $('#vid').animate({
-              height: '223px'
+                height: '223px'
             });
 
             //move annotation form
@@ -1216,7 +1200,7 @@ $(document).ready(function () {
             fontSize = fontSize * ANTI_ROC_SOC_CONSTANT;
 
             //redraw the annotations so they fit the video
-            $('.annotation-on-screen').each(function (i, obj) {
+            $('.annotation-on-screen').each(function () {
                 var currentWidth = $(this).width();
                 var currentHeight = $(this).height();
                 var currentX = $(this).position().left;
@@ -1241,7 +1225,7 @@ $(document).ready(function () {
             });
 
             $('#vid').animate({
-              height: '333px'
+                height: '333px'
             });
 
             //move annotation form
