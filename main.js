@@ -468,8 +468,21 @@ function saveAnnotations() {
 
 }
 
+//clear just the current video's annotations from local storage...
+function clearStoredAnnotations(){
+  //get the relevant local storage ID from the html data attribute...
+  var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
+
+  //save null...
+  localStorage.setItem(localStorageId, null);
+
+  //re-set local list variable...
+  annotationsArray = [];
+
+}
+
 //clear the contents of existing local storage items (probably just for testing purposes but you never know...)
-function clearStoredAnnotations() {
+function clearAllStoredAnnotations() {
     //clear all local storage items associated with this page.
     window.localStorage.clear();
 
@@ -1063,7 +1076,7 @@ $(document).ready(function () {
 
     $(CLEAR_ALL_BUTTON).click(function () {
         //check first before deleting literally everything ever!!!
-        var shouldDelete = confirm('This will delete ALL annotations for every video in easyAnnotate. Do you wish to continue?');
+        var shouldDelete = confirm('This will delete all annotations, do you wish to continue?');
         // :o
         if (shouldDelete) {
             //Delete our beautiful content mercilessly.
