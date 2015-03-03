@@ -590,7 +590,28 @@ function saveAnnotationButtonClicked() {
 }
 
 function updateVideoURLClicked(){
+  //get the url from the form
   var videoURL = $(FORM_VIDEO_URL_FIELD).val();
+
+  //check it's a accurate URL
+  if(!isValidUrl(videoURL)){
+    //don't do anything because the video URL isn't correct (maybe add some message to user?)
+    return false;
+  }
+
+  //get a unique element id so we can give it unique annotations
+  var videoElementID = CryptoJS.MD5(videoURL);
+
+  //set the video unique element id to videoElementID
+  $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
+
+  //setUp()
+
+  $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+  $(VIDEO_PLAYER_ELEMENT).load();
+
+
+
   console.log(videoURL);
 }
 
