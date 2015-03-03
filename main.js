@@ -598,56 +598,61 @@ function saveAnnotationButtonClicked() {
     }
 }
 
-function updateVideoURLClicked(){
-  //get the url from the form
-  var videoURL = $(FORM_VIDEO_URL_FIELD).val();
-  var videoElementID = CryptoJS.MD5(videoURL);
+function updateVideoURLClicked() {
+    //get the url from the form
+    var videoURL = $(FORM_VIDEO_URL_FIELD).val();
 
-  //check it's a accurate URL
-  if(!isValidUrl(videoURL)){
-    //don't do anything because the video URL isn't correct (maybe add some message to user?)
-    return false;
-  }
+    //check it's a accurate URL
+    if (!isValidUrl(videoURL)) {
+        //don't do anything because the video URL isn't correct
+        //alert the user...
+        alert("It looks like you've entered an invalid video URL... please check it over then try again.");
+        //then give up...
+        return false;
+    }
 
-  //close the update form - we're happy with the url and we're gonna update...
-  toggleChangeVideoForm();
+    //get a unique hash for that particular video's video id based upon the URL...
+    var videoElementID = CryptoJS.MD5(videoURL);
 
-  //set the video unique element id to videoElementID
-  $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
+    //close the update form - we're happy with the url and we're gonna update...
+    toggleChangeVideoForm();
 
-  $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+    //set the video unique element id to videoElementID
+    $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
 
-  $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
+    $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+
+    $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
         var width = this.videoWidth;
         var height = this.videoHeight;
         console.log(width);
         console.log(height);
 
-        if((width / height) > 1.818){
-          //width is the problem in this case, so set the newWidth to vidWidth
-          var newWidth = vidWidth;
-          $(VIDEO_PLAYER_ELEMENT).width(newWidth)
+        if ((width / height) > 1.818) {
+            //width is the problem in this case, so set the newWidth to vidWidth
+            var newWidth = vidWidth;
+            $(VIDEO_PLAYER_ELEMENT).width(newWidth)
         }
-        else{ //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
-          var newHeight = vidHeight;
-          $(VIDEO_PLAYER_ELEMENT).height(newHeight)
+        else { //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
+            var newHeight = vidHeight;
+            $(VIDEO_PLAYER_ELEMENT).height(newHeight)
         }
     });
 
-  console.log(videoElementID);
+    console.log(videoElementID);
 
-  $(VIDEO_PLAYER_ELEMENT).load();
+    $(VIDEO_PLAYER_ELEMENT).load();
 
-  annotationsArray = [];
+    annotationsArray = [];
 
-  populateAnnotationsList();
+    populateAnnotationsList();
 
-  setUp();
+    setUp();
 
-  console.log(videoURL);
+    console.log(videoURL);
 }
 
-function resetFormValues(){
+function resetFormValues() {
     //and clear the old values to defaults so new annotations don't have set ones...
     $(FORM_TEXT_FIELD).val("");
     $(FORM_LINK_FIELD).val("");
@@ -786,12 +791,12 @@ function populateAnnotationsList() {
 }
 
 //this is to be used when changing videos
-function clearAnnotationsList(){
-  //clear any existing annotations in the list...
-  $("li.vidAnnotationListItem").each(function () {
-      //remove it!
-      this.remove();
-  });
+function clearAnnotationsList() {
+    //clear any existing annotations in the list...
+    $("li.vidAnnotationListItem").each(function () {
+        //remove it!
+        this.remove();
+    });
 }
 
 function deleteAnnotationAtIndex(index) {
@@ -892,14 +897,14 @@ function toggleAddAnnotationForm() {
 }
 
 function toggleChangeVideoForm() {
-  if ($(CHANGE_VIDEO_FORM_SELECTOR).is(":visible")) {
-    // hide it
-    $(CHANGE_VIDEO_FORM_SELECTOR).hide("fast");
-  } else {
-    //show it
-    $(CHANGE_VIDEO_FORM_SELECTOR).show("fast");
+    if ($(CHANGE_VIDEO_FORM_SELECTOR).is(":visible")) {
+        // hide it
+        $(CHANGE_VIDEO_FORM_SELECTOR).hide("fast");
+    } else {
+        //show it
+        $(CHANGE_VIDEO_FORM_SELECTOR).show("fast");
 
-  }
+    }
 }
 
 //  jQuery events.
@@ -988,8 +993,8 @@ $(document).ready(function () {
         playPauseClicked();
     });
 
-    $(VIDEO_URL_BUTTON).click(function() {
-      updateVideoURLClicked();
+    $(VIDEO_URL_BUTTON).click(function () {
+        updateVideoURLClicked();
     })
 
     $(document).on('click', REMOVE_BUTTON_SELECTOR, function () {
@@ -1056,8 +1061,8 @@ $(document).ready(function () {
     });
 
     //change video form toggles on/off when the change video button is clicked...
-    $(CHANGE_VIDEO_BUTTON).click(function(){
-      toggleChangeVideoForm();
+    $(CHANGE_VIDEO_BUTTON).click(function () {
+        toggleChangeVideoForm();
     });
 
     //tab work
@@ -1261,15 +1266,15 @@ $(document).ready(function () {
     Mousetrap.bind('a', function () { /* toggle annotations... */
         $(TOGGLE_ANNOTATIONS_BUTTON).trigger('click');
     });
-    Mousetrap.bind('esc', function() {
-      if( canDraw == true ){
-        canDraw = false;
-        $(INFORMATION_TEXT_SELECTOR).text('');
-        $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
-      }
-      else if( $(ANNOTATION_FORM_SELECTOR).is(':visible') ){
-        cancelAnnotationFormButtonClicked();
-      }
+    Mousetrap.bind('esc', function () {
+        if (canDraw == true) {
+            canDraw = false;
+            $(INFORMATION_TEXT_SELECTOR).text('');
+            $(ADD_BUTTON_SELECTOR).fadeTo("fast", 1);
+        }
+        else if ($(ANNOTATION_FORM_SELECTOR).is(':visible')) {
+            cancelAnnotationFormButtonClicked();
+        }
     });
 
 });
