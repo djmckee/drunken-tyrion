@@ -36,12 +36,15 @@ body{
 #vid{
 	display: inline-block;
 	float: left;
+	height: 223px;
+	background-color: #333;
+	margin-bottom: 10px;
 }
 
 #vidAnnotation{
 	float:right;
 	width: 190px;
-	height: 210px;
+	height: 213px;
 	background-color: #333;
 	/* background-color: #806060;  /* was once 666 rock SOC */
 	background-image: url('resources/noAnnotations.png');
@@ -303,4 +306,17 @@ progress::-webkit-progress-value {
 form textarea, form input {
 	font-family: 'Roboto Condensed', sans-serif;
 	width: 100%;
+}
+
+#videoURL input{
+	display: inline;
+}
+
+#videoURLText{
+	width: 100%;
+}
+
+#videoURLSubmit{
+	margin-top: 5px;
+	display: block;
 }

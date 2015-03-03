@@ -35,6 +35,9 @@ var FORM_LENGTH_FIELD = '#form-annotation-length';
 var FORM_LINK_FIELD = '#form-annotation-link';
 var CANVAS_SELECTOR = 'canvas';
 
+var VIDEO_URL_BUTTON = '#videoURLSubmit';
+var FORM_VIDEO_URL_FIELD = '#form-video-URL';
+
 var FORM_IMAGE_URL_FIELD = '#form-image-url';
 var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
@@ -46,7 +49,9 @@ var TEXT_COLOUR_BUTTON = "#text-colour-button";
 var DEFAULT_ANNOTATION_COLOUR = "rgba(89, 124, 86, 0.7)";
 var DEFAULT_TEXT_COLOUR = "rgba(255, 255, 255, 1.0)";
 var DEFAULT_VID_WIDTH = 400;
+var DEFAULT_VID_HEIGHT = 220;
 var LARGE_VID_WIDTH = 600;
+var LARGE_VID_HEIGHT = 330;
 var VID_WIDTH_TO_HEIGHT_MULTIPLIER = 0.55;
 
 //Fun fact: 1.5 is the least metal number.
@@ -58,6 +63,9 @@ var ctx = canvas.getContext('2d');
 
 //variable storing width of video currently
 var vidWidth = DEFAULT_VID_WIDTH; //video starts at 400px wide
+
+//variable storing height of video currently
+var vidHeight = DEFAULT_VID_HEIGHT; //video starts at 220px high
 
 //rect is a dictionary which will contain an x, y, width and height.
 var rect = {};
@@ -363,7 +371,8 @@ function putAllCurrentAnnotationsOnScreen() {
 // perform some basic setup tasks such as loading in the existing array of annotations from local storage...
 function setUp() {
     //data-easyannotation-file-id is the attribute that holds our local storage file id, get it...
-    var localStorageId = $(VIDEO_SELECTOR).data('easyannotation-file-id');
+    var localStorageId = $(VIDEO_SELECTOR).attr('data-easyannotation-file-id');
+    console.log(localStorageId);
 
     //check there's actually something to load in first...
     if (localStorage.getItem(localStorageId)) {
@@ -586,6 +595,52 @@ function saveAnnotationButtonClicked() {
     }
 }
 
+function updateVideoURLClicked(){
+  //get the url from the form
+  var videoURL = $(FORM_VIDEO_URL_FIELD).val();
+  var videoElementID = CryptoJS.MD5(videoURL);
+
+  //check it's a accurate URL
+  if(!isValidUrl(videoURL)){
+    //don't do anything because the video URL isn't correct (maybe add some message to user?)
+    return false;
+  }
+
+  //set the video unique element id to videoElementID
+  $(VIDEO_PLAYER_ELEMENT).attr('data-easyannotation-file-id', videoElementID);
+
+  $(VIDEO_PLAYER_ELEMENT).find('#MP4-video').attr('src', videoURL);
+
+  $(VIDEO_PLAYER_ELEMENT).bind("loadedmetadata", function () {
+        var width = this.videoWidth;
+        var height = this.videoHeight;
+        console.log(width);
+        console.log(height);
+
+        if((width / height) > 1.818){
+          //width is the problem in this case, so set the newWidth to vidWidth
+          var newWidth = vidWidth;
+          $(VIDEO_PLAYER_ELEMENT).width(newWidth)
+        }
+        else{ //height is the problem in this case (or it's perfect), so set the newHeight to vidHeight
+          var newHeight = vidHeight;
+          $(VIDEO_PLAYER_ELEMENT).height(newHeight)
+        }
+    });
+
+  console.log(videoElementID);
+
+  $(VIDEO_PLAYER_ELEMENT).load();
+
+  annotationsArray = [];
+
+  populateAnnotationsList();
+
+  setUp();
+
+  console.log(videoURL);
+}
+
 function resetFormValues(){
     //and clear the old values to defaults so new annotations don't have set ones...
     $(FORM_TEXT_FIELD).val("");
@@ -722,6 +777,15 @@ function populateAnnotationsList() {
         $(ANNOTATION_PANE).css({'background-image': "url('resources/noAnnotations.png')"});
 
     }
+}
+
+//this is to be used when changing videos
+function clearAnnotationsList(){
+  //clear any existing annotations in the list...
+  $("li.vidAnnotationListItem").each(function () {
+      //remove it!
+      this.remove();
+  });
 }
 
 function deleteAnnotationAtIndex(index) {
@@ -904,6 +968,10 @@ $(document).ready(function () {
         playPauseClicked();
     });
 
+    $(VIDEO_URL_BUTTON).click(function() {
+      updateVideoURLClicked();
+    })
+
     $(document).on('click', REMOVE_BUTTON_SELECTOR, function () {
         //get the index to remove from the button data attribute...
         var index = $(this).data('easyannotation-annotation-id');
@@ -1010,6 +1078,7 @@ $(document).ready(function () {
 
             //set the video width to 400
             vidWidth = DEFAULT_VID_WIDTH;
+            vidHeight = DEFAULT_VID_HEIGHT;
 
             //and set the canvas size
             canvas.width = DEFAULT_VID_WIDTH;
@@ -1057,6 +1126,7 @@ $(document).ready(function () {
 
             //set the video width to 600
             vidWidth = LARGE_VID_WIDTH;
+            vidHeight = LARGE_VID_HEIGHT;
 
             //and set the canvas size
             canvas.width = LARGE_VID_WIDTH;
