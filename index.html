@@ -52,7 +52,7 @@
 	      <div id="vid-overlay"></div>
 				<canvas id="vid-canvas" width="400" height="220"></canvas>
 				<video width="400" data-easyannotation-file-id="ExampleFileName" id="videoPlayer">
-					<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+					<source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" id="MP4-video">
 					<source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
 					Your browser does not support HTML5 video, lulz.
 				</video>
@@ -84,6 +84,12 @@
 			<a id="delete-everything-button" class="control padded-button player-button no-select">Clear all annotations forever</a>
 			<a id="toggle-annotations-button" class="control padded-button player-button no-select">Turn off annotations</a>
 		</p>
+			<br /><br /><br />
+
+			<form id="videoURL">
+				Change the video: <input type="text" name="videoURL" id="form-video-URL" placeholder="Submit a .mp4 video (e.g. http://www.w3schools.com/html/mov_bbb.mp4)" />
+				<a class="control no-select" id="videoURLSubmit">Submit</a>
+			</form>
 		</div>
 
 	</div>
