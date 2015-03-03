@@ -1266,6 +1266,9 @@ $(document).ready(function () {
     Mousetrap.bind('a', function () { /* toggle annotations... */
         $(TOGGLE_ANNOTATIONS_BUTTON).trigger('click');
     });
+    Mousetrap.bind('c', function () { /* change video url... */
+        $(CHANGE_VIDEO_BUTTON).trigger('click');
+    });
     Mousetrap.bind('esc', function () {
         if (canDraw == true) {
             canDraw = false;
