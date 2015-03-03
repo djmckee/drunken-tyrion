@@ -35,6 +35,8 @@ var FORM_LENGTH_FIELD = '#form-annotation-length';
 var FORM_LINK_FIELD = '#form-annotation-link';
 var CANVAS_SELECTOR = 'canvas';
 
+var CHANGE_VIDEO_FORM_SELECTOR = 'form#videoURL';
+var CHANGE_VIDEO_BUTTON = 'a#change-video-button';
 var VIDEO_URL_BUTTON = '#videoURLSubmit';
 var FORM_VIDEO_URL_FIELD = '#form-video-URL';
 
@@ -43,6 +45,7 @@ var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
 var TEXT_TAB_CONTENT = '#textTabContent';
 var IMAGE_TAB_CONTENT = '#imageTabContent';
+
 
 var COLOUR_BUTTON = "#background-colour-button";
 var TEXT_COLOUR_BUTTON = "#text-colour-button";
@@ -885,6 +888,17 @@ function toggleAddAnnotationForm() {
     }
 }
 
+function toggleChangeVideoForm() {
+  if ($(CHANGE_VIDEO_FORM_SELECTOR).is(":visible")) {
+    // hide it
+    $(CHANGE_VIDEO_FORM_SELECTOR).hide("fast");
+  } else {
+    //show it
+    $(CHANGE_VIDEO_FORM_SELECTOR).show("fast");
+
+  }
+}
+
 //  jQuery events.
 $(document).ready(function () {
     //the DOM has loaded, so let's begin...
@@ -898,6 +912,9 @@ $(document).ready(function () {
 
     //hide image tab in annotation form
     $(IMAGE_TAB_CONTENT).hide();
+
+    //hide change video form on load
+    $(CHANGE_VIDEO_FORM_SELECTOR).hide();
 
 
     //super super handy reference for video tag info... http://www.w3schools.com/tags/ref_av_dom.asp
@@ -1033,6 +1050,11 @@ $(document).ready(function () {
             $(ANNOTATIONS_ON_SCREEN_SELECTOR).remove();
 
         }
+    });
+
+    //change video form toggles on/off when the change video button is clicked...
+    $(CHANGE_VIDEO_BUTTON).click(function(){
+      toggleChangeVideoForm();
     });
 
     //tab work
