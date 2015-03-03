@@ -32,10 +32,10 @@ with open (js_file_name) as js_file:
     print 'Found ' + js_file_name
     #read the file
     js_string = js_file.read()
+    #remove any console.log's - this is production grade JS!
+    js_string = re.sub(r'console.log((.*?));', '//console.log((.*?));', js_string)
     #run the minifier...
     minified = minify(js_string, mangle=do_you_want_your_javascript_mangled, mangle_toplevel=do_you_want_your_javascript_mangled)
-    #remove any console.log's - this is production grade JS!
-    minified = re.sub(r'console.log((.*?));', ' ', minified)
     #work out a suitable file name...
     minified_js_name = js_file_name.replace('.js', '.min.js')
     #remove old versions of the file...
