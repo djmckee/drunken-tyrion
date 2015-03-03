@@ -35,6 +35,9 @@ var FORM_LENGTH_FIELD = '#form-annotation-length';
 var FORM_LINK_FIELD = '#form-annotation-link';
 var CANVAS_SELECTOR = 'canvas';
 
+var VIDEO_URL_BUTTON = '#videoURLSubmit';
+var FORM_VIDEO_URL_FIELD = '#form-video-URL';
+
 var FORM_IMAGE_URL_FIELD = '#form-image-url';
 var TEXT_TAB_LINK = '#textTab';
 var IMAGE_TAB_LINK = '#imageTab';
@@ -586,6 +589,11 @@ function saveAnnotationButtonClicked() {
     }
 }
 
+function updateVideoURLClicked(){
+  var videoURL = $(FORM_VIDEO_URL_FIELD).val();
+  console.log(videoURL);
+}
+
 function resetFormValues(){
     //and clear the old values to defaults so new annotations don't have set ones...
     $(FORM_TEXT_FIELD).val("");
@@ -903,6 +911,10 @@ $(document).ready(function () {
     $(PLAY_PAUSE_SELECTOR).click(function () {
         playPauseClicked();
     });
+
+    $(VIDEO_URL_BUTTON).click(function() {
+      updateVideoURLClicked();
+    })
 
     $(document).on('click', REMOVE_BUTTON_SELECTOR, function () {
         //get the index to remove from the button data attribute...
