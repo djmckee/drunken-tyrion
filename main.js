@@ -1173,6 +1173,11 @@ $(document).ready(function () {
                 height: '223px'
             });
 
+            $(VIDEO_SELECTOR).css({
+              height: '220px',
+              width: '400px'
+            });
+
             //move annotation form
             $(ANNOTATION_FORM_SELECTOR).animate({"top": "65px"});
 
@@ -1226,6 +1231,11 @@ $(document).ready(function () {
 
             $('#vid').animate({
                 height: '333px'
+            });
+
+            $(VIDEO_SELECTOR).css({
+              height: '330px',
+              width: '600px'
             });
 
             //move annotation form
