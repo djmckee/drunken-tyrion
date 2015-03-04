@@ -1,12 +1,14 @@
 # drunken-tyrion
 
-**Please edit index-dev.html, NOT index.html - index.html is destroyed every time the build script is ran**
+### easyAnnotate
+easyAnnotate is a simple HTML5 video annotation solution, written primarily in JavaScript (with a 'lil CSS and HTML thrown in for good measure). 
 
-Ham Sandwich
+**Winner of the March 2015 iParadigms Newcastle TurnItIn Hackathon.**
 
-**Programmer Excuse of the Day: "Oh, you said you DIDN'T want that to happen?"**
+It works basically, and provides text and image annotations. There's probably a few bugs though.
 
-Useful links are useful... https://github.com/djmckee/drunken-tyrion/wiki/Useful-links
+*Please edit the index-dev.html file, rather than index.html - index.html is a production ready file that is destroyed and re-created (from the current contents of index-dev.html) every time the build.py script is ran.*
+
 
 ##Libraries we've used
 * [jQuery](http://jquery.com/)
