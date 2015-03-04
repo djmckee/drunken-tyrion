@@ -559,6 +559,7 @@ function saveAnnotationButtonClicked() {
 
     //see if whitespace boxes are clicked?
     var imageWhitespace = $(FORM_IMAGE_WHITESPACE).val();
+    console.log(imageWhitespace);
     var textWhitespace = $(FORM_TEXT_WHITESPACE).val();
 
     //if there's something there, validate it...
@@ -615,10 +616,13 @@ function saveAnnotationButtonClicked() {
         drawnWidth = 30;
     }
 
-    if (imageWhitespace || textWhitespace) {
+    if (imageWhitespace == 'on') {
         //user wants the annotation to only be as big as the image/text
         console.log('height set to auto as user wanted fitting annotation');
         drawnHeight = 'auto';
+    }
+    else{
+      console.log('height not changed, user wanted whitespace');
     }
 
     //ensure that annotations can't be outside the video
