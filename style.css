@@ -148,19 +148,28 @@ body{
 
 #addAnnotationForm{
 	width: 175px;
-	height: 200px;
+	height: 220px;
 	position: relative;
 	padding: 10px;
 	background-color: #597c56;
 	border: 2px solid #333;
 	color: #FFF;
 	left: 400px;
-	top: 350px;
+	top: 65px;
 	z-index: 4000;
 }
 
 #addAnnotationForm textarea{
 	resize: none;
+}
+
+.add-checkbox{
+	position: relative;
+	top: 17px;
+}
+
+.checkbox-span{
+	margin-left: 20px
 }
 
 .form-colour-container {

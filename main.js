@@ -1174,7 +1174,7 @@ $(document).ready(function () {
             });
 
             //move annotation form
-            $(ANNOTATION_FORM_SELECTOR).animate({"top": "350px"});
+            $(ANNOTATION_FORM_SELECTOR).animate({"top": "65px"});
 
         } else {
             //go big or go home!
